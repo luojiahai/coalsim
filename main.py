@@ -1,8 +1,8 @@
 from io import StringIO
 from skbio import read
 from skbio.tree import TreeNode
-import numpy as np
-import random
+
+import qiuyi_tree
 
 
 def newick_to_table():
@@ -64,64 +64,11 @@ def newick_to_table():
     nodes = to_list(root, root=root['object'])
     output_to_file('data/nodes_table.txt', nodes)
 
-
-def read_table(path):
-    f = open(path, 'r')
-    f.readline()
-    temp = []
-    parents = []
-    distances = []
-    names = []
-    for line in f:
-        splited = line.strip().split('\t')
-        parent = splited[2]
-        if (parent == 'None'):
-            parent = -1
-        d2p = splited[3]
-        if (d2p == 'None'):
-            d2p = 0.0
-        temp.append({
-            'id': int(splited[0]),
-            'parent': int(parent)
-        })
-        parents.append(int(parent))
-        distances.append(float(d2p))
-        names.append(splited[1])
-    childs = [[] for _ in range(len(temp))]
-    for e in temp:
-        if (e['parent'] < 0):
-            continue
-        childs[e['parent']].append(e['id'])
-    return 
-
-def coal(node, mark, distance, set1, lambda0):
-    if (mark <= 1):
-        return (mark, set1, distance)
-    else:
-        lambda_c = mark * lambda0
-        distance_fake = np.random.exponential(scale=1.0/lambda_c)
-        if (distance < distance_fake):
-            return (mark, set1, distance)
-        else:
-            # change set
-            if (len(set1[node]) >= 2):
-                print("initial node " + str(node) + ": " + str(set1[node]))
-                couple = random.sample(set1[node], 2)
-                set1[node] = [int(''.join([str(e) for e in sorted(couple)]))] + [e for e in set1[node] if e not in couple]
-                print("coalescent at node " + str(node) + ": " + str(set1[node]) + ", " + "distance = " + distance_fake)
-            else:
-                return (mark, set1, distance)
-            distance = distance - distance_fake
-            coal(node, mark - 1, distance, set1, lambda0)
-
 def main():
-    # newick_to_table()
-    data = read_table('data/nodes_table.txt')
-
-    print(data)
-    # n_nodes = data['names']
-    # mark = np.zeros(10)
-    
+    qtree = qiuyi_tree.SpeciesTree(table_file_path='data/nodes_table.txt',
+                                   lambda0=1)
+    qtree.print_nodes()
+    qtree.coalescent()
 
 
 if __name__ == "__main__":
