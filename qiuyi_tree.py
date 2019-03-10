@@ -11,13 +11,13 @@ class TreeNode(object):
         self.parent = parent
         self.distance_to_parent = distance_to_parent
         self.childs = []
-        self.walking_distance = -1
     
     def __repr__(self):
         return "node_id: {}, parent: {}, distance_to_parent: {}, childs: {}".format(self.node_id, 
                                                                         self.parent, 
                                                                         self.distance_to_parent,
                                                                         self.childs)
+
 
 class SpeciesTree(object):
     def __init__(self,
@@ -73,9 +73,9 @@ class SpeciesTree(object):
                 return
             else:
                 if (len(self.set[node_id]) >= 2):
-                    print("initial node " + str(node_id) + ": " + str(self.set[node_id]))
+                    print("initial node " + str(node_id) + ": " + str(sorted(self.set[node_id])))
                     couple = random.sample(self.set[node_id], 2)
-                    self.set[node_id] = [''.join([str(e) for e in couple])] + [str(e) for e in self.set[node_id] if e not in couple]
+                    self.set[node_id] = [''.join(sorted([str(e) for e in couple]))] + [str(e) for e in self.set[node_id] if e not in couple]
                     print("coalescent at node " + str(node_id) + ": " + str(self.set[node_id]) + ", " + "distance = " + str(distance_fake))
                 else:
                     return
@@ -112,7 +112,7 @@ class SpeciesTree(object):
             for new_leaf in new_leaves:
                 if (new_leaf not in temp_new_leaves):
                     temp_new_leaves.append(new_leaf)
-            new_leaves = temp_new_leaves
-            self.leaves = new_leaves.copy()
-            labelled = [False for _ in range(len(self.nodes))]
+            self.leaves = temp_new_leaves.copy()
+
             new_leaves = []
+            labelled = [False for _ in range(len(self.nodes))]

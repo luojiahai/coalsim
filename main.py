@@ -5,8 +5,8 @@ from skbio.tree import TreeNode
 import qiuyi_tree
 
 
-def newick_to_table():
-    f = open('data/tree_sample.txt')
+def newick_to_table(input_path, output_path):
+    f = open(input_path)
     tree = read(f, format="newick", into=TreeNode)
     f.close()
 
@@ -62,11 +62,12 @@ def newick_to_table():
     root = parse(tree)
     root = rename(root)
     nodes = to_list(root, root=root['object'])
-    output_to_file('data/nodes_table.txt', nodes)
+    output_to_file(output_path, nodes)
 
 def main():
-    qtree = qiuyi_tree.SpeciesTree(table_file_path='data/nodes_table.txt',
-                                   lambda0=1)
+    # newick_to_table(input_path='data/tree_sample.txt', output_path='data/nodes_table.txt')
+
+    qtree = qiuyi_tree.SpeciesTree(table_file_path='data/nodes_table.txt', lambda0=1)
     qtree.print_nodes()
     qtree.coalescent()
 
