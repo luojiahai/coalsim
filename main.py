@@ -67,9 +67,14 @@ def newick_to_table(input_path, output_path):
 def main():
     newick_to_table(input_path='data/tree_sample1.txt', output_path='data/nodes_table.txt')
 
-    qtree = qiuyi_tree.SpeciesTree(table_file_path='data/nodes_table.txt', lambda0=0.3)
-    qtree.print_nodes()
-    qtree.coalescent()
+    qstree = qiuyi_tree.SpeciesTree(table_file_path='data/nodes_table.txt', lambda0=0.3)
+    qstree.print_nodes()
+    qstree.coalescent()
+
+    print(qstree.coalescent_process)
+
+    qgtree = qiuyi_tree.GeneTree(species_tree=qstree)
+    
 
 
 if __name__ == "__main__":
