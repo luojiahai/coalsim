@@ -10,6 +10,5 @@ def main():
     qgtree = qiuyi_tree.GeneTree(species_tree=qstree)
     
 
-
 if __name__ == "__main__":
     main()

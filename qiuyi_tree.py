@@ -29,15 +29,25 @@ class TreeNode(object):
                                                                         self.childs)
 
 
-class SpeciesTree(object):
+class GenericTree(object):
+    def __init__(self):
+        self.nodes = []
+        return
+
+    def print_nodes(self):
+        for node in self.nodes:
+            print(node)
+        return
+
+
+class SpeciesTree(GenericTree):
     def __init__(self,
                  table_file_path,
                  lambda0):
-        self.lambda0 = lambda0
-
-        self.nodes = []
+        GenericTree.__init__(self)
         self.__construct_species_nodes(table_file_path)
 
+        self.lambda0 = lambda0
         self.set = [[str(node.node_id) + '*'] if not node.childs else [] for node in self.nodes]
         self.leaves = [node.node_id for node in self.nodes if not node.childs]
         self.root = None
@@ -46,11 +56,6 @@ class SpeciesTree(object):
                 self.root = node
 
         self.coalescent_process = collections.defaultdict(list)
-        return
-
-    def print_nodes(self):
-        for node in self.nodes:
-            print(node)
         return
 
     def __construct_species_nodes(self, path):
@@ -158,9 +163,11 @@ class SpeciesTree(object):
         return
 
 
-class GeneTree(object):
+class GeneTree(GenericTree):
     def __init__(self,
                  species_tree):
+        GenericTree.__init__(self)
+        
         self.species_nodes = species_tree.nodes
         self.coalescent_process = species_tree.coalescent_process
         self.leaves = species_tree.leaves
@@ -171,7 +178,6 @@ class GeneTree(object):
             self.time_sequence[leaf] = self.__reverse_time_sequence(target_star=str(leaf)+'*')
         pprint.pprint(self.time_sequence)
 
-        self.nodes = []
         self.__construct_gene_nodes()
         return
 
