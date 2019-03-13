@@ -142,19 +142,22 @@ class GeneTree(object):
         self.nodes = species_tree.nodes
         self.coalescent_process = species_tree.coalescent_process
         self.leaves = [node.node_id for node in self.nodes if not node.childs]
-        self.total_distance = self.__distance_to_root(node_id=0)
+        self.total_distance = self.__distance_to_root_recurse(node_id=0)
 
         for leaf in self.leaves:
             print(leaf)
             self.__extract_couples(target_star=str(leaf)+'*')
 
-    def __distance_to_root(self, node_id):
+    def __distance_to_root_recurse(self, node_id):
         if (self.nodes[node_id].parent < 0):
             return 0
         else:
             d2p = self.nodes[node_id].distance_to_parent
             parent = self.nodes[node_id].parent
-            return d2p + self.__distance_to_root(parent)
+            return d2p + self.__distance_to_root_recurse(parent)
+        
+    def __walking_distance(self, node_id, distance_in_tube):
+        return distance_in_tube + (self.total_distance - self.__distance_to_root_recurse(node_id))
 
     def __in_set(self, target, clade):
         if (len(target) < len(clade)):
@@ -167,12 +170,14 @@ class GeneTree(object):
     def __extract_couples(self, target_star):
         sequence = []
         for k, v in self.coalescent_process.items():
+            distance_in_tube = 0.0
             for elem in v:
+                distance_in_tube += elem['distance']
                 if (target_star in elem['from_set'] and target_star not in elem['to_set']):
                     for e in elem['to_set']:
                         if self.__in_set(target_star, e):
                             couple = e.replace(target_star, '')
-                            walking_distance = elem['distance'] + (self.total_distance - self.__distance_to_root(int(k)))
+                            walking_distance = self.__walking_distance(int(k), distance_in_tube=distance_in_tube)
                             # pair = (couple, walking_distance)
                             pair = (e, walking_distance)
                             print(pair)
