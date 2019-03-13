@@ -12,21 +12,22 @@ np.random.seed(4)
 
 class TreeNode(object):
     def __init__(self,
-                 node_id,
-                 parent,
-                 distance_to_parent):
+                 node_id=None,
+                 parent=None,
+                 distance_to_parent=None,
+                 children=None):
         self.node_id = node_id
         self.parent = parent
         self.distance_to_parent = distance_to_parent
-        self.childs = []
-        self.distance_to_childs = []
+        self.children = children if not children else []
+        self.distance_to_children = []
         return
     
     def __repr__(self):
-        return "node_id: {}, parent: {}, distance_to_parent: {}, childs: {}".format(self.node_id, 
+        return "node_id: {}, parent: {}, distance_to_parent: {}, children: {}".format(self.node_id, 
                                                                         self.parent, 
                                                                         self.distance_to_parent,
-                                                                        self.childs)
+                                                                        self.children)
 
 
 class GenericTree(object):
@@ -51,9 +52,9 @@ class SpeciesTree(GenericTree):
         for node in self.nodes:
             if (node.parent < 0):
                 self.root = node
-        self.leaves = [node.node_id for node in self.nodes if not node.childs]
+        self.leaves = [node.node_id for node in self.nodes if not node.children]
 
-        self.set = [[str(node.node_id) + '*'] if not node.childs else [] for node in self.nodes]
+        self.set = [[str(node.node_id) + '*'] if not node.children else [] for node in self.nodes]
         self.lambda0 = lambda0
         self.coalescent_process = collections.defaultdict(list)
         return
@@ -74,13 +75,13 @@ class SpeciesTree(GenericTree):
                                        parent=int(parent),
                                        distance_to_parent=float(d2p)))
         
-        # find childs
-        childs = [[] for _ in range(len(self.nodes))]
+        # find children
+        children = [[] for _ in range(len(self.nodes))]
         for node in self.nodes:
             if (node.parent < 0): continue
-            childs[node.parent].append(node.node_id)
+            children[node.parent].append(node.node_id)
         for node in self.nodes:
-            node.childs = sorted(childs[node.node_id])
+            node.children = sorted(children[node.node_id])
 
         return
 
@@ -135,17 +136,19 @@ class SpeciesTree(GenericTree):
                     break
                 else:
                     parent = self.nodes[leaf].parent
-                    childs = self.nodes[parent].childs
+                    children = self.nodes[parent].children
                     if (labelled[leaf]):
                         continue
                     labelled[leaf] = True
-                    if (len(self.set[childs[0]]) != 0 
-                        and len(self.set[childs[1]]) != 0):
-                        self.__coalescent_recurse(node_id=childs[0], distance=self.nodes[childs[0]].distance_to_parent)
-                        self.__coalescent_recurse(node_id=childs[1], distance=self.nodes[childs[1]].distance_to_parent)
-                        self.set[parent] = list(set().union(self.set[childs[0]], self.set[childs[1]]))
+                    if (len(self.set[children[0]]) != 0 
+                        and len(self.set[children[1]]) != 0):
+                        self.__coalescent_recurse(node_id=children[0], 
+                                                  distance=self.nodes[children[0]].distance_to_parent)
+                        self.__coalescent_recurse(node_id=children[1], 
+                                                  distance=self.nodes[children[1]].distance_to_parent)
+                        self.set[parent] = list(set().union(self.set[children[0]], self.set[children[1]]))
                         if (len(new_leaves) > 0):
-                            new_leaves = [e for e in new_leaves if e != childs[0] and e != childs[1]]
+                            new_leaves = [e for e in new_leaves if e != children[0] and e != children[1]]
                         new_leaves.append(parent)
                     else:
                         new_leaves.append(leaf)
@@ -228,7 +231,7 @@ class GeneTree(GenericTree):
         diff = set(a).difference(set(b))
         return ''.join([e + '*' for e in sorted(list(diff))])
 
-    def __get_distance_to_parent(self, node_name, parent_name):
+    def __get_distance(self, node_name, parent_name):
         for leaf, sequence in self.time_sequence.items():
             if (len(node_name) == 2 and node_name[0] == leaf):
                 for pair in sequence:
@@ -245,17 +248,20 @@ class GeneTree(GenericTree):
     def __construct_gene_nodes_recurse(self, skbio_tree_node):
         # one node (leaf)
         if (len(skbio_tree_node.name) == 2):
-            skbio_tree_node.length = self.__get_distance_to_parent(skbio_tree_node.name, skbio_tree_node.parent.name)
+            skbio_tree_node.length = self.__get_distance(skbio_tree_node.name, 
+                                                         skbio_tree_node.parent.name)
             return
         # two nodes
         elif (len(skbio_tree_node.name) == 4):
             child_one_name = skbio_tree_node.name[:2]
             child_two_name = skbio_tree_node.name[2:]
             child_one = skbio.tree.TreeNode(name=child_one_name, 
-                                            length=self.__get_distance_to_parent(child_one_name, skbio_tree_node.name), 
+                                            length=self.__get_distance(child_one_name, 
+                                                                       skbio_tree_node.name), 
                                             parent=skbio_tree_node)
             child_two = skbio.tree.TreeNode(name=child_two_name, 
-                                            length=self.__get_distance_to_parent(child_two_name, skbio_tree_node.name),
+                                            length=self.__get_distance(child_two_name, 
+                                                                       skbio_tree_node.name),
                                             parent=skbio_tree_node)
             skbio_tree_node.children = [child_one, child_two]
             return
@@ -267,10 +273,12 @@ class GeneTree(GenericTree):
                     child_one_name = prev_pair[0]
                     child_two_name = self.__star_replace(skbio_tree_node.name, prev_pair[0])
                     child_one = skbio.tree.TreeNode(name=child_one_name, 
-                                                    length=self.__get_distance_to_parent(child_one_name, skbio_tree_node.name), 
+                                                    length=self.__get_distance(child_one_name, 
+                                                                               skbio_tree_node.name), 
                                                     parent=skbio_tree_node)
                     child_two = skbio.tree.TreeNode(name=child_two_name, 
-                                                    length=self.__get_distance_to_parent(child_two_name, skbio_tree_node.name),
+                                                    length=self.__get_distance(child_two_name, 
+                                                                               skbio_tree_node.name),
                                                     parent=skbio_tree_node)
                     self.__construct_gene_nodes_recurse(child_one)
                     self.__construct_gene_nodes_recurse(child_two)
@@ -297,7 +305,9 @@ class GeneTree(GenericTree):
         return
 
 
-def newick_to_table(output_path, input_path=None, skbio_tree=None):
+def newick_to_table(output_path, 
+                    input_path=None, 
+                    skbio_tree=None):
     tree = None
     if (skbio_tree):
         tree = skbio_tree
