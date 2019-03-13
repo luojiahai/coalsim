@@ -2,7 +2,7 @@ import numpy as np
 import random
 import collections
 
-np.random.seed(3)
+np.random.seed(4)
 
 
 class TreeNode(object):
@@ -86,10 +86,14 @@ class SpeciesTree(object):
             else:
                 if (len(self.set[node_id]) >= 2):
                     temp_set = sorted(self.set[node_id])
-                    print("initial node " + str(node_id) + ": " + str(temp_set))
-                    couple = random.sample(self.set[node_id], 2)
+                    couple = np.random.choice(self.set[node_id], size=2, replace=False)
                     self.set[node_id] = [''.join(self.__star_sorted(couple))] + [e for e in self.set[node_id] if e not in couple]
+
+                    # print process
+                    print("initial node " + str(node_id) + ": " + str(temp_set))
                     print("coalescent at node " + str(node_id) + ": " + str(self.set[node_id]) + ", " + "distance = " + str(distance_fake))
+
+                    # save process
                     self.coalescent_process[str(node_id)].append({
                         'from_set': temp_set, 
                         'to_set': self.set[node_id].copy(),
