@@ -248,20 +248,17 @@ class GeneTree(GenericTree):
     def __construct_gene_nodes_recurse(self, skbio_tree_node):
         # one node (leaf)
         if (len(skbio_tree_node.name) == 2):
-            skbio_tree_node.length = self.__get_distance(skbio_tree_node.name, 
-                                                         skbio_tree_node.parent.name)
+            skbio_tree_node.length = self.__get_distance(skbio_tree_node.name, skbio_tree_node.parent.name)
             return
         # two nodes
         elif (len(skbio_tree_node.name) == 4):
             child_one_name = skbio_tree_node.name[:2]
             child_two_name = skbio_tree_node.name[2:]
             child_one = skbio.tree.TreeNode(name=child_one_name, 
-                                            length=self.__get_distance(child_one_name, 
-                                                                       skbio_tree_node.name), 
+                                            length=self.__get_distance(child_one_name, skbio_tree_node.name), 
                                             parent=skbio_tree_node)
             child_two = skbio.tree.TreeNode(name=child_two_name, 
-                                            length=self.__get_distance(child_two_name, 
-                                                                       skbio_tree_node.name),
+                                            length=self.__get_distance(child_two_name, skbio_tree_node.name),
                                             parent=skbio_tree_node)
             skbio_tree_node.children = [child_one, child_two]
             return
@@ -273,12 +270,10 @@ class GeneTree(GenericTree):
                     child_one_name = prev_pair[0]
                     child_two_name = self.__star_replace(skbio_tree_node.name, prev_pair[0])
                     child_one = skbio.tree.TreeNode(name=child_one_name, 
-                                                    length=self.__get_distance(child_one_name, 
-                                                                               skbio_tree_node.name), 
+                                                    length=self.__get_distance(child_one_name, skbio_tree_node.name), 
                                                     parent=skbio_tree_node)
                     child_two = skbio.tree.TreeNode(name=child_two_name, 
-                                                    length=self.__get_distance(child_two_name, 
-                                                                               skbio_tree_node.name),
+                                                    length=self.__get_distance(child_two_name, skbio_tree_node.name),
                                                     parent=skbio_tree_node)
                     self.__construct_gene_nodes_recurse(child_one)
                     self.__construct_gene_nodes_recurse(child_two)
@@ -349,8 +344,7 @@ def newick_to_table(output_path,
         d['distance_to_root'] = d['object'].distance(root)
         ret.append(d)
         if (d['object'] is root):
-            ret = sorted(
-                ret, key=lambda x: x['distance_to_root'], reverse=True)
+            ret = sorted(ret, key=lambda x: x['distance_to_root'], reverse=True)
         return ret
 
     def _output_to_file(path, nodes):
@@ -361,8 +355,7 @@ def newick_to_table(output_path,
             for j in range(len(nodes)):
                 if (nodes[i]['parent'] is nodes[j]['object']):
                     parent_index = str(j)
-            f.write(str(i) + '\t' + nodes[i]['name'] + '\t' +
-                    parent_index + '\t' + str(nodes[i]['distance']) + '\n')
+            f.write(str(i) + '\t' + nodes[i]['name'] + '\t' + parent_index + '\t' + str(nodes[i]['distance']) + '\n')
         f.close()
 
     root = _parse(tree)
