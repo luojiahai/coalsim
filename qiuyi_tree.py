@@ -32,6 +32,8 @@ class TreeNode(object):
 class GenericTree(object):
     def __init__(self):
         self.nodes = []
+        self.root = None
+        self.leaves = []
         return
 
     def print_nodes(self):
@@ -46,15 +48,13 @@ class SpeciesTree(GenericTree):
                  lambda0):
         GenericTree.__init__(self)
         self.__construct_species_nodes(table_file_path)
-
-        self.lambda0 = lambda0
-        self.set = [[str(node.node_id) + '*'] if not node.childs else [] for node in self.nodes]
-        self.leaves = [node.node_id for node in self.nodes if not node.childs]
-        self.root = None
         for node in self.nodes:
             if (node.parent < 0):
                 self.root = node
+        self.leaves = [node.node_id for node in self.nodes if not node.childs]
 
+        self.set = [[str(node.node_id) + '*'] if not node.childs else [] for node in self.nodes]
+        self.lambda0 = lambda0
         self.coalescent_process = collections.defaultdict(list)
         return
 
@@ -167,15 +167,14 @@ class GeneTree(GenericTree):
     def __init__(self,
                  species_tree):
         GenericTree.__init__(self)
+        self.leaves = species_tree.leaves
         
         self.species_nodes = species_tree.nodes
         self.coalescent_process = species_tree.coalescent_process
-        self.leaves = species_tree.leaves
         self.total_distance = self.__distance_to_root_recurse(node_id=0)
-
         self.time_sequence = {}
         for leaf in self.leaves:
-            self.time_sequence[leaf] = self.__reverse_time_sequence(target_star=str(leaf)+'*')
+            self.time_sequence[str(leaf)] = self.__reverse_time_sequence(target_star=str(leaf)+'*')
         pprint.pprint(self.time_sequence)
 
         self.__construct_gene_nodes()
@@ -217,7 +216,37 @@ class GeneTree(GenericTree):
                             sequence += self.__reverse_time_sequence(target_star=e)
         return sequence
 
+    def __construct_gene_nodes_recurse(self, skbio_tree_node):
+        name = skbio_tree_node.name
+        if (len(name) == 2):
+            skbio_tree_node.length = self.time_sequence[name[0]][0][1]
+            return
+        elif (len(name) == 4):
+            child_one_name = name[:2]
+            child_two_name = name[2:]
+            child_length = self.time_sequence[child_one_name[0]][0][1]
+            child_one = skbio.tree.TreeNode(name=child_one_name, length=child_length, parent=skbio_tree_node)
+            child_two = skbio.tree.TreeNode(name=child_two_name, length=child_length, parent=skbio_tree_node)
+            skbio_tree_node.children = [child_one, child_two]
+            return
+        for leaf, sequence in self.time_sequence.items():
+            prev_pair = None
+            for pair in sequence:
+                if (name == pair[0] and prev_pair != None):
+                    child_one = skbio.tree.TreeNode(name=prev_pair[0], length=prev_pair[1], parent=skbio_tree_node)
+                    child_two = skbio.tree.TreeNode(name=name.replace(prev_pair[0], ''), parent=skbio_tree_node)
+                    self.__construct_gene_nodes_recurse(child_one)
+                    self.__construct_gene_nodes_recurse(child_two)
+                    skbio_tree_node.children = [child_one, child_two]
+                    break
+                prev_pair = pair
+        return
+
     def __construct_gene_nodes(self):
+        tree = skbio.tree.TreeNode()
+        tree.name = self.time_sequence['0'][-1][0]
+        self.__construct_gene_nodes_recurse(tree)
+        print(tree.ascii_art())
         return
 
 
