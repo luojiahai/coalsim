@@ -1,3 +1,5 @@
+geneTree <- read.csv("./geneTree.csv")
+
 node = geneTree$node;
 child1 = geneTree$child1;
 child2 = geneTree$child2;
