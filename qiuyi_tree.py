@@ -7,7 +7,7 @@ import random
 import collections
 import pprint
 
-np.random.seed(4)
+np.random.seed(6)
 
 
 class TreeNode(object):
@@ -179,8 +179,8 @@ class GenericTree(object):
 
 class SpeciesTree(GenericTree):
     def __init__(self,
-                 lambda0,
-                 newick_path):
+                 newick_path,
+                 lambda0):
         GenericTree.__init__(self)
         self.__construct_species_nodes(newick_path)
         for node in self.nodes:
@@ -283,7 +283,9 @@ class SpeciesTree(GenericTree):
 
 class GeneTree(GenericTree):
     def __init__(self,
-                 species_tree):
+                 species_tree,
+                 lambda_dup,
+                 lambda_loss):
         GenericTree.__init__(self)
         self.leaves = species_tree.leaves
         
@@ -298,6 +300,13 @@ class GeneTree(GenericTree):
         pprint.pprint(self.time_sequence)
 
         self.__construct_gene_nodes()
+        for node in self.nodes:
+            if (node.parent < 0):
+                self.root = node
+        
+        self.lambda_dup = lambda_dup
+        self.lambda_loss = lambda_loss
+
         return
 
     def __distance_to_root_recurse(self, node_id):
@@ -407,3 +416,28 @@ class GeneTree(GenericTree):
         super().construct_nodes('data/gene_nodes_table.txt')
 
         return
+
+    def __dl_process_recurse(self, tree, distance):
+        node = self.nodes_dict[tree.name]
+        distance_dup = np.random.exponential(scale=1.0/self.lambda_dup)
+        distance_loss = np.random.exponential(scale=1.0/self.lambda_loss)
+        if (distance_dup < distance_loss and distance_dup < distance):
+            print('duplication at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_dup))
+            self.__dl_process_recurse(tree, distance - distance_dup)
+        elif (distance_loss <= distance_dup and distance_loss < distance):
+            print('loss at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance_loss))
+        else:
+            print('nothing happened at node ' + str(node.node_id) + ' (' + node.name + ')')
+            if (node.children):
+                child_one = tree.children[0]
+                child_two = tree.children[1]
+                distance_to_child_one = node.distance_to_children[0]
+                distance_to_child_two = node.distance_to_children[1]
+                self.__dl_process_recurse(child_one, distance_to_child_one)
+                self.__dl_process_recurse(child_two, distance_to_child_two)
+            else:
+                print('reach the end of node ' + str(node.node_id) + ' (' + node.name + ')')
+
+    def dl_process(self):
+        self.__dl_process_recurse(self.skbio_tree, distance=0)
+        
