@@ -5,7 +5,6 @@ import skbio.tree
 import numpy as np
 import random
 import collections
-import pprint
 
 np.random.seed(6)
 
@@ -223,7 +222,9 @@ class GenericTree(object):
                                           coalescent_process=coalescent_process)
         return
 
-    def coalescent(self, nodes, root, distance_at_root, lambda0):
+    def coalescent(self, distance_at_root, lambda0):
+        nodes = self.nodes
+        root = self.root
         coalescent_process = collections.defaultdict(list)
 
         old_leaves = [node.node_id for node in nodes if not node.children]
@@ -280,9 +281,6 @@ class GenericTree(object):
             labelled = {}
             for node in nodes:
                 labelled[node.node_id] = False
-
-        print('\ncoalescent_process:')
-        pprint.pprint(coalescent_process)
         return coalescent_process
         
 
@@ -367,8 +365,10 @@ class GeneTree(GenericTree):
         GenericTree.__init__(self)
         self.time_sequences = time_sequences
         self.__construct_gene_nodes()
+        max_node_id = -1
         for node in self.nodes:
-            if (node.parent < 0):
+            if (node.node_id > max_node_id):
+                max_node_id = node.node_id
                 self.root = node
         return
 
@@ -392,7 +392,7 @@ class GeneTree(GenericTree):
                     prev_pair = pair
         return None
 
-    def __construct_skbio_tree_recurse(self, skbio_tree_node):
+    def __create_skbio_tree_recurse(self, skbio_tree_node):
         # one node (leaf)
         if (len(skbio_tree_node.name) == 2):
             skbio_tree_node.length = self.__distance(skbio_tree_node.name, skbio_tree_node.parent.name)
@@ -422,8 +422,8 @@ class GeneTree(GenericTree):
                     child_two = skbio.tree.TreeNode(name=child_two_name, 
                                                     length=self.__distance(child_two_name, skbio_tree_node.name),
                                                     parent=skbio_tree_node)
-                    self.__construct_skbio_tree_recurse(child_one)
-                    self.__construct_skbio_tree_recurse(child_two)
+                    self.__create_skbio_tree_recurse(child_one)
+                    self.__create_skbio_tree_recurse(child_two)
                     skbio_tree_node.children = [child_one, child_two]
                     is_found = True
                     break
@@ -436,7 +436,7 @@ class GeneTree(GenericTree):
         # construct skbio tree from time sequence
         tree = skbio.tree.TreeNode()
         tree.name = self.time_sequences['0'][-1][0]
-        self.__construct_skbio_tree_recurse(tree)
+        self.__create_skbio_tree_recurse(tree)
         tree.length = None
         self.skbio_tree = tree
         super().newick_to_table(skbio_tree=tree, output_path='data/gene_nodes_table.txt')
