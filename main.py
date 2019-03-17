@@ -3,7 +3,7 @@ import pprint
 
 
 def main():
-    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')
+    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample1.txt')
     print('\nsecies_tree ascii_art:')
     print(qstree.skbio_tree.ascii_art())
     print('\nspecies_nodes:')
@@ -16,13 +16,17 @@ def main():
     time_sequences = qstree.time_sequences(coalescent_process=coalescent_process)
     pprint.pprint(time_sequences)
 
-    qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences)
+    qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)
     print('\ngene_tree ascii_art:')
     print(qgtree.skbio_tree.ascii_art())
     print('\ngene_nodes:')
     qgtree.print_nodes()
     print('\ngene_tree dl_process:')
-    qgtree.dl_process(lambda_dup=1, lambda_loss=0.3)
+    dup_events = qgtree.dl_process(lambda_dup=0.1, lambda_loss=0.03)
+    print('\ngene_tree dup_events:')
+    pprint.pprint(dup_events)
+    print('\ngene_tree duplication_subtree:')
+    qgtree.duplication_subtree(coalescent_process=coalescent_process, dup_events=dup_events)
 
 
     # print('\nsubtree coalescent:')
