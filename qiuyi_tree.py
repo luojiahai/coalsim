@@ -526,7 +526,7 @@ class GeneTree(GenericTree):
         print('\ngene_subtree dup_events:')
         print(gene_subtree_dup_events)
 
-        self.duplication_subtree(coalescent_process=species_subtree_coal_process, dup_events=gene_subtree_dup_events)
+        gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, dup_events=gene_subtree_dup_events)
         return
 
     def duplication_subtree(self, coalescent_process, dup_events):
