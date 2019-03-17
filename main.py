@@ -32,9 +32,8 @@ def main():
     sub_nodes = qstree.nodes.copy()
     del sub_nodes[3]
     del sub_nodes[5]
-    sub_root = sub_nodes[4]
-    qstree_2 = qiuyi_tree.SpeciesTree(nodes=sub_nodes, root=sub_root)
-    coalescent_process_2 = qstree_2.coalescent(sub_nodes, sub_root, distance_at_root=1.7, lambda0=1)
+    qstree_2 = qiuyi_tree.SpeciesTree(nodes=sub_nodes)
+    coalescent_process_2 = qstree_2.coalescent(qstree_2.nodes, qstree_2.root, distance_at_root=1.7, lambda0=1)
     print('\nsubtree time_sequences:')
     time_sequences_2 = qstree_2.time_sequences(coalescent_process=coalescent_process_2)
     pprint.pprint(time_sequences_2)

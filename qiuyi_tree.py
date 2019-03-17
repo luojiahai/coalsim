@@ -289,14 +289,18 @@ class GenericTree(object):
 class SpeciesTree(GenericTree):
     def __init__(self,
                  newick_path=None,
-                 nodes=None,
-                 root=None):
+                 nodes=None):
         GenericTree.__init__(self)
         if (not newick_path):
             self.nodes = nodes
-            self.root = root
         else:
             self.__construct_species_nodes(newick_path)
+
+        max_node_id = -1
+        for node in self.nodes:
+            if (node.node_id > max_node_id):
+                max_node_id = node.node_id
+                self.root = node
 
         self.nodes_id_dict = {}
         for node in self.nodes:
@@ -309,9 +313,6 @@ class SpeciesTree(GenericTree):
         output_path = 'data/species_nodes_table.txt'
         self.skbio_tree = super().newick_to_table(input_path=newick_path, output_path=output_path)
         super().construct_nodes(output_path, process_tree=True)
-        for node in self.nodes:
-            if (node.parent < 0):
-                self.root = node
         return
 
     def __distance_to_root_recurse(self, node_id):
