@@ -453,7 +453,7 @@ class GeneTree(GenericTree):
         super().construct_nodes('output/gene_nodes_table.txt', process_tree=False)
         return
 
-    def __dl_process_recurse(self, tree, distance, lambda_dup, lambda_loss, dup_events):
+    def __dup_loss_process_recurse(self, tree, distance, lambda_dup, lambda_loss, dup_events):
         node = self.nodes_name_dict[tree.name]
         distance_dup = np.random.exponential(scale=1.0/lambda_dup)
         distance_loss = np.random.exponential(scale=1.0/lambda_loss)
@@ -464,7 +464,7 @@ class GeneTree(GenericTree):
                 'name': node.name, 
                 'distance': distance - distance_dup
             })
-            self.__dl_process_recurse(tree, distance - distance_dup, lambda_dup, lambda_loss, dup_events)
+            self.__dup_loss_process_recurse(tree, distance - distance_dup, lambda_dup, lambda_loss, dup_events)
         elif (distance_loss <= distance_dup and distance_loss < distance):
             print('loss at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance_loss))
         else:
@@ -474,19 +474,19 @@ class GeneTree(GenericTree):
                 child_two = tree.children[1]
                 distance_to_child_one = node.distance_to_children[0]
                 distance_to_child_two = node.distance_to_children[1]
-                self.__dl_process_recurse(child_one, distance_to_child_one, lambda_dup, lambda_loss, dup_events)
-                self.__dl_process_recurse(child_two, distance_to_child_two, lambda_dup, lambda_loss, dup_events)
+                self.__dup_loss_process_recurse(child_one, distance_to_child_one, lambda_dup, lambda_loss, dup_events)
+                self.__dup_loss_process_recurse(child_two, distance_to_child_two, lambda_dup, lambda_loss, dup_events)
             else:
                 print('reach the end of node ' + str(node.node_id) + ' (' + node.name + ')')
         return
 
-    def dl_process(self, lambda_dup, lambda_loss):
+    def dup_loss_process(self, lambda_dup, lambda_loss):
         dup_events = []
-        self.__dl_process_recurse(self.skbio_tree, 
-                                  distance=0, 
-                                  lambda_dup=lambda_dup, 
-                                  lambda_loss=lambda_loss, 
-                                  dup_events=dup_events)
+        self.__dup_loss_process_recurse(self.skbio_tree, 
+                                        distance=0, 
+                                        lambda_dup=lambda_dup, 
+                                        lambda_loss=lambda_loss, 
+                                        dup_events=dup_events)
         return dup_events
         
     def __duplication_subtree_recurse(self, event, node_id, coal_distance):
@@ -521,8 +521,8 @@ class GeneTree(GenericTree):
         gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
         gene_subtree.print_nodes()
 
-        print('\ngene_subtree dl_process:')
-        gene_subtree_dup_events = gene_subtree.dl_process(lambda_dup=0.1, lambda_loss=0.03)
+        print('\ngene_subtree dup_loss_process:')
+        gene_subtree_dup_events = gene_subtree.dup_loss_process(lambda_dup=0.1, lambda_loss=0.03)
         print('\ngene_subtree dup_events:')
         print(gene_subtree_dup_events)
 
