@@ -3,7 +3,7 @@ import pprint
 
 
 def main():
-    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')
+    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample1.txt')
     print('\nsecies_tree ascii_art:')
     print(qstree.skbio_tree.ascii_art())
     print('\nspecies_nodes:')
@@ -25,17 +25,17 @@ def main():
     qgtree.dl_process(lambda_dup=1, lambda_loss=0.3)
 
 
-    print('\nsubtree coalescent:')
-    sub_nodes = qstree.nodes.copy()
-    del sub_nodes[3]
-    del sub_nodes[5]
-    qstree_2 = qiuyi_tree.SpeciesTree(nodes=sub_nodes)
-    coalescent_process_2 = qstree_2.coalescent(distance_at_root=1.7, lambda0=1)
-    print('\nsubtree coalescent_process:')
-    pprint.pprint(coalescent_process_2)
-    print('\nsubtree time_sequences:')
-    time_sequences_2 = qstree_2.time_sequences(coalescent_process=coalescent_process_2)
-    pprint.pprint(time_sequences_2)
+    # print('\nsubtree coalescent:')
+    # sub_nodes = qstree.nodes.copy()
+    # del sub_nodes[3]
+    # del sub_nodes[5]
+    # qstree_2 = qiuyi_tree.SpeciesTree(nodes=sub_nodes)
+    # coalescent_process_2 = qstree_2.coalescent(distance_at_root=1.7, lambda0=1)
+    # print('\nsubtree coalescent_process:')
+    # pprint.pprint(coalescent_process_2)
+    # print('\nsubtree time_sequences:')
+    # time_sequences_2 = qstree_2.time_sequences(coalescent_process=coalescent_process_2)
+    # pprint.pprint(time_sequences_2)
 
     return
     

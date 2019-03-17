@@ -6,7 +6,7 @@ import numpy as np
 import random
 import collections
 
-np.random.seed(6)
+np.random.seed(4)
 
 
 class TreeNode(object):
@@ -141,22 +141,18 @@ class GenericTree(object):
                                        name=name,
                                        parent=int(parent),
                                        distance_to_parent=float(d2p)))
-
         # process tree
         if (process_tree):
             self.__process_tree_recurse(self.skbio_tree)
-
         # create dict
         for node in self.nodes:
             self.nodes_name_dict[node.name] = node
-
         # find children
         for node in self.nodes:
             children, node.distance_to_children = self.children_distances(self.skbio_tree, node.name)
             for child in children:
                 node_id = self.nodes_name_dict[child.name].node_id
                 node.children.append(node_id)
-
         return
 
     def __children_distances_recurse(self, tree, name):
@@ -174,6 +170,34 @@ class GenericTree(object):
 
     def children_distances(self, tree, name):
         return self.__children_distances_recurse(tree, name)
+        
+
+class SpeciesTree(GenericTree):
+    def __init__(self,
+                 newick_path=None,
+                 nodes=None):
+        GenericTree.__init__(self)
+        if (not newick_path):
+            self.nodes = nodes
+        else:
+            self.__construct_species_nodes(newick_path)
+        max_node_id = -1
+        for node in self.nodes:
+            if (node.node_id > max_node_id):
+                max_node_id = node.node_id
+                self.root = node
+        self.nodes_id_dict = {}
+        for node in self.nodes:
+            self.nodes_id_dict[node.node_id] = node
+        self.leaves = [node.node_id for node in self.nodes if not node.children]
+        self.total_distance = self.__distance_to_root_recurse(node_id=self.leaves[0])
+        return
+
+    def __construct_species_nodes(self, newick_path):
+        output_path = 'data/species_nodes_table.txt'
+        self.skbio_tree = super().newick_to_table(input_path=newick_path, output_path=output_path)
+        super().construct_nodes(output_path, process_tree=True)
+        return
 
     def __star_sorted(self, couple):
         string = ''
@@ -282,36 +306,6 @@ class GenericTree(object):
             for node in nodes:
                 labelled[node.node_id] = False
         return coalescent_process
-        
-
-class SpeciesTree(GenericTree):
-    def __init__(self,
-                 newick_path=None,
-                 nodes=None):
-        GenericTree.__init__(self)
-        if (not newick_path):
-            self.nodes = nodes
-        else:
-            self.__construct_species_nodes(newick_path)
-
-        max_node_id = -1
-        for node in self.nodes:
-            if (node.node_id > max_node_id):
-                max_node_id = node.node_id
-                self.root = node
-
-        self.nodes_id_dict = {}
-        for node in self.nodes:
-            self.nodes_id_dict[node.node_id] = node
-        self.leaves = [node.node_id for node in self.nodes if not node.children]
-        self.total_distance = self.__distance_to_root_recurse(node_id=self.leaves[0])
-        return
-
-    def __construct_species_nodes(self, newick_path):
-        output_path = 'data/species_nodes_table.txt'
-        self.skbio_tree = super().newick_to_table(input_path=newick_path, output_path=output_path)
-        super().construct_nodes(output_path, process_tree=True)
-        return
 
     def __distance_to_root_recurse(self, node_id):
         if (self.nodes_id_dict[node_id].parent < 0 or 
@@ -440,7 +434,7 @@ class GeneTree(GenericTree):
         tree.length = None
         self.skbio_tree = tree
         super().newick_to_table(skbio_tree=tree, output_path='data/gene_nodes_table.txt')
-        super().construct_nodes('data/gene_nodes_table.txt')
+        super().construct_nodes('data/gene_nodes_table.txt', process_tree=False)
         return
 
     def __dl_process_recurse(self, tree, distance, lambda_dup, lambda_loss):
