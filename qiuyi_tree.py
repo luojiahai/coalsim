@@ -181,7 +181,7 @@ class SpeciesTree(GenericTree):
             self.nodes = nodes
         else:
             self.__construct_species_nodes(newick_path)
-    
+
         max_node_id = -1
         for node in self.nodes:
             if (node.node_id > max_node_id):
@@ -362,6 +362,7 @@ class GeneTree(GenericTree):
         GenericTree.__init__(self)
         self.time_sequences = time_sequences
         self.__construct_gene_nodes()
+        
         max_node_id = -1
         for node in self.nodes:
             if (node.node_id > max_node_id):
