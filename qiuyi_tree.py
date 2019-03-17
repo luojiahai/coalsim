@@ -515,7 +515,7 @@ class GeneTree(GenericTree):
         pprint.pprint(species_subtree_time_seq)
 
         # save subtree
-        species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000)[:4])
+        species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
         
         print('\ngene_subtree nodes:')
         gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
