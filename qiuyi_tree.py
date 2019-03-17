@@ -181,14 +181,17 @@ class SpeciesTree(GenericTree):
             self.nodes = nodes
         else:
             self.__construct_species_nodes(newick_path)
+    
         max_node_id = -1
         for node in self.nodes:
             if (node.node_id > max_node_id):
                 max_node_id = node.node_id
                 self.root = node
+                
         self.nodes_id_dict = {}
         for node in self.nodes:
             self.nodes_id_dict[node.node_id] = node
+        
         self.leaves = [node.node_id for node in self.nodes if not node.children]
         self.total_distance = self.__distance_to_root_recurse(node_id=self.leaves[0])
         return
