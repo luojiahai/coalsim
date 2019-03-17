@@ -1,15 +1,23 @@
 import qiuyi_tree
 
 def main():
-    qiuyi_tree.newick_to_table(input_path='data/tree_sample1.txt', 
-                               output_path='data/species_nodes_table.txt')
+    qstree = qiuyi_tree.SpeciesTree(lambda0=0.3, newick_path='data/tree_sample.txt')
 
-    qstree = qiuyi_tree.SpeciesTree(table_file_path='data/species_nodes_table.txt', 
-                                    lambda0=0.3)
+    print('\nsecies_tree ascii_art:')
+    print(qstree.skbio_tree.ascii_art())
+    print('\nspecies_nodes:')
     qstree.print_nodes()
+    print('\ncoalescent:')
     qstree.coalescent()
 
     qgtree = qiuyi_tree.GeneTree(species_tree=qstree)
+
+    print('\ngene_tree ascii_art:')
+    print(qgtree.skbio_tree.ascii_art())
+    print('\ngene_nodes:')
+    qgtree.print_nodes()
+
+    return
     
 
 if __name__ == "__main__":

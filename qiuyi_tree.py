@@ -13,42 +13,176 @@ np.random.seed(4)
 class TreeNode(object):
     def __init__(self,
                  node_id=None,
+                 name=None,
                  parent=None,
                  distance_to_parent=None,
                  children=None):
         self.node_id = node_id
+        self.name = name
         self.parent = parent
         self.distance_to_parent = distance_to_parent
-        self.children = children if not children else []
+        self.children = children if children else []
         self.distance_to_children = []
         return
     
     def __repr__(self):
-        return "node_id: {}, parent: {}, distance_to_parent: {}, children: {}".format(self.node_id, 
-                                                                        self.parent, 
-                                                                        self.distance_to_parent,
-                                                                        self.children)
+        return "node_id: {}, name: {}, parent: {}, distance_to_parent: {}, children: {}, distance_to_children: {}".format(
+                self.node_id, 
+                self.name,
+                self.parent, 
+                self.distance_to_parent,
+                self.children,
+                self.distance_to_children)
 
 
 class GenericTree(object):
     def __init__(self):
+        self.skbio_tree = None
         self.nodes = []
+        self.nodes_dict = {}
         self.root = None
         self.leaves = []
         return
+
+    def newick_to_table(self,
+                        output_path, 
+                        input_path=None, 
+                        skbio_tree=None):
+        tree = None
+        if (skbio_tree):
+            tree = skbio_tree
+        else:
+            f = open(input_path)
+            tree = skbio.read(f, format="newick", into=skbio.tree.TreeNode)
+            f.close()
+
+        def _parse(tree):
+            node = {
+                'object': tree,
+                'name': tree.name,
+                'parent': tree.parent,
+                'children': [],
+                'distance': tree.length
+            }
+            if tree.is_tip():
+                return node
+            for children in tree.children:
+                node['children'].append(_parse(children))
+            return node
+
+        def _rename(node):
+            ret = node.copy()
+            name = ''
+            for i in range(len(ret['children'])):
+                ret['children'][i] = _rename(ret['children'][i])
+                name += ret['children'][i]['name']
+            if (not ret['name']):
+                ret['name'] = name
+            return ret
+
+        def _to_list(node, root):
+            d = node.copy()
+            ret = []
+            for i in range(len(d['children'])):
+                ret += _to_list(d['children'][i], root=root)
+            del d['children']
+            d['distance_to_root'] = d['object'].distance(root)
+            ret.append(d)
+            if (d['object'] is root):
+                ret = sorted(ret, key=lambda x: x['distance_to_root'], reverse=True)
+            return ret
+
+        root = _parse(tree)
+        root = _rename(root)
+        nodes = _to_list(root, root=root['object'])
+
+        # output to file
+        f = open(output_path, 'w')
+        f.write('id\tname\tparent\td2p\n')
+        for i in range(len(nodes)):
+            parent_index = 'None'
+            for j in range(len(nodes)):
+                if (nodes[i]['parent'] is nodes[j]['object']):
+                    parent_index = str(j)
+            f.write(str(i) + '\t' + nodes[i]['name'] + '\t' + parent_index + '\t' + str(nodes[i]['distance']) + '\n')
+        f.close()
+
+        return tree
 
     def print_nodes(self):
         for node in self.nodes:
             print(node)
         return
 
+    def __process_tree_recurse(self, tree):
+        if (tree.name):
+            return tree.name
+        else:
+            name = ''
+            for child in tree.children:
+                name += self.__process_tree_recurse(child)
+            tree.name = name
+            return tree.name
+
+    def construct_nodes(self, path, process_tree=False):
+        # open table file and construct species tree
+        f = open(path, 'r')
+        f.readline()
+        for line in f:
+            splited = line.strip().split('\t')
+            node_id = int(splited[0])
+            name = splited[1]
+            parent = splited[2]
+            if (parent == 'None'):
+                parent = -1
+            d2p = splited[3]
+            if (d2p == 'None'):
+                d2p = -1.0
+            self.nodes.append(TreeNode(node_id=node_id,
+                                       name=name,
+                                       parent=int(parent),
+                                       distance_to_parent=float(d2p)))
+
+        # process tree
+        if (process_tree):
+            self.__process_tree_recurse(self.skbio_tree)
+
+        # create dict
+        for node in self.nodes:
+            self.nodes_dict[node.name] = node
+
+        # find children
+        for node in self.nodes:
+            children, node.distance_to_children = self.children_distances(self.skbio_tree, node.name)
+            for child in children:
+                node_id = self.nodes_dict[child.name].node_id
+                node.children.append(node_id)
+
+        return
+
+    def __children_distances_recurse(self, tree, name):
+        ret = None
+        if (tree.name == name):
+            distances = []
+            for child in tree.children:
+                distances.append(tree.distance(child))
+            ret = (tree.children, distances)
+            return ret
+        else:
+            for child in tree.children:
+                ret = self.__children_distances_recurse(child, name)
+                if (ret): return ret
+
+    def children_distances(self, tree, name):
+        return self.__children_distances_recurse(tree, name)
+        
 
 class SpeciesTree(GenericTree):
     def __init__(self,
-                 table_file_path,
-                 lambda0):
+                 lambda0,
+                 newick_path):
         GenericTree.__init__(self)
-        self.__construct_species_nodes(table_file_path)
+        self.__construct_species_nodes(newick_path)
         for node in self.nodes:
             if (node.parent < 0):
                 self.root = node
@@ -59,30 +193,10 @@ class SpeciesTree(GenericTree):
         self.coalescent_process = collections.defaultdict(list)
         return
 
-    def __construct_species_nodes(self, path):
-        # open table file and construct species tree
-        f = open(path, 'r')
-        f.readline()
-        for line in f:
-            splited = line.strip().split('\t')
-            parent = splited[2]
-            if (parent == 'None'):
-                parent = -1
-            d2p = splited[3]
-            if (d2p == 'None'):
-                d2p = -1.0
-            self.nodes.append(TreeNode(node_id=int(splited[0]),
-                                       parent=int(parent),
-                                       distance_to_parent=float(d2p)))
-        
-        # find children
-        children = [[] for _ in range(len(self.nodes))]
-        for node in self.nodes:
-            if (node.parent < 0): continue
-            children[node.parent].append(node.node_id)
-        for node in self.nodes:
-            node.children = sorted(children[node.node_id])
-
+    def __construct_species_nodes(self, newick_path):
+        output_path = 'data/species_nodes_table.txt'
+        self.skbio_tree = super().newick_to_table(input_path=newick_path, output_path=output_path)
+        super().construct_nodes(output_path, process_tree=True)
         return
 
     def __star_sorted(self, couple):
@@ -94,8 +208,8 @@ class SpeciesTree(GenericTree):
         return [str(e) + '*' for e in splited]
 
     def __coalescent_recurse(self,
-                       node_id,
-                       distance):
+                             node_id,
+                             distance):
         if (len(self.set[node_id]) <= 1):
             return
         else:
@@ -162,10 +276,8 @@ class SpeciesTree(GenericTree):
             new_leaves = []
             labelled = [False for _ in range(len(self.nodes))]
 
+        print('\ncoalescent_process:')
         pprint.pprint(self.coalescent_process)
-        f = open('output/out_cp.txt', 'w')
-        f.write(str(self.coalescent_process))
-        f.close()
         return
 
 
@@ -181,10 +293,9 @@ class GeneTree(GenericTree):
         self.time_sequence = {}
         for leaf in self.leaves:
             self.time_sequence[str(leaf)] = self.__reverse_time_sequence(target_star=str(leaf)+'*')
+
+        print('\ntime_sequence:')
         pprint.pprint(self.time_sequence)
-        f = open('output/out_ts.txt', 'w')
-        f.write(str(self.time_sequence))
-        f.close()
 
         self.__construct_gene_nodes()
         return
@@ -231,7 +342,7 @@ class GeneTree(GenericTree):
         diff = set(a).difference(set(b))
         return ''.join([e + '*' for e in sorted(list(diff))])
 
-    def __get_distance(self, node_name, parent_name):
+    def __distance(self, node_name, parent_name):
         for leaf, sequence in self.time_sequence.items():
             if (len(node_name) == 2 and node_name[0] == leaf):
                 for pair in sequence:
@@ -245,20 +356,20 @@ class GeneTree(GenericTree):
                     prev_pair = pair
         return None
 
-    def __construct_gene_nodes_recurse(self, skbio_tree_node):
+    def __construct_skbio_tree_recurse(self, skbio_tree_node):
         # one node (leaf)
         if (len(skbio_tree_node.name) == 2):
-            skbio_tree_node.length = self.__get_distance(skbio_tree_node.name, skbio_tree_node.parent.name)
+            skbio_tree_node.length = self.__distance(skbio_tree_node.name, skbio_tree_node.parent.name)
             return
         # two nodes
         elif (len(skbio_tree_node.name) == 4):
             child_one_name = skbio_tree_node.name[:2]
             child_two_name = skbio_tree_node.name[2:]
             child_one = skbio.tree.TreeNode(name=child_one_name, 
-                                            length=self.__get_distance(child_one_name, skbio_tree_node.name), 
+                                            length=self.__distance(child_one_name, skbio_tree_node.name), 
                                             parent=skbio_tree_node)
             child_two = skbio.tree.TreeNode(name=child_two_name, 
-                                            length=self.__get_distance(child_two_name, skbio_tree_node.name),
+                                            length=self.__distance(child_two_name, skbio_tree_node.name),
                                             parent=skbio_tree_node)
             skbio_tree_node.children = [child_one, child_two]
             return
@@ -270,13 +381,13 @@ class GeneTree(GenericTree):
                     child_one_name = prev_pair[0]
                     child_two_name = self.__star_replace(skbio_tree_node.name, prev_pair[0])
                     child_one = skbio.tree.TreeNode(name=child_one_name, 
-                                                    length=self.__get_distance(child_one_name, skbio_tree_node.name), 
+                                                    length=self.__distance(child_one_name, skbio_tree_node.name), 
                                                     parent=skbio_tree_node)
                     child_two = skbio.tree.TreeNode(name=child_two_name, 
-                                                    length=self.__get_distance(child_two_name, skbio_tree_node.name),
+                                                    length=self.__distance(child_two_name, skbio_tree_node.name),
                                                     parent=skbio_tree_node)
-                    self.__construct_gene_nodes_recurse(child_one)
-                    self.__construct_gene_nodes_recurse(child_two)
+                    self.__construct_skbio_tree_recurse(child_one)
+                    self.__construct_skbio_tree_recurse(child_two)
                     skbio_tree_node.children = [child_one, child_two]
                     is_found = True
                     break
@@ -286,79 +397,13 @@ class GeneTree(GenericTree):
         return
 
     def __construct_gene_nodes(self):
+        # construct skbio tree from time sequence
         tree = skbio.tree.TreeNode()
         tree.name = self.time_sequence['0'][-1][0]
-        self.__construct_gene_nodes_recurse(tree)
+        self.__construct_skbio_tree_recurse(tree)
         tree.length = None
-        print(tree)
-        print(tree.ascii_art())
-        f = open('output/out_tree.txt', 'w')
-        f.write(str(tree.ascii_art()))
-        f.close()
-        newick_to_table('data/gene_nodes_table.txt', skbio_tree=tree)
-        
+        self.skbio_tree = tree
+        super().newick_to_table(skbio_tree=tree, output_path='data/gene_nodes_table.txt')
+        super().construct_nodes('data/gene_nodes_table.txt')
+
         return
-
-
-def newick_to_table(output_path, 
-                    input_path=None, 
-                    skbio_tree=None):
-    tree = None
-    if (skbio_tree):
-        tree = skbio_tree
-    else:
-        f = open(input_path)
-        tree = skbio.read(f, format="newick", into=skbio.tree.TreeNode)
-        f.close()
-
-    def _parse(tree):
-        node = {
-            'object': tree,
-            'name': tree.name,
-            'parent': tree.parent,
-            'children': [],
-            'distance': tree.length
-        }
-        if tree.is_tip():
-            return node
-        for children in tree.children:
-            node['children'].append(_parse(children))
-        return node
-
-    def _rename(node):
-        ret = node.copy()
-        name = ''
-        for i in range(len(ret['children'])):
-            ret['children'][i] = _rename(ret['children'][i])
-            name += ret['children'][i]['name']
-        if (not ret['name']):
-            ret['name'] = name
-        return ret
-
-    def _to_list(node, root):
-        d = node.copy()
-        ret = []
-        for i in range(len(d['children'])):
-            ret += _to_list(d['children'][i], root=root)
-        del d['children']
-        d['distance_to_root'] = d['object'].distance(root)
-        ret.append(d)
-        if (d['object'] is root):
-            ret = sorted(ret, key=lambda x: x['distance_to_root'], reverse=True)
-        return ret
-
-    def _output_to_file(path, nodes):
-        f = open(path, 'w')
-        f.write('id\tname\tparent\td2p\n')
-        for i in range(len(nodes)):
-            parent_index = 'None'
-            for j in range(len(nodes)):
-                if (nodes[i]['parent'] is nodes[j]['object']):
-                    parent_index = str(j)
-            f.write(str(i) + '\t' + nodes[i]['name'] + '\t' + parent_index + '\t' + str(nodes[i]['distance']) + '\n')
-        f.close()
-
-    root = _parse(tree)
-    root = _rename(root)
-    nodes = _to_list(root, root=root['object'])
-    _output_to_file(output_path, nodes)
