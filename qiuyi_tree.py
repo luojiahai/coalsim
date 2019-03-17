@@ -39,7 +39,7 @@ class GenericTree(object):
     def __init__(self):
         self.skbio_tree = None
         self.nodes = []
-        self.nodes_dict = {}
+        self.nodes_name_dict = {}
         self.root = None
         self.leaves = []
         return
@@ -125,7 +125,7 @@ class GenericTree(object):
             return tree.name
 
     def construct_nodes(self, path, process_tree=False):
-        # open table file and construct species tree
+        # open table file and construct tree nodes
         f = open(path, 'r')
         f.readline()
         for line in f:
@@ -149,13 +149,13 @@ class GenericTree(object):
 
         # create dict
         for node in self.nodes:
-            self.nodes_dict[node.name] = node
+            self.nodes_name_dict[node.name] = node
 
         # find children
         for node in self.nodes:
             children, node.distance_to_children = self.children_distances(self.skbio_tree, node.name)
             for child in children:
-                node_id = self.nodes_dict[child.name].node_id
+                node_id = self.nodes_name_dict[child.name].node_id
                 node.children.append(node_id)
 
         return
@@ -175,30 +175,6 @@ class GenericTree(object):
 
     def children_distances(self, tree, name):
         return self.__children_distances_recurse(tree, name)
-        
-
-class SpeciesTree(GenericTree):
-    def __init__(self,
-                 newick_path,
-                 lambda0):
-        GenericTree.__init__(self)
-        self.__construct_species_nodes(newick_path)
-        for node in self.nodes:
-            if (node.parent < 0):
-                self.root = node
-        self.leaves = [node.node_id for node in self.nodes if not node.children]
-        for node in self.nodes:
-            if (node.parent < 0):
-                self.root = node
-        self.lambda0 = lambda0
-        self.coalescent_process = collections.defaultdict(list)
-        return
-
-    def __construct_species_nodes(self, newick_path):
-        output_path = 'data/species_nodes_table.txt'
-        self.skbio_tree = super().newick_to_table(input_path=newick_path, output_path=output_path)
-        super().construct_nodes(output_path, process_tree=True)
-        return
 
     def __star_sorted(self, couple):
         string = ''
@@ -211,11 +187,13 @@ class SpeciesTree(GenericTree):
     def __coalescent_recurse(self,
                              node_id,
                              distance,
-                             clade_set):
+                             clade_set,
+                             lambda0,
+                             coalescent_process):
         if (len(clade_set[node_id]) <= 1):
             return
         else:
-            lambda_c = len(clade_set[node_id]) * self.lambda0
+            lambda_c = len(clade_set[node_id]) * lambda0
             distance_fake = np.random.exponential(scale=1.0/lambda_c)
             if (distance < distance_fake):
                 return
@@ -230,7 +208,7 @@ class SpeciesTree(GenericTree):
                     print("coalescent at node " + str(node_id) + ": " + str(clade_set[node_id]) + ", " + "distance = " + str(distance_fake))
 
                     # save process
-                    self.coalescent_process[str(node_id)].append({
+                    coalescent_process[str(node_id)].append({
                         'from_set': temp_set, 
                         'to_set': clade_set[node_id].copy(),
                         'distance': distance_fake
@@ -238,25 +216,34 @@ class SpeciesTree(GenericTree):
                 else:
                     return
                 distance = distance - distance_fake
-                self.__coalescent_recurse(node_id=node_id, distance=distance, clade_set=clade_set)
+                self.__coalescent_recurse(node_id=node_id, 
+                                          distance=distance, 
+                                          clade_set=clade_set, 
+                                          lambda0=lambda0,
+                                          coalescent_process=coalescent_process)
         return
 
-    def coalescent(self, nodes, root):
+    def coalescent(self, nodes, root, distance_at_root, lambda0):
+        coalescent_process = collections.defaultdict(list)
+
         old_leaves = [node.node_id for node in nodes if not node.children]
         new_leaves = []
-        clade_set = [[str(node.node_id) + '*'] if not node.children else [] for node in nodes]
+        clade_set = {}
         labelled = {}
         nodes_id_dict = {}
         for node in nodes:
             labelled[node.node_id] = False
             nodes_id_dict[node.node_id] = node
+            clade_set[node.node_id] = [str(node.node_id) + '*'] if not node.children else []
 
         while (True):
             for leaf in old_leaves:
                 if (leaf == root.node_id):
                     self.__coalescent_recurse(node_id=root.node_id, 
-                                              distance=10000, 
-                                              clade_set=clade_set)
+                                              distance=distance_at_root, 
+                                              clade_set=clade_set,
+                                              lambda0=lambda0,
+                                              coalescent_process=coalescent_process)
                     break
                 else:
                     parent = nodes_id_dict[leaf].parent
@@ -268,10 +255,14 @@ class SpeciesTree(GenericTree):
                         and len(clade_set[children[1]]) != 0):
                         self.__coalescent_recurse(node_id=children[0], 
                                                   distance=nodes_id_dict[children[0]].distance_to_parent,
-                                                  clade_set=clade_set)
+                                                  clade_set=clade_set,
+                                                  lambda0=lambda0,
+                                                  coalescent_process=coalescent_process)
                         self.__coalescent_recurse(node_id=children[1], 
                                                   distance=nodes_id_dict[children[1]].distance_to_parent,
-                                                  clade_set=clade_set)
+                                                  clade_set=clade_set,
+                                                  lambda0=lambda0,
+                                                  coalescent_process=coalescent_process)
                         clade_set[parent] = list(set().union(clade_set[children[0]], clade_set[children[1]]))
                         if (len(new_leaves) > 0):
                             new_leaves = [e for e in new_leaves if e != children[0] and e != children[1]]
@@ -291,44 +282,45 @@ class SpeciesTree(GenericTree):
                 labelled[node.node_id] = False
 
         print('\ncoalescent_process:')
-        pprint.pprint(self.coalescent_process)
+        pprint.pprint(coalescent_process)
+        return coalescent_process
+        
+
+class SpeciesTree(GenericTree):
+    def __init__(self,
+                 newick_path=None,
+                 nodes=None,
+                 root=None):
+        GenericTree.__init__(self)
+        if (not newick_path):
+            self.nodes = nodes
+            self.root = root
+        else:
+            self.__construct_species_nodes(newick_path)
+
+        self.nodes_id_dict = {}
+        for node in self.nodes:
+            self.nodes_id_dict[node.node_id] = node
+        self.leaves = [node.node_id for node in self.nodes if not node.children]
+        self.total_distance = self.__distance_to_root_recurse(node_id=self.leaves[0])
         return
 
-
-class GeneTree(GenericTree):
-    def __init__(self,
-                 species_tree,
-                 lambda_dup,
-                 lambda_loss):
-        GenericTree.__init__(self)
-        self.leaves = species_tree.leaves
-        
-        self.species_nodes = species_tree.nodes
-        self.coalescent_process = species_tree.coalescent_process
-        self.total_distance = self.__distance_to_root_recurse(node_id=0)
-        self.time_sequence = {}
-        for leaf in self.leaves:
-            self.time_sequence[str(leaf)] = self.__reverse_time_sequence(target_star=str(leaf)+'*')
-
-        print('\ntime_sequence:')
-        pprint.pprint(self.time_sequence)
-
-        self.__construct_gene_nodes()
+    def __construct_species_nodes(self, newick_path):
+        output_path = 'data/species_nodes_table.txt'
+        self.skbio_tree = super().newick_to_table(input_path=newick_path, output_path=output_path)
+        super().construct_nodes(output_path, process_tree=True)
         for node in self.nodes:
             if (node.parent < 0):
                 self.root = node
-        
-        self.lambda_dup = lambda_dup
-        self.lambda_loss = lambda_loss
-
         return
 
     def __distance_to_root_recurse(self, node_id):
-        if (self.species_nodes[node_id].parent < 0):
+        if (self.nodes_id_dict[node_id].parent < 0 or 
+            node_id == self.root.node_id):
             return 0
         else:
-            d2p = self.species_nodes[node_id].distance_to_parent
-            parent = self.species_nodes[node_id].parent
+            d2p = self.nodes_id_dict[node_id].distance_to_parent
+            parent = self.nodes_id_dict[node_id].parent
             return d2p + self.__distance_to_root_recurse(parent)
         
     def __walking_distance(self, node_id, branch_distance):
@@ -342,9 +334,9 @@ class GeneTree(GenericTree):
         else:
             return False
     
-    def __reverse_time_sequence(self, target_star):
+    def __reverse_time_order(self, target_star, coalescent_process):
         sequence = []
-        for k, v in self.coalescent_process.items():
+        for k, v in coalescent_process.items():
             branch_distance = 0.0
             for elem in v:
                 branch_distance += elem['distance']
@@ -356,8 +348,28 @@ class GeneTree(GenericTree):
                             # pair = (couple, walking_distance)
                             pair = (e, walking_distance)
                             sequence.append(pair)
-                            sequence += self.__reverse_time_sequence(target_star=e)
+                            sequence += self.__reverse_time_order(target_star=e, 
+                                                                  coalescent_process=coalescent_process)
         return sequence
+
+    def time_sequences(self, coalescent_process):
+        time_sequences = {}
+        for leaf in self.leaves:
+            time_sequences[str(leaf)] = self.__reverse_time_order(target_star=str(leaf)+'*', 
+                                                                  coalescent_process=coalescent_process)
+        return time_sequences
+
+
+class GeneTree(GenericTree):
+    def __init__(self,
+                 time_sequences):
+        GenericTree.__init__(self)
+        self.time_sequences = time_sequences
+        self.__construct_gene_nodes()
+        for node in self.nodes:
+            if (node.parent < 0):
+                self.root = node
+        return
 
     def __star_replace(self, string, substring):
         a = string.split('*')[:-1]
@@ -366,7 +378,7 @@ class GeneTree(GenericTree):
         return ''.join([e + '*' for e in sorted(list(diff))])
 
     def __distance(self, node_name, parent_name):
-        for leaf, sequence in self.time_sequence.items():
+        for leaf, sequence in self.time_sequences.items():
             if (len(node_name) == 2 and node_name[0] == leaf):
                 for pair in sequence:
                     if (pair[0] == parent_name):
@@ -397,7 +409,7 @@ class GeneTree(GenericTree):
             skbio_tree_node.children = [child_one, child_two]
             return
         is_found = False
-        for leaf, sequence in self.time_sequence.items():
+        for leaf, sequence in self.time_sequences.items():
             prev_pair = None
             for pair in sequence:
                 if (prev_pair != None and skbio_tree_node.name == pair[0]):
@@ -422,22 +434,21 @@ class GeneTree(GenericTree):
     def __construct_gene_nodes(self):
         # construct skbio tree from time sequence
         tree = skbio.tree.TreeNode()
-        tree.name = self.time_sequence['0'][-1][0]
+        tree.name = self.time_sequences['0'][-1][0]
         self.__construct_skbio_tree_recurse(tree)
         tree.length = None
         self.skbio_tree = tree
         super().newick_to_table(skbio_tree=tree, output_path='data/gene_nodes_table.txt')
         super().construct_nodes('data/gene_nodes_table.txt')
-
         return
 
-    def __dl_process_recurse(self, tree, distance):
-        node = self.nodes_dict[tree.name]
-        distance_dup = np.random.exponential(scale=1.0/self.lambda_dup)
-        distance_loss = np.random.exponential(scale=1.0/self.lambda_loss)
+    def __dl_process_recurse(self, tree, distance, lambda_dup, lambda_loss):
+        node = self.nodes_name_dict[tree.name]
+        distance_dup = np.random.exponential(scale=1.0/lambda_dup)
+        distance_loss = np.random.exponential(scale=1.0/lambda_loss)
         if (distance_dup < distance_loss and distance_dup < distance):
             print('duplication at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_dup))
-            self.__dl_process_recurse(tree, distance - distance_dup)
+            self.__dl_process_recurse(tree, distance - distance_dup, lambda_dup, lambda_loss)
         elif (distance_loss <= distance_dup and distance_loss < distance):
             print('loss at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance_loss))
         else:
@@ -447,11 +458,13 @@ class GeneTree(GenericTree):
                 child_two = tree.children[1]
                 distance_to_child_one = node.distance_to_children[0]
                 distance_to_child_two = node.distance_to_children[1]
-                self.__dl_process_recurse(child_one, distance_to_child_one)
-                self.__dl_process_recurse(child_two, distance_to_child_two)
+                self.__dl_process_recurse(child_one, distance_to_child_one, lambda_dup, lambda_loss)
+                self.__dl_process_recurse(child_two, distance_to_child_two, lambda_dup, lambda_loss)
             else:
                 print('reach the end of node ' + str(node.node_id) + ' (' + node.name + ')')
+        return
 
-    def dl_process(self):
-        self.__dl_process_recurse(self.skbio_tree, distance=0)
+    def dl_process(self, lambda_dup, lambda_loss):
+        self.__dl_process_recurse(self.skbio_tree, distance=0, lambda_dup=lambda_dup, lambda_loss=lambda_loss)
+        return
         
