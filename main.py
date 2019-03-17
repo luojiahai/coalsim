@@ -9,7 +9,7 @@ def main():
     print('\nspecies_nodes:')
     qstree.print_nodes()
     print('\ncoalescent:')
-    qstree.coalescent()
+    qstree.coalescent(qstree.nodes, qstree.root)
 
     qgtree = qiuyi_tree.GeneTree(species_tree=qstree,
                                  lambda_dup=1,

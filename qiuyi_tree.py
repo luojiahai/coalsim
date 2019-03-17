@@ -187,6 +187,9 @@ class SpeciesTree(GenericTree):
             if (node.parent < 0):
                 self.root = node
         self.leaves = [node.node_id for node in self.nodes if not node.children]
+        for node in self.nodes:
+            if (node.parent < 0):
+                self.root = node
         self.lambda0 = lambda0
         self.coalescent_process = collections.defaultdict(list)
         return
@@ -238,31 +241,36 @@ class SpeciesTree(GenericTree):
                 self.__coalescent_recurse(node_id=node_id, distance=distance, clade_set=clade_set)
         return
 
-    def coalescent(self):
-        old_leaves = self.leaves.copy()
+    def coalescent(self, nodes, root):
+        old_leaves = [node.node_id for node in nodes if not node.children]
         new_leaves = []
-        labelled = [False for _ in range(len(self.nodes))]
-        clade_set = [[str(node.node_id) + '*'] if not node.children else [] for node in self.nodes]
+        clade_set = [[str(node.node_id) + '*'] if not node.children else [] for node in nodes]
+        labelled = {}
+        nodes_id_dict = {}
+        for node in nodes:
+            labelled[node.node_id] = False
+            nodes_id_dict[node.node_id] = node
+
         while (True):
             for leaf in old_leaves:
-                if (leaf == self.root.node_id):
-                    self.__coalescent_recurse(node_id=self.root.node_id, 
+                if (leaf == root.node_id):
+                    self.__coalescent_recurse(node_id=root.node_id, 
                                               distance=10000, 
                                               clade_set=clade_set)
                     break
                 else:
-                    parent = self.nodes[leaf].parent
-                    children = self.nodes[parent].children
+                    parent = nodes_id_dict[leaf].parent
+                    children = nodes_id_dict[parent].children
                     if (labelled[leaf]):
                         continue
                     labelled[leaf] = True
                     if (len(clade_set[children[0]]) != 0 
                         and len(clade_set[children[1]]) != 0):
                         self.__coalescent_recurse(node_id=children[0], 
-                                                  distance=self.nodes[children[0]].distance_to_parent,
+                                                  distance=nodes_id_dict[children[0]].distance_to_parent,
                                                   clade_set=clade_set)
                         self.__coalescent_recurse(node_id=children[1], 
-                                                  distance=self.nodes[children[1]].distance_to_parent,
+                                                  distance=nodes_id_dict[children[1]].distance_to_parent,
                                                   clade_set=clade_set)
                         clade_set[parent] = list(set().union(clade_set[children[0]], clade_set[children[1]]))
                         if (len(new_leaves) > 0):
@@ -270,7 +278,7 @@ class SpeciesTree(GenericTree):
                         new_leaves.append(parent)
                     else:
                         new_leaves.append(leaf)
-            if (leaf == self.root.node_id):
+            if (leaf == root.node_id):
                 break
             temp_new_leaves = []
             for new_leaf in new_leaves:
@@ -278,7 +286,9 @@ class SpeciesTree(GenericTree):
                     temp_new_leaves.append(new_leaf)
             old_leaves = temp_new_leaves.copy()
             new_leaves = []
-            labelled = [False for _ in range(len(self.nodes))]
+            labelled = {}
+            for node in nodes:
+                labelled[node.node_id] = False
 
         print('\ncoalescent_process:')
         pprint.pprint(self.coalescent_process)
