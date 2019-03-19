@@ -1,6 +1,4 @@
-# to do list: change the name gene_tree to coalescent_tree
-#             save the trivial subtree in dup_loss_process_trivial
-
+# to do list: save the trivial subtree in dup_loss_process_trivial
 from io import StringIO
 import skbio
 import skbio.tree
