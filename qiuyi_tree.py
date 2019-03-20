@@ -57,6 +57,8 @@ class GenericTree(object):
         tree = None
         if (skbio_tree):
             tree = skbio_tree
+        # add trivial case like 1*:1
+
         else:
             f = open(input_path)
             tree = skbio.read(f, format="newick", into=skbio.tree.TreeNode)
@@ -99,6 +101,7 @@ class GenericTree(object):
             return ret
 
         root = _parse(tree)
+        print('----------------',root)
         root = _rename(root)
         nodes = _to_list(root, root=root['object'])
 
@@ -506,7 +509,7 @@ class GeneTree(GenericTree):
     def create_skbio_tree_recurse(self, skbio_tree_node):
         # one node (leaf)
         if (len(skbio_tree_node.name) == 2):
-            skbio_tree_node.length = self.distance_from_to(skbio_tree_node.name, skbio_tree_node.parent.name)
+            skbio_tree_node.length = 1
             return
         # two nodes
         elif (len(skbio_tree_node.name) == 4):
@@ -546,11 +549,16 @@ class GeneTree(GenericTree):
     # construct ghe gene tree in newick format from time sequence
     def construct_gene_nodes(self):
         tree = skbio.tree.TreeNode()
-        tree.name = next(iter(self.time_sequences.values()))[-1][0]
+        if (next(iter(self.time_sequences.values()))):
+            tree.name = next(iter(self.time_sequences.values()))[-1][0]
+        else: 
+            tree.name = next(iter(self.time_sequences)) + '*' # empty
         self.create_skbio_tree_recurse(tree)
         tree.length = None
         self.skbio_tree = tree
+
         super().newick_to_table(skbio_tree=tree, output_path='output/gene_nodes_table.txt')
+
         super().construct_nodes('output/gene_nodes_table.txt', process_tree=False)
         return
 
@@ -622,34 +630,35 @@ class GeneTree(GenericTree):
         subtree_names = [node.name for node in subtree.traverse()]
         subtree_nodes = [node for node in self.species_tree.nodes if node.name in subtree_names]
 
-        if (node_id in self.species_tree.leaves):       # trivial cases
-            print('\nspecies_subtree_nodes:')
-            print('leaf_id:', node_id, ', name:', name)
+        # if (node_id in self.species_tree.leaves):       # trivial cases
+        #     print('\nspecies_subtree_nodes:')
+        #     print('leaf_id:', node_id, ', name:', name)
 
-            print('\nspecies_subtree_coal:')
-            species_subtree_coal_process = {str(node_id): [{'distance': event['distance'],
-                                                       'from_set': [str(node_id) + '*'],
-                                                       'to_set': [str(node_id) + '*']}]}
-            print('\nspecies_subtree_coal_process:')
-            print('Trivial Coalescence at leaves.')
+        #     print('\nspecies_subtree_coal:')
+        #     species_subtree_coal_process = {str(node_id): [{'distance': event['distance'],
+        #                                                'from_set': [str(node_id) + '*'],
+        #                                                'to_set': [str(node_id) + '*']}]}
+        #     print('\nspecies_subtree_coal_process:')
+        #     print('Trivial Coalescence at leaves.')
             
-            print('\nspecies_subtree_time_seq:')
-            print('Trivial Coalescence at leaves.')
+        #     print('\nspecies_subtree_time_seq:')
+        #     print('Trivial Coalescence at leaves.')
 
-            # save subtree
-            # species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
+        #     # save subtree
+        #     # species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
             
-            print('\ngene_subtree nodes:')
-            print('Trivial Coalescence at leaves.')
+        #     print('\ngene_subtree nodes:')
+        #     print('Trivial Coalescence at leaves.')
 
-            print('\ngene_subtree dup_loss_process:')
-            gene_subtree_dup_events = self.dup_loss_process_trivial(leaf_id=event['node_id'], leaf_name=event['name'], distance=event['distance'], lambda_dup=0.2, lambda_loss=0.05)
-            print('\ngene_subtree dup_events:')
-            print(gene_subtree_dup_events)
+        #     print('\ngene_subtree dup_loss_process:')
+        #     gene_subtree_dup_events = self.dup_loss_process_trivial(leaf_id=event['node_id'], leaf_name=event['name'], distance=event['distance'], lambda_dup=0.2, lambda_loss=0.05)
+        #     print('\ngene_subtree dup_events:')
+        #     print(gene_subtree_dup_events)
 
-            self.duplication_subtree(coalescent_process=None, dup_events=gene_subtree_dup_events)
+        #     self.duplication_subtree(coalescent_process=None, dup_events=gene_subtree_dup_events)
             
-        else:       # non-trivial cases
+        # else:       # non-trivial cases
+        if (True):
             species_subtree = SpeciesTree(nodes=subtree_nodes)
             species_subtree.skbio_tree = subtree
             print('\nspecies_subtree_nodes:')
