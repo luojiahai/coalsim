@@ -41,9 +41,11 @@ class GenericTree(object):
     def __init__(self):
         self.skbio_tree = None
         self.nodes = []
-        self.nodes_name_dict = {}
         self.root = None
         self.leaves = []
+        self.nodes_id_dict = {}
+        self.nodes_name_dict = {}
+        self.total_distance = -1
         return
 
     def save_to_file(self, path):
@@ -177,6 +179,29 @@ class GenericTree(object):
 
     def children_distances(self, tree, name):
         return self.children_distances_recurse(tree, name)
+
+    def node_by_id(self, node_id):
+        return self.nodes_id_dict[node_id]
+
+    def node_by_name(self, name):
+        return self.nodes_name_dict[name]
+    
+    # find the distance of a given node to the root
+    # needed when finding the walking distance
+    def distance_to_root_recurse(self, node_id):        
+        if (self.nodes_id_dict[node_id].parent < 0 or 
+            node_id == self.root.node_id):
+            return 0
+        else:
+            d2p = self.nodes_id_dict[node_id].distance_to_parent
+            parent = self.nodes_id_dict[node_id].parent
+            return d2p + self.distance_to_root_recurse(parent)
+
+    # given a coalescent event happening at "branch_distance" above a speices node with "node_id"
+    # find the distance of this event to the bottom of the tree
+    # needed when assigning ids to the coalescent tree
+    def walking_distance(self, node_id, branch_distance):
+        return branch_distance + (self.total_distance - self.distance_to_root_recurse(node_id))
         
 
 class SpeciesTree(GenericTree):
@@ -194,10 +219,8 @@ class SpeciesTree(GenericTree):
             if (node.node_id > max_node_id):
                 max_node_id = node.node_id
                 self.root = node
-                
-        self.nodes_id_dict = {}
-        for node in self.nodes:
             self.nodes_id_dict[node.node_id] = node
+            self.nodes_name_dict[node.name] = node
         
         self.leaves = [node.node_id for node in self.nodes if not node.children]
         self.total_distance = self.distance_to_root_recurse(node_id=self.leaves[0])
@@ -267,10 +290,8 @@ class SpeciesTree(GenericTree):
         new_leaves = []     # leaves set will be updated in the loop
         clade_set = {}      # set of extant species that an ancestral gene will finally be fixed in
         labelled = {}       # avoid doing repeated coalescence
-        nodes_id_dict = {}
         for node in nodes:
             labelled[node.node_id] = False
-            nodes_id_dict[node.node_id] = node
             clade_set[node.node_id] = [str(node.node_id) + '*'] if not node.children else []
 
         while (True):
@@ -284,20 +305,20 @@ class SpeciesTree(GenericTree):
                                             coalescent_process=coalescent_process)
                     break
                 else:
-                    parent = nodes_id_dict[leaf].parent
-                    children = nodes_id_dict[parent].children
+                    parent = self.nodes_id_dict[leaf].parent
+                    children = self.nodes_id_dict[parent].children
                     if (labelled[leaf]):
                         continue
                     labelled[leaf] = True
                     if (len(clade_set[children[0]]) != 0 
                         and len(clade_set[children[1]]) != 0):
                         self.coalescent_recurse(node_id=children[0], 
-                                                distance=nodes_id_dict[children[0]].distance_to_parent,
+                                                distance=self.nodes_id_dict[children[0]].distance_to_parent,
                                                 clade_set=clade_set,
                                                 lambda0=lambda0,
                                                 coalescent_process=coalescent_process)
                         self.coalescent_recurse(node_id=children[1], 
-                                                distance=nodes_id_dict[children[1]].distance_to_parent,
+                                                distance=self.nodes_id_dict[children[1]].distance_to_parent,
                                                 clade_set=clade_set,
                                                 lambda0=lambda0,
                                                 coalescent_process=coalescent_process)
@@ -334,13 +355,11 @@ class SpeciesTree(GenericTree):
         new_leaves = []
         clade_set = {}
         labelled = {}
-        nodes_id_dict = {}
         mark = {} 
 
         for node in nodes:
             mark[node.node_id] = True
             labelled[node.node_id] = False
-            nodes_id_dict[node.node_id] = node
             clade_set[node.node_id] = [str(node.node_id) + '*'] if not node.children else [] 
         for leaf in old_leaves: mark[leaf] = False
         for leaf in sub_leaves: mark[leaf] = True       # mark the leaves of the sub_species_tree but not in the sub_leaves set as FALSE
@@ -356,8 +375,8 @@ class SpeciesTree(GenericTree):
                     if len(clade_set[root.node_id]) == 1: break
                     else: return self.sub_coalescent(distance_above_root, lambda0, sub_leaves)
                 else:
-                    parent = nodes_id_dict[leaf].parent
-                    children = nodes_id_dict[parent].children
+                    parent = self.nodes_id_dict[leaf].parent
+                    children = self.nodes_id_dict[parent].children
                     if (labelled[leaf]):
                         continue
                     labelled[leaf] = True
@@ -365,12 +384,12 @@ class SpeciesTree(GenericTree):
                         and len(clade_set[children[1]]) != 0):
                             if (mark[children[0]] and mark[children[1]]):       # when both children are marked, do normal coalescence
                                 self.coalescent_recurse(node_id=children[0], 
-                                                        distance=nodes_id_dict[children[0]].distance_to_parent,
+                                                        distance=self.nodes_id_dict[children[0]].distance_to_parent,
                                                         clade_set=clade_set,
                                                         lambda0=lambda0,
                                                         coalescent_process=coalescent_process)
                                 self.coalescent_recurse(node_id=children[1], 
-                                                        distance=nodes_id_dict[children[1]].distance_to_parent,
+                                                        distance=self.nodes_id_dict[children[1]].distance_to_parent,
                                                         clade_set=clade_set,
                                                         lambda0=lambda0,
                                                         coalescent_process=coalescent_process)
@@ -415,23 +434,6 @@ class SpeciesTree(GenericTree):
         # find genes comming into the root,
         # randomly choose one gene,
         # find the subtree rooted at the chosen gene.
-    
-    # find the distance of a given node to the root
-    # needed when finding the walking distance
-    def distance_to_root_recurse(self, node_id):        
-        if (self.nodes_id_dict[node_id].parent < 0 or 
-            node_id == self.root.node_id):
-            return 0
-        else:
-            d2p = self.nodes_id_dict[node_id].distance_to_parent
-            parent = self.nodes_id_dict[node_id].parent
-            return d2p + self.distance_to_root_recurse(parent)
-
-    # given a coalescent event happening at "branch_distance" above a speices node with "node_id"
-    # find the distance of this event to the bottom of the tree
-    # needed when assigning ids to the coalescent tree
-    def walking_distance(self, node_id, branch_distance):
-        return branch_distance + (self.total_distance - self.distance_to_root_recurse(node_id))
 
     # checking whether a given clade is in the target set
     # modified for the "*" representation
@@ -455,8 +457,8 @@ class SpeciesTree(GenericTree):
                         if self.star_in_set(target_star, e):
                             couple = e.replace(target_star, '')
                             Snode_id = int(k)
-                            Snode_height = self.walking_distance(int(k), branch_distance=0)
-                            walking_distance = self.walking_distance(int(k), branch_distance=branch_distance)
+                            Snode_height = super().walking_distance(int(k), branch_distance=0)
+                            walking_distance = super().walking_distance(int(k), branch_distance=branch_distance)
                             # pair = (couple, walking_distance)
                             pair = (e, walking_distance, Snode_id, Snode_height)
                             sequence.append(pair)
@@ -487,8 +489,12 @@ class GeneTree(GenericTree):
             if (node.node_id > max_node_id):
                 max_node_id = node.node_id
                 self.root = node
+            self.nodes_id_dict[node.node_id] = node
+            self.nodes_name_dict[node.name] = node
         
         self.species_tree = species_tree
+        self.leaves = [node.node_id for node in self.nodes if not node.children]
+        self.total_distance = self.distance_to_root_recurse(node_id=self.leaves[0])
         return
 
     # string replacement modified for the "*" representation
@@ -501,7 +507,7 @@ class GeneTree(GenericTree):
 
     def distance_from_to(self, node_name, parent_name):
         for leaf, sequence in self.time_sequences.items():
-            if (len(node_name) == 2 and node_name[0] == leaf):
+            if (node_name.count('*') == 1 and node_name[0] == leaf):
                 for pair in sequence:
                     if (pair[0] == parent_name):
                         return pair[1]
@@ -515,7 +521,7 @@ class GeneTree(GenericTree):
 
     def create_skbio_tree_recurse(self, skbio_tree_node):
         # one node (leaf)
-        if (len(skbio_tree_node.name) == 2):
+        if (skbio_tree_node.name.count('*') == 1):
             skbio_tree_node.length = 1
             return
         # two nodes
@@ -556,8 +562,11 @@ class GeneTree(GenericTree):
     # construct ghe gene tree in newick format from time sequence
     def construct_gene_nodes(self):
         tree = skbio.tree.TreeNode() # empty tree, initialization
-        if (next(iter(self.time_sequences.values()))):
-            tree.name = next(iter(self.time_sequences.values()))[-1][0]
+        time_seq = self.time_sequences.copy()
+        for k, v in self.time_sequences.items():
+            if (not v): del time_seq[k]
+        if (len(time_seq) > 0 and next(iter(time_seq.values()))):
+            tree.name = next(iter(time_seq.values()))[-1][0]
             self.create_skbio_tree_recurse(tree)
             tree.length = None
             self.skbio_tree = tree
@@ -567,6 +576,11 @@ class GeneTree(GenericTree):
             tree.name = next(iter(self.time_sequences)) + '*' # empty
             tree.length = None
             self.skbio_tree = tree
+
+            self.nodes.append(TreeNode(node_id=0,
+                                       name=tree.name,
+                                       parent=-1,
+                                       distance_to_parent=-1.0))
             # super().newick_to_table(skbio_tree=tree, output_path='output/gene_nodes_table.txt')
             # super().construct_nodes('output/gene_nodes_table.txt', process_tree=False)
         return
@@ -610,11 +624,15 @@ class GeneTree(GenericTree):
         return
     
     # store the duplication events
-    def dup_loss_process(self, lambda_dup, lambda_loss, lambda_trans):
+    def dup_loss_process(self, lambda_dup, lambda_loss, lambda_trans, event=None):
         dup_events = []
         trans_events = []
+        distance = 0
+        # trivial case
+        if (len(self.nodes) == 1):
+            distance = event['distance']
         self.dup_loss_process_recurse(self.skbio_tree, 
-                                      distance=0, 
+                                      distance=distance, 
                                       lambda_dup=lambda_dup, 
                                       lambda_loss=lambda_loss, 
                                       lambda_trans=lambda_trans,
@@ -663,36 +681,36 @@ class GeneTree(GenericTree):
         subtree_names = [node.name for node in subtree.traverse()]
         subtree_nodes = [node for node in self.species_tree.nodes if node.name in subtree_names]
 
-        if (node_id in self.species_tree.leaves):       # trivial cases
-            print('\nspecies_subtree_nodes:')
-            print('leaf_id:', node_id, ', name:', name)
+        # if (node_id in self.species_tree.leaves):       # trivial cases
+        #     print('\nspecies_subtree_nodes:')
+        #     print('leaf_id:', node_id, ', name:', name)
 
-            print('\nspecies_subtree_coal:')
-            species_subtree_coal_process = {str(node_id): [{'distance': event['distance'],
-                                                       'from_set': [str(node_id) + '*'],
-                                                       'to_set': [str(node_id) + '*']}]}
-            print('\nspecies_subtree_coal_process:')
-            print('Trivial Coalescence at leaves.')
+        #     print('\nspecies_subtree_coal:')
+        #     species_subtree_coal_process = {str(node_id): [{'distance': event['distance'],
+        #                                                'from_set': [str(node_id) + '*'],
+        #                                                'to_set': [str(node_id) + '*']}]}
+        #     print('\nspecies_subtree_coal_process:')
+        #     print('Trivial Coalescence at leaves.')
             
-            print('\nspecies_subtree_time_seq:')
-            print('Trivial Coalescence at leaves.')
+        #     print('\nspecies_subtree_time_seq:')
+        #     print('Trivial Coalescence at leaves.')
 
-            # save subtree
-            # species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
+        #     # save subtree
+        #     # species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
             
-            print('\ngene_subtree nodes:')
-            print('Trivial Coalescence at leaves.')
+        #     print('\ngene_subtree nodes:')
+        #     print('Trivial Coalescence at leaves.')
 
-            print('\ngene_subtree dup_loss_process:')
-            gene_subtree_dup_events = self.dup_loss_process_trivial(leaf_id=event['node_id'], leaf_name=event['name'], distance=event['distance'], 
-                                                                    lambda_dup=0.2, lambda_loss=0.05, lambda_trans=0.1)[0]
-            print('\ngene_subtree dup_events:')
-            print(gene_subtree_dup_events)
+        #     print('\ngene_subtree dup_loss_process:')
+        #     gene_subtree_dup_events = self.dup_loss_process_trivial(leaf_id=event['node_id'], leaf_name=event['name'], distance=event['distance'], 
+        #                                                             lambda_dup=0.2, lambda_loss=0.05, lambda_trans=0.1)[0]
+        #     print('\ngene_subtree dup_events:')
+        #     print(gene_subtree_dup_events)
 
-            self.duplication_subtree(coalescent_process=None, dup_events=gene_subtree_dup_events)
+        #     self.duplication_subtree(coalescent_process=None, dup_events=gene_subtree_dup_events)
             
-        else:       # non-trivial cases
-        # if (True):
+        # else:       # non-trivial cases
+        if (True):
             species_subtree = SpeciesTree(nodes=subtree_nodes)
             species_subtree.skbio_tree = subtree
             print('\nspecies_subtree_nodes:')
@@ -718,7 +736,7 @@ class GeneTree(GenericTree):
             gene_subtree.print_nodes()
 
             print('\ngene_subtree dup_loss_process:')
-            gene_subtree_dup_events = gene_subtree.dup_loss_process(lambda_dup=0.2, lambda_loss=0.05, lambda_trans=0.1)[0]
+            gene_subtree_dup_events = gene_subtree.dup_loss_process(event=event, lambda_dup=0.3, lambda_loss=0.0000001, lambda_trans=0.0000001)[0]
             print('\ngene_subtree dup_events:')
             print(gene_subtree_dup_events)
 

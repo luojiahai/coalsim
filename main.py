@@ -3,7 +3,7 @@ import pprint
 
 
 def main():
-    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample1.txt')    # read newick species tree
+    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample2.txt')    # read newick species tree
     print('\nsecies_tree ascii_art:')
     print(qstree.skbio_tree.ascii_art())
     print('\nspecies_nodes:')
@@ -16,14 +16,15 @@ def main():
     time_sequences = qstree.time_sequences(coalescent_process=coalescent_process)       # convert to time sequence structure
     pprint.pprint(time_sequences)
 
+
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
     print('\ngene_tree ascii_art:')
     print(qgtree.skbio_tree.ascii_art())
     print('\ngene_nodes:')
     qgtree.print_nodes()
     print('\ngene_tree dup_loss_process:')
-    dup_events = qgtree.dup_loss_process(lambda_dup=0.2, lambda_loss=0.05, lambda_trans=0.1)[0]      # locate the duplication points on the coalescent tree
-    trans_events = qgtree.dup_loss_process(lambda_dup=0.2, lambda_loss=0.05, lambda_trans=0.1)[1]
+    dup_events = qgtree.dup_loss_process(lambda_dup=0.3, lambda_loss=0.000001, lambda_trans=0.0000001)[0]      # locate the duplication points on the coalescent tree
+    trans_events = qgtree.dup_loss_process(lambda_dup=0.3, lambda_loss=0.0000001, lambda_trans=0.000001)[1]
     print('\ngene_tree dup_events:')
     pprint.pprint(dup_events)
     print('\ngene_tree trans_events:')
@@ -31,6 +32,14 @@ def main():
     print('\ngene_tree duplication_subtree:')
     qgtree.duplication_subtree(coalescent_process=coalescent_process, dup_events=dup_events)        # generate duplication subtrees
 
+
+    # print('\nHAHAHAHAHAHA')
+    # print(qstree.node_by_id(10))
+    # print(qstree.node_by_name('E'))
+    # print(qgtree.node_by_id(10))
+    # print(qgtree.node_by_name('3*'))
+    # print(qstree.node_by_id(0))
+    # print(qgtree.node_by_id(14))
 
     # qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
     # print('\ngene_tree ascii_art:')
