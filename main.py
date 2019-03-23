@@ -24,7 +24,7 @@ def main():
     print(qgtree.skbio_tree.ascii_art())
     print('\ngene_nodes:')
     qgtree.print_nodes()
-    print('\ngene_tree DLT_process:')
+    print('\ngene_tree dlt_process:')
     events = qgtree.dup_loss_process(lambda_dup=0.2, lambda_loss=0.2, lambda_trans=0.2)     # locate the duplication points on the coalescent tree
     print('\ngene_tree events:')
     pprint.pprint(events)
