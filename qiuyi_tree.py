@@ -205,6 +205,8 @@ class GenericTree(object):
         
 
 class SpeciesTree(GenericTree):
+    global_species_tree = None
+
     def __init__(self,
                  newick_path=None,
                  nodes=None):
@@ -432,9 +434,9 @@ class SpeciesTree(GenericTree):
 
     def trans_coalescent(self, distance_above_root, lambda0):
         full_coal_process, genes_into_root = self.coalescent(distance_above_root=10000, lambda0=lambda0)
-        chosen_gene = np.random.choice(genes_into_roo, size=1, replace=False)[0]
+        chosen_gene = np.random.choice(genes_into_root)
         sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
-        return sub_coal_process
+        return sub_coal_process, chosen_gene
         # find genes comming into the root,
         # randomly choose one gene,
         # find the subtree rooted at the chosen gene.
@@ -610,6 +612,25 @@ class GeneTree(GenericTree):
             # super().construct_nodes('output/gene_nodes_table.txt', process_tree=False)
         return
 
+    ### PROBLEM NOT SOLVED
+    def find_trans_target(self, height, node_id):
+        tree = SpeciesTree.global_species_tree
+        species_nodes = tree.nodes
+        nodes_list = []
+        for node in species_nodes:
+            if (node.node_id == node_id):
+                continue
+            if (node.node_id == tree.root.node_id):
+                continue
+            parent_walking_distance = tree.walking_distance(tree.node_by_id(node.parent).node_id, 0)
+            print('Parent: ' + str(parent_walking_distance))
+            if (parent_walking_distance > height):
+                node_walking_distance = tree.walking_distance(node.node_id, 0)
+                print('Node: ' + str(node_walking_distance))
+                if (node_walking_distance <= height):
+                    nodes_list.append(node.node_id)
+        return np.random.choice(nodes_list)
+
     # find the points of duplicatons and losses recursively
     def dup_loss_process_recurse(self, tree, distance, lambda_dup, lambda_loss, lambda_trans, events):
         node = self.nodes_name_dict[tree.name]
@@ -627,12 +648,16 @@ class GeneTree(GenericTree):
             self.dup_loss_process_recurse(tree, distance - distance_dup, lambda_dup, lambda_loss, lambda_trans, events) # looking for more events on the same branch
         elif (distance_trans <= min(distance_dup, distance_loss) and distance_trans < distance):
             print('transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_trans))
+            height = super().walking_distance(node.node_id, 0) + distance - distance_trans
+            print('HEIGHT: ' + str(height))
+            target = self.find_trans_target(height, node.node_id)
             events.append({
                 'type': 'transfer',
                 'node_id': node.node_id, 
                 'name': node.name, 
                 'distance': distance - distance_trans,
-                'target': None
+                'target': target,
+                'distance_above_root': 0
             })
             self.dup_loss_process_recurse(tree, distance - distance_trans, lambda_dup, lambda_loss, lambda_trans, events)
         elif (distance_loss <= min(distance_dup, distance_trans) and distance_loss < distance):      # loss happens first, the seaching process stops at the loss point
@@ -659,7 +684,7 @@ class GeneTree(GenericTree):
     # store the duplication events
     def dup_loss_process(self, lambda_dup, lambda_loss, lambda_trans, event=None):
         events = []
-        distance = 0
+        distance = 0 # = something else
         # trivial case
         if (len(self.nodes) == 1):
             distance = event['distance']
@@ -673,6 +698,46 @@ class GeneTree(GenericTree):
     
     # find the duplication subtree and do subtree coalescence
     def duplication_subtree_recurse(self, event, node_id, coal_distance):
+
+        if (event['type'] == 'transfer'):
+            species_skbio_tree = self.species_tree.skbio_tree
+            name = self.species_tree.nodes_id_dict[node_id].name
+
+            subtree = species_skbio_tree.find(name)
+            subtree_names = [node.name for node in subtree.traverse()]
+            subtree_nodes = [node for node in self.species_tree.nodes if node.name in subtree_names]
+
+            species_subtree = SpeciesTree(nodes=subtree_nodes)
+            species_subtree.skbio_tree = subtree
+            print('\nspecies_subtree_nodes:')
+            species_subtree.print_nodes()
+
+            distance_above_root = event['distance'] + coal_distance # + sth else
+            print('\nspecies_subtree_coal:')
+            full_coal_process, chosen_gene = species_subtree.trans_coalescent(distance_above_root, lambda0=0.3)
+            species_subtree_coal_process = species_subtree.filter_coal_process(full_coal_process=full_coal_process, chosen_gene=chosen_gene)
+
+            print('\nspecies_subtree_coal_process:')
+            pprint.pprint(species_subtree_coal_process)
+
+            species_subtree_time_seq = species_subtree.time_sequences(coalescent_process=species_subtree_coal_process)
+            print('\nspecies_subtree_time_seq:')
+            pprint.pprint(species_subtree_time_seq)
+
+            # save subtree
+            species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
+            
+            print('\ngene_subtree nodes:')
+            gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
+            gene_subtree.print_nodes()
+
+            print('\ngene_subtree dlt_process:')
+            gene_subtree_events = gene_subtree.dup_loss_process(event=event, lambda_dup=0.2, lambda_loss=0.2, lambda_trans=0.2)
+            print('\ngene_subtree events:')
+            pprint.pprint(gene_subtree_events)
+
+            gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events)
+
         if (event['type'] == 'duplication'):
             species_skbio_tree = self.species_tree.skbio_tree
             name = self.species_tree.nodes_id_dict[node_id].name
@@ -722,20 +787,39 @@ class GeneTree(GenericTree):
         if (not events):
             return
         for event in events:
-            node_id = None
-            coal_distance = None
-            if (coalescent_process):        # non-trivial
-                for k, v in coalescent_process.items():
-                    for elem in v:
-                        if (event['name'] in elem['to_set'] and event['name'] not in elem['from_set']):
-                            node_id = int(k)
-                            coal_distance = elem['distance']
-                if (node_id == None):
+            if (event['type'] == 'duplication'):
+                node_id = None
+                coal_distance = None
+                if (coalescent_process):        # non-trivial
+                    for k, v in coalescent_process.items():
+                        for elem in v:
+                            if (event['name'] in elem['to_set'] and event['name'] not in elem['from_set']):
+                                node_id = int(k)
+                                coal_distance = elem['distance']
+                    if (node_id == None):
+                        node_id = int(event['name'][:-1])
+                        coal_distance = 0
+                    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
+                else:       # trivial
                     node_id = int(event['name'][:-1])
                     coal_distance = 0
-                self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
-            else:       # trivial
-                node_id = int(event['name'][:-1])
-                coal_distance = 0
-                self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
+                    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
+            elif (event['type'] == 'transfer'):
+                trans_target_id = event['target']
+                coal_distance = 0 # check carefully
+                self.duplication_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=coal_distance)
+                # if (coalescent_process):        # non-trivial
+                #     for k, v in coalescent_process.items():
+                #         for elem in v:
+                #             if (event['name'] in elem['to_set'] and event['name'] not in elem['from_set']):
+                #                 node_id = int(k)
+                #                 coal_distance = elem['distance']
+                #     if (node_id == None):
+                #         node_id = int(event['name'][:-1])
+                #         coal_distance = 0
+                #    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
+                # else:       # trivial
+                #     node_id = int(event['name'][:-1])
+                #     coal_distance = 0
+                #     self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
         return

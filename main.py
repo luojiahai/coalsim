@@ -4,6 +4,9 @@ import pprint
 
 def main():
     qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
+
+    qiuyi_tree.SpeciesTree.global_species_tree = qstree
+
     print('\nsecies_tree ascii_art:')
     print(qstree.skbio_tree.ascii_art())
     print('\nspecies_nodes:')
