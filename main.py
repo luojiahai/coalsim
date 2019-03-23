@@ -3,7 +3,7 @@ import pprint
 
 
 def main():
-    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample2.txt')    # read newick species tree
+    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
     print('\nsecies_tree ascii_art:')
     print(qstree.skbio_tree.ascii_art())
     print('\nspecies_nodes:')
@@ -15,7 +15,9 @@ def main():
     print('\ntime_sequences:')
     time_sequences = qstree.time_sequences(coalescent_process=coalescent_process)       # convert to time sequence structure
     pprint.pprint(time_sequences)
-
+    
+    # print('\nTEST')
+    # pprint.pprint(qstree.filter_coal_process(coalescent_process, '1*2*'))
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
     print('\ngene_tree ascii_art:')
@@ -23,7 +25,7 @@ def main():
     print('\ngene_nodes:')
     qgtree.print_nodes()
     print('\ngene_tree DLT_process:')
-    events = qgtree.dup_loss_process(lambda_dup=0.3, lambda_loss=0.3, lambda_trans=0.3)     # locate the duplication points on the coalescent tree
+    events = qgtree.dup_loss_process(lambda_dup=0.2, lambda_loss=0.2, lambda_trans=0.2)     # locate the duplication points on the coalescent tree
     print('\ngene_tree events:')
     pprint.pprint(events)
     print('\ngene_tree duplication_subtree:')

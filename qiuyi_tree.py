@@ -5,6 +5,7 @@ import skbio.tree
 import numpy as np
 import random
 import collections
+import copy
 
 import pprint
 
@@ -427,21 +428,42 @@ class SpeciesTree(GenericTree):
                 labelled[node.node_id] = False
         return coalescent_process
 
-    # def trans_coalescent(self, distance_above_root, lambda0):
-    #     full_coal_summary = self.coalescent(distance_above_root=10000, lambda0)
-    #     full_coal_process = full_coal_summary[0]
-    #     genes_into_root = full_coal_summary[1]
-    #     chosen_gene = np.random.choice(genes_into_roo, size=1, replace=False)[0]
-    #     sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
-    #     return sub_coal_process
-    #     # find genes comming into the root,
-    #     # randomly choose one gene,
-    #     # find the subtree rooted at the chosen gene.
+    def trans_coalescent(self, distance_above_root, lambda0):
+        full_coal_summary = self.coalescent(distance_above_root=10000, lambda0=lambda0)
+        full_coal_process = full_coal_summary[0]
+        genes_into_root = full_coal_summary[1]
+        chosen_gene = np.random.choice(genes_into_roo, size=1, replace=False)[0]
+        sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
+        return sub_coal_process
+        # find genes comming into the root,
+        # randomly choose one gene,
+        # find the subtree rooted at the chosen gene.
+
+    def filter_coal_process(self, full_coal_process, chosen_gene):
+        coal_process = collections.defaultdict(list)
+        for k, v in full_coal_process.items():
+            for elem in v:
+                distance = elem['distance']
+                from_set = []
+                to_set = []
+                for clade in elem['from_set']:
+                    if (self.star_in_set(target=clade, clade=chosen_gene)):
+                        from_set.append(clade)
+                for clade in elem['to_set']:
+                    if (self.star_in_set(target=clade, clade=chosen_gene)):
+                        to_set.append(clade)
+                if (to_set):
+                    coal_process[k].append({
+                        'from_set': from_set, 
+                        'to_set': to_set,
+                        'distance': distance
+                    })
+        return coal_process
 
     # checking whether a given clade is in the target set
     # modified for the "*" representation
     def star_in_set(self, target, clade):
-        if (len(target) < len(clade)):
+        if (len(target) <= len(clade)):
             splited_target = target.split('*')[:-1]
             splited_clade = clade.split('*')[:-1]
             return set(splited_target).issubset(set(splited_clade))
@@ -457,7 +479,7 @@ class SpeciesTree(GenericTree):
                 branch_distance += elem['distance']
                 if (target_star in elem['from_set'] and target_star not in elem['to_set']):
                     for e in elem['to_set']:
-                        if self.star_in_set(target_star, e):
+                        if len(target_star) < len(e) and self.star_in_set(target_star, e):
                             couple = e.replace(target_star, '')
                             species_node_id = int(k)
                             species_node_height = super().walking_distance(int(k), branch_distance=0)
@@ -744,7 +766,7 @@ class GeneTree(GenericTree):
             gene_subtree.print_nodes()
 
             print('\ngene_subtree dup_loss_process:')
-            gene_subtree_events = gene_subtree.dup_loss_process(event=event, lambda_dup=0.3, lambda_loss=0.3, lambda_trans=0.3)
+            gene_subtree_events = gene_subtree.dup_loss_process(event=event, lambda_dup=0.2, lambda_loss=0.2, lambda_trans=0.2)
             print('\ngene_subtree events:')
             print(gene_subtree_events)
 
