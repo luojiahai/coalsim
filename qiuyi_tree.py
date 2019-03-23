@@ -225,7 +225,10 @@ class SpeciesTree(GenericTree):
             self.nodes_name_dict[node.name] = node
         
         self.leaves = [node.node_id for node in self.nodes if not node.children]
+        # if (self.leaves):
         self.total_distance = self.distance_to_root_recurse(node_id=self.leaves[0])
+        # else:
+        #     self.total_distance = 1
         return
 
     def construct_species_nodes(self, newick_path):
@@ -549,7 +552,8 @@ class GeneTree(GenericTree):
     def create_skbio_tree_recurse(self, skbio_tree_node):
         # one node (leaf)
         if (skbio_tree_node.name.count('*') == 1):
-            skbio_tree_node.length = 1
+            # skbio_tree_node.length = 2
+            skbio_tree_node.length = self.distance_from_to(skbio_tree_node.name, skbio_tree_node.parent.name)
             return
         # two nodes
         elif (len(skbio_tree_node.name) == 4):
@@ -647,18 +651,19 @@ class GeneTree(GenericTree):
             })
             self.dup_loss_process_recurse(tree, distance - distance_dup, lambda_dup, lambda_loss, lambda_trans, events) # looking for more events on the same branch
         elif (distance_trans <= min(distance_dup, distance_loss) and distance_trans < distance):
-            print('transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_trans))
-            height = super().walking_distance(node.node_id, 0) + distance - distance_trans
-            print('HEIGHT: ' + str(height))
-            target = self.find_trans_target(height, node.node_id)
-            events.append({
-                'type': 'transfer',
-                'node_id': node.node_id, 
-                'name': node.name, 
-                'distance': distance - distance_trans,
-                'target': target,
-                'distance_above_root': 0
-            })
+            event_height = super().walking_distance(node.node_id, 0) + distance - distance_trans
+            species_tree_height = SpeciesTree.global_species_tree.total_distance
+            if (event_height < species_tree_height):
+                print('transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_trans))
+                target = self.find_trans_target(event_height, node.node_id)
+                events.append({
+                    'type': 'transfer',
+                    'node_id': node.node_id, 
+                    'name': node.name, 
+                    'distance': distance - distance_trans,
+                    'target': target,
+                    'distance_above_root': 0
+                })
             self.dup_loss_process_recurse(tree, distance - distance_trans, lambda_dup, lambda_loss, lambda_trans, events)
         elif (distance_loss <= min(distance_dup, distance_trans) and distance_loss < distance):      # loss happens first, the seaching process stops at the loss point
             print('loss at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_loss))
@@ -700,13 +705,13 @@ class GeneTree(GenericTree):
     def duplication_subtree_recurse(self, event, node_id, coal_distance):
 
         if (event['type'] == 'transfer'):
-            species_skbio_tree = self.species_tree.skbio_tree
-            name = self.species_tree.nodes_id_dict[node_id].name
+            tree = SpeciesTree.global_species_tree
+            species_skbio_tree = tree.skbio_tree
+            name = tree.nodes_id_dict[node_id].name
 
             subtree = species_skbio_tree.find(name)
             subtree_names = [node.name for node in subtree.traverse()]
-            subtree_nodes = [node for node in self.species_tree.nodes if node.name in subtree_names]
-
+            subtree_nodes = [node for node in tree.nodes if node.name in subtree_names]
             species_subtree = SpeciesTree(nodes=subtree_nodes)
             species_subtree.skbio_tree = subtree
             print('\nspecies_subtree_nodes:')
@@ -714,7 +719,7 @@ class GeneTree(GenericTree):
 
             distance_above_root = event['distance'] + coal_distance # + sth else
             print('\nspecies_subtree_coal:')
-            full_coal_process, chosen_gene = species_subtree.trans_coalescent(distance_above_root, lambda0=0.3)
+            full_coal_process, chosen_gene = species_subtree.trans_coalescent(distance_above_root, lambda0=0.7)
             species_subtree_coal_process = species_subtree.filter_coal_process(full_coal_process=full_coal_process, chosen_gene=chosen_gene)
 
             print('\nspecies_subtree_coal_process:')
@@ -754,7 +759,7 @@ class GeneTree(GenericTree):
             distance_above_root = event['distance'] + coal_distance
             sub_leaves = [int(node_id) for node_id in event['name'].strip().split('*')[:-1]]
             print('\nspecies_subtree_coal:')
-            species_subtree_coal_process = species_subtree.sub_coalescent(distance_above_root=distance_above_root, lambda0=0.3, sub_leaves=sub_leaves)
+            species_subtree_coal_process = species_subtree.sub_coalescent(distance_above_root=distance_above_root, lambda0=0.7, sub_leaves=sub_leaves)
 
             print('\nspecies_subtree_coal_process:')
             pprint.pprint(species_subtree_coal_process)
