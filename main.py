@@ -9,7 +9,7 @@ def main():
     print('\nspecies_nodes:')
     qstree.print_nodes()
     print('\ncoalescent:')
-    coalescent_process = qstree.coalescent(distance_above_root=10000, lambda0=0.3)      # do coalescece based on the species tree
+    coalescent_process, _ = qstree.coalescent(distance_above_root=10000, lambda0=0.3)      # do coalescece based on the species tree
     print('\ncoalescent_process:')
     pprint.pprint(coalescent_process)
     print('\ntime_sequences:')

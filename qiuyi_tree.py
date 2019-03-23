@@ -285,6 +285,7 @@ class SpeciesTree(GenericTree):
         nodes = self.nodes
         root = self.root
         coalescent_process = collections.defaultdict(list)
+        clade_set_into_root = None
 
         old_leaves = [node.node_id for node in nodes if not node.children]      # leaves of the given species tree
         new_leaves = []     # leaves set will be updated in the loop
@@ -297,7 +298,8 @@ class SpeciesTree(GenericTree):
         while (True):
             for leaf in old_leaves:
                 if (leaf == root.node_id):
-                    print('=the clade set at the root is=', clade_set[leaf])
+                    # print('=the clade set at the root is=', clade_set[leaf])
+                    clade_set_into_root = clade_set[leaf]
                     self.coalescent_recurse(node_id=root.node_id, 
                                             distance=distance_above_root, 
                                             clade_set=clade_set,
@@ -340,7 +342,7 @@ class SpeciesTree(GenericTree):
             labelled = {}
             for node in nodes:
                 labelled[node.node_id] = False
-        return coalescent_process
+        return coalescent_process, clade_set_into_root
 
     # this is the main function of doing sub_species-tree coalescence
     # this will be used when modelling duplications and transfers
@@ -429,9 +431,7 @@ class SpeciesTree(GenericTree):
         return coalescent_process
 
     def trans_coalescent(self, distance_above_root, lambda0):
-        full_coal_summary = self.coalescent(distance_above_root=10000, lambda0=lambda0)
-        full_coal_process = full_coal_summary[0]
-        genes_into_root = full_coal_summary[1]
+        full_coal_process, genes_into_root = self.coalescent(distance_above_root=10000, lambda0=lambda0)
         chosen_gene = np.random.choice(genes_into_roo, size=1, replace=False)[0]
         sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
         return sub_coal_process
