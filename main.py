@@ -1,12 +1,17 @@
 import qiuyi_tree
 import pprint
+import os, shutil
 
 
 def main():
+    shutil.rmtree('./output')
+    os.mkdir('./output')
+    os.mkdir('./output/newick_gene_subtrees')
+    os.mkdir('./output/subtrees')
+
     qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
-
+    qstree.save_to_file(path='output/species_nodes_table.txt')
     qiuyi_tree.SpeciesTree.global_species_tree = qstree
-
     print('\nsecies_tree ascii_art:')
     print(qstree.skbio_tree.ascii_art())
     print('\nspecies_nodes:')
@@ -23,6 +28,10 @@ def main():
     # pprint.pprint(qstree.filter_coal_process(coalescent_process, '1*2*'))
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
+    qgtree.save_to_file(path='output/gene_nodes_table.txt')
+    f = open('output/newick_gene_subtrees/gene_tree.txt', 'w')
+    f.write(str(qgtree.skbio_tree))
+    f.close()
     print('\ngene_tree ascii_art:')
     print(qgtree.skbio_tree.ascii_art())
     print('\ngene_nodes:')

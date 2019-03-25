@@ -5,4 +5,4 @@ id	name	parent	d2p
 3	D	6	5.0
 4	BC	5	1.0
 5	ABC	6	2.0
-6	ABCD	-1	-1.0
+6	ABCD	None	None

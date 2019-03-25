@@ -11,6 +11,9 @@ import pprint
 
 # np.random.seed(4)
 
+def subtree_file_name(path, event, node_id, distance):
+    return '{}/subtree_{}_{:03d}_{:07d}.txt'.format(path, event, node_id, int(distance * 10000))
+
 
 class TreeNode(object):
     def __init__(self,
@@ -48,8 +51,9 @@ class GenericTree(object):
         self.total_distance = -1
         return
 
-    def save_to_file(self, path):
-        f = open(path, 'w')
+    def save_to_file(self, path, mode='w', distance=None):
+        f = open(path, mode)
+        if (distance): f.write(str(distance) + '\n')
         f.write('id\tname\tparent\td2p\n')
         for node in self.nodes:
             f.write(str(node.node_id) + '\t' + node.name + '\t' + str(node.parent) + '\t' + str(node.distance_to_parent) + '\n')
@@ -225,16 +229,13 @@ class SpeciesTree(GenericTree):
             self.nodes_name_dict[node.name] = node
         
         self.leaves = [node.node_id for node in self.nodes if not node.children]
-        # if (self.leaves):
         self.total_distance = self.distance_to_root_recurse(node_id=self.leaves[0])
-        # else:
-        #     self.total_distance = 1
         return
 
     def construct_species_nodes(self, newick_path):
-        output_path = 'output/species_nodes_table.txt'
+        output_path = 'output/temp_species_nodes_table.txt'
         self.skbio_tree = super().newick_to_table(input_path=newick_path, output_path=output_path)
-        super().construct_nodes(output_path, process_tree=True)
+        super().construct_nodes(path=output_path, process_tree=True)
         return
 
     def star_sorted(self, couple):
@@ -601,8 +602,9 @@ class GeneTree(GenericTree):
             self.create_skbio_tree_recurse(tree)
             tree.length = None
             self.skbio_tree = tree
-            super().newick_to_table(skbio_tree=tree, output_path='output/gene_nodes_table.txt')
-            super().construct_nodes('output/gene_nodes_table.txt', process_tree=False)   
+            output_path = 'output/temp_gene_nodes_table.txt'
+            super().newick_to_table(skbio_tree=tree, output_path=output_path)
+            super().construct_nodes(path=output_path, process_tree=False)   
         else: 
             tree.name = next(iter(self.time_sequences)) + '*' # empty
             tree.length = None
@@ -612,8 +614,6 @@ class GeneTree(GenericTree):
                                        name=tree.name,
                                        parent=-1,
                                        distance_to_parent=-1.0))
-            # super().newick_to_table(skbio_tree=tree, output_path='output/gene_nodes_table.txt')
-            # super().construct_nodes('output/gene_nodes_table.txt', process_tree=False)
         return
 
     ### PROBLEM NOT SOLVED
@@ -656,13 +656,14 @@ class GeneTree(GenericTree):
             if (event_height < species_tree_height):
                 print('transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_trans))
                 target = self.find_trans_target(event_height, node.node_id)
+                target_height = SpeciesTree.global_species_tree.walking_distance(target, 0)
                 events.append({
                     'type': 'transfer',
                     'node_id': node.node_id, 
                     'name': node.name, 
                     'distance': distance - distance_trans,
                     'target': target,
-                    'distance_above_root': 0
+                    'distance_above_target': event_height - target_height
                 })
             self.dup_loss_process_recurse(tree, distance - distance_trans, lambda_dup, lambda_loss, lambda_trans, events)
         elif (distance_loss <= min(distance_dup, distance_trans) and distance_loss < distance):      # loss happens first, the seaching process stops at the loss point
@@ -704,12 +705,12 @@ class GeneTree(GenericTree):
     # find the duplication subtree and do subtree coalescence
     def duplication_subtree_recurse(self, event, node_id, coal_distance):
 
-        if (event['type'] == 'transfer'):
+        if (event['type'] == 'transfer'): # node_id = target_id
             tree = SpeciesTree.global_species_tree
             species_skbio_tree = tree.skbio_tree
             name = tree.nodes_id_dict[node_id].name
 
-            subtree = species_skbio_tree.find(name)
+            subtree = species_skbio_tree.find(name).deepcopy()
             subtree_names = [node.name for node in subtree.traverse()]
             subtree_nodes = [node for node in tree.nodes if node.name in subtree_names]
             species_subtree = SpeciesTree(nodes=subtree_nodes)
@@ -717,7 +718,7 @@ class GeneTree(GenericTree):
             print('\nspecies_subtree_nodes:')
             species_subtree.print_nodes()
 
-            distance_above_root = event['distance'] + coal_distance # + sth else
+            distance_above_root = coal_distance
             print('\nspecies_subtree_coal:')
             full_coal_process, chosen_gene = species_subtree.trans_coalescent(distance_above_root, lambda0=0.7)
             species_subtree_coal_process = species_subtree.filter_coal_process(full_coal_process=full_coal_process, chosen_gene=chosen_gene)
@@ -730,11 +731,16 @@ class GeneTree(GenericTree):
             pprint.pprint(species_subtree_time_seq)
 
             # save subtree
-            species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
+            species_subtree.save_to_file(path=subtree_file_name('output/subtrees', 'trans', node_id, distance_above_root), distance=distance_above_root)
             
             print('\ngene_subtree nodes:')
             gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
             gene_subtree.print_nodes()
+            gene_subtree.save_to_file(path=subtree_file_name('output/subtrees', 'trans', node_id, distance_above_root), mode='a')
+
+            f = open(subtree_file_name('output/newick_gene_subtrees', 'trans', node_id, distance_above_root), 'w')
+            f.write(str(gene_subtree.skbio_tree))
+            f.close()
 
             print('\ngene_subtree dlt_process:')
             gene_subtree_events = gene_subtree.dup_loss_process(event=event, lambda_dup=0.2, lambda_loss=0.2, lambda_trans=0.2)
@@ -747,7 +753,7 @@ class GeneTree(GenericTree):
             species_skbio_tree = self.species_tree.skbio_tree
             name = self.species_tree.nodes_id_dict[node_id].name
 
-            subtree = species_skbio_tree.find(name)
+            subtree = species_skbio_tree.find(name).deepcopy()
             subtree_names = [node.name for node in subtree.traverse()]
             subtree_nodes = [node for node in self.species_tree.nodes if node.name in subtree_names]
 
@@ -769,11 +775,17 @@ class GeneTree(GenericTree):
             pprint.pprint(species_subtree_time_seq)
 
             # save subtree
-            species_subtree.save_to_file(path='output/subtrees/species_subtree_' + str(node_id) + '_' + str(event['distance']*1000000)[:4])
+            species_subtree.save_to_file(path=subtree_file_name('output/subtrees', 'dup', node_id, distance_above_root), distance=distance_above_root)
             
             print('\ngene_subtree nodes:')
             gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
             gene_subtree.print_nodes()
+            gene_subtree.save_to_file(path=subtree_file_name('output/subtrees', 'dup', node_id, distance_above_root), mode='a')
+
+            f = open(subtree_file_name('output/newick_gene_subtrees', 'dup', node_id, distance_above_root), 'w')
+            f.write(str(gene_subtree.skbio_tree))
+            f.close()
+            # gene_subtree.skbio_tree
 
             print('\ngene_subtree dlt_process:')
             gene_subtree_events = gene_subtree.dup_loss_process(event=event, lambda_dup=0.2, lambda_loss=0.2, lambda_trans=0.2)
@@ -811,8 +823,8 @@ class GeneTree(GenericTree):
                     self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
             elif (event['type'] == 'transfer'):
                 trans_target_id = event['target']
-                coal_distance = 0 # check carefully
-                self.duplication_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=coal_distance)
+                distance_above_target = event['distance_above_target']
+                self.duplication_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=distance_above_target)
                 # if (coalescent_process):        # non-trivial
                 #     for k, v in coalescent_process.items():
                 #         for elem in v:
