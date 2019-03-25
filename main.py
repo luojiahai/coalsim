@@ -1,6 +1,7 @@
 import qiuyi_tree
 import pprint
 import os, shutil
+import numpy as np
 
 
 def main():
@@ -11,13 +12,16 @@ def main():
 
     qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
     qstree.save_to_file(path='output/species_nodes_table.txt')
+
     qiuyi_tree.SpeciesTree.global_species_tree = qstree
+    qiuyi_tree.SpeciesTree.lambda0 = np.random.gamma(shape=3, scale=0.1, size=len(qstree.leaves))
+
     print('\nsecies_tree ascii_art:')
     print(qstree.skbio_tree.ascii_art())
     print('\nspecies_nodes:')
     qstree.print_nodes()
     print('\ncoalescent:')
-    coalescent_process, _ = qstree.coalescent(distance_above_root=10000, lambda0=0.7)      # do coalescece based on the species tree
+    coalescent_process, _ = qstree.coalescent(distance_above_root=10000)      # do coalescece based on the species tree
     print('\ncoalescent_process:')
     pprint.pprint(coalescent_process)
     print('\ntime_sequences:')
@@ -28,6 +32,11 @@ def main():
     # pprint.pprint(qstree.filter_coal_process(coalescent_process, '1*2*'))
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
+
+    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_loss = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_trans = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
+
     qgtree.save_to_file(path='output/gene_nodes_table.txt')
     f = open('output/newick_gene_subtrees/gene_tree.txt', 'w')
     f.write(str(qgtree.skbio_tree))
@@ -37,7 +46,7 @@ def main():
     print('\ngene_nodes:')
     qgtree.print_nodes()
     print('\ngene_tree dlt_process:')
-    events = qgtree.dup_loss_process(lambda_dup=0.2, lambda_loss=0.2, lambda_trans=0.2, distance=0)     # locate the duplication points on the coalescent tree
+    events = qgtree.dup_loss_process(distance=0)     # locate the duplication points on the coalescent tree
     print('\ngene_tree events:')
     pprint.pprint(events)
     print('\ngene_tree duplication_subtree:')
