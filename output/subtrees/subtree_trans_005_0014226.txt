@@ -1,9 +1,0 @@
-1.4226028670770292
-id	name	parent	d2p
-0	A	5	3.0
-1	B	4	2.0
-2	C	4	2.0
-4	BC	5	1.0
-5	ABC	6	2.0
-id	name	parent	d2p
-0	0*	-1	-1.0
