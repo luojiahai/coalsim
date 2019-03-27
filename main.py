@@ -2,13 +2,64 @@ import qiuyi_tree
 import pprint
 import os, shutil
 import numpy as np
+import skbio
 
+
+def dir_recurse(gene_tree, path):
+    files = os.listdir(path)
+    for f in files:
+        f_path = os.path.join(path, f)
+        if os.path.isdir(f_path):
+            dir_recurse(gene_tree, f_path)
+            
+    _id = '_' + path.split('_')[-1]
+
+    subtree_path = os.path.join(path, 'gene_tree.txt')
+    f = open(subtree_path)
+    subtree = skbio.read(f, format="newick", into=skbio.tree.TreeNode)
+    f.close()
+
+    event_path = os.path.join(path, 'event.txt')
+    f = open(event_path)
+    line = f.readline()
+    splited = line.strip().split(',')
+    name = splited[0]
+    distance = float(splited[1])
+
+    new_node = skbio.TreeNode()
+    child = gene_tree.find(name)
+    parent = child.parent
+    new_node.name = name + _id
+    new_node.length = child.length - distance
+    new_node.parent = parent
+    new_node.children.append(child)
+    child.length = distance
+    child.parent = new_node
+    for i in range(len(parent.children)):
+        if (parent.children[i].name == child.name):
+            del parent.children[i]
+            break
+    parent.children.append(new_node)
+    new_node.children.append(subtree)
+    subtree.parent = new_node
+    for node in subtree.traverse():
+        node.name = node.name + _id
+
+def build_tree(gene_tree, path):
+    files = os.listdir(path)
+    for f in files:
+        f_path = os.path.join(path, f)
+        if os.path.isdir(f_path):
+            dir_recurse(gene_tree, f_path)
+    return
 
 def main():
     shutil.rmtree('./output')
     os.mkdir('./output')
     os.mkdir('./output/newick_gene_subtrees')
     os.mkdir('./output/subtrees')
+    tree_path = './output/tree'
+    os.mkdir(tree_path)
 
     qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
     qstree.save_to_file(path='output/species_nodes_table.txt')
@@ -33,9 +84,9 @@ def main():
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
 
-    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    qiuyi_tree.GeneTree.lambda_loss = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
-    qiuyi_tree.GeneTree.lambda_trans = np.random.gamma(shape=0.5, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_loss = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_trans = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
 
     qgtree.save_to_file(path='output/gene_nodes_table.txt')
     f = open('output/newick_gene_subtrees/gene_tree.txt', 'w')
@@ -50,8 +101,15 @@ def main():
     print('\ngene_tree events:')
     pprint.pprint(events)
     print('\ngene_tree duplication_subtree:')
-    qgtree.duplication_subtree(coalescent_process=coalescent_process, events=events)        # generate duplication subtrees
+    qgtree.duplication_subtree(coalescent_process=coalescent_process, events=events, path=tree_path)        # generate duplication subtrees
 
+
+    final = qgtree.skbio_tree.deepcopy()
+    build_tree(final, './output/tree')
+    f = open('./output/final.txt', 'w')
+    f.write(str(final))
+    f.write(str(final.ascii_art()))
+    f.close
 
     # print('\nHAHAHAHAHAHA')
     # print(qstree.node_by_id(10))

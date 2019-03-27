@@ -7,10 +7,17 @@ import random
 import collections
 import copy
 from statistics import mean
+import os
 
 import pprint
 
 # np.random.seed(4)
+
+count = 1
+def increment():
+    global count
+    count += 1
+    return count
 
 def subtree_file_name(path, event, node_id, distance):
     return '{}/subtree_{}_{:03d}_{:07d}.txt'.format(path, event, node_id, int(distance * 10000))
@@ -669,7 +676,7 @@ class GeneTree(GenericTree):
         distance_trans = np.random.exponential(scale=1.0/self.get_lambda_trans(node.name))
         if (distance_dup < min(distance_loss, distance_trans) and distance_dup < distance):      # duplication happens first
             print('duplication at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_dup))
-            event_height = event_height = super().walking_distance(node.node_id, 0) + distance - distance_dup
+            event_height = super().walking_distance(node.node_id, 0) + distance - distance_dup
             events.append({
                 'type': 'duplication',
                 'node_id': node.node_id, 
@@ -781,7 +788,7 @@ class GeneTree(GenericTree):
         return events
     
     # find the duplication subtree and do subtree coalescence
-    def duplication_subtree_recurse(self, event, node_id, coal_distance):
+    def duplication_subtree_recurse(self, event, node_id, coal_distance, path):
 
         if (event['type'] == 'transfer'): # node_id = target_id
             tree = SpeciesTree.global_species_tree
@@ -827,7 +834,14 @@ class GeneTree(GenericTree):
             print('\ngene_subtree events:')
             pprint.pprint(gene_subtree_events)
 
-            gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events)
+            _id = 'trans_subtree_' + str(increment())
+            next_dir = os.path.join(path, _id)
+            os.mkdir(next_dir)
+            file_name = 'event.txt'
+            f = open(os.path.join(next_dir, file_name), 'w')
+            f.write(str(event['name']) + ',' + str(event['distance']))
+            f.close()
+            gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events, path=next_dir)
 
         if (event['type'] == 'duplication'):
             species_skbio_tree = self.species_tree.skbio_tree
@@ -874,7 +888,15 @@ class GeneTree(GenericTree):
             print('\ngene_subtree events:')
             pprint.pprint(gene_subtree_events)
 
-            gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events)
+            _id = 'dup_subtree_' + str(increment())
+            next_dir = os.path.join(path, _id)
+            os.mkdir(next_dir)
+            file_name = 'event.txt'
+            f = open(os.path.join(next_dir, file_name), 'w')
+            f.write(str(event['name']) + ',' + str(event['distance']))
+            f.close()
+            gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events, path=next_dir)
+        
         return
 
     # find all the duplication points on the coalescent tree
@@ -882,7 +904,14 @@ class GeneTree(GenericTree):
     # do subtree coalescence to obtain the sub_coalescent_tree
     # find all the duplication points on the sub_coalescent_tree
     # recurse
-    def duplication_subtree(self, coalescent_process, events):
+    def duplication_subtree(self, coalescent_process, events, path):
+        if (path):
+            f = open(os.path.join(path, 'gene_tree.txt'), 'w')
+            f.write(str(self.skbio_tree))
+            f.close()
+            f = open(os.path.join(path, 'species_tree.txt'), 'w')
+            f.write(str(self.species_tree.skbio_tree))
+            f.close()
         if (not events):
             return
         for event in events:
@@ -898,16 +927,16 @@ class GeneTree(GenericTree):
                     if (node_id == None):
                         node_id = int(event['name'][:-1])
                         coal_distance = 0
-                    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
+                    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance, path=path)
                 else:       # trivial
                     node_id = int(event['name'][:-1])
                     coal_distance = 0
-                    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
+                    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance, path=path)
             elif (event['type'] == 'transfer'):
                 trans_target_id = event['target']
                 target_height = SpeciesTree.global_species_tree.walking_distance(trans_target_id, 0)
                 distance_above_target = event['event_height'] - target_height
-                self.duplication_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=distance_above_target)
+                self.duplication_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=distance_above_target, path=path)
                 # if (coalescent_process):        # non-trivial
                 #     for k, v in coalescent_process.items():
                 #         for elem in v:
@@ -922,4 +951,9 @@ class GeneTree(GenericTree):
                 #     node_id = int(event['name'][:-1])
                 #     coal_distance = 0
                 #     self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
+            elif (event['type'] == 'loss'):
+                file_name = 'loss_' + str(event['distance'])
+                f = open(os.path.join(path, file_name), 'w')
+                f.write(str(event))
+                f.close()
         return
