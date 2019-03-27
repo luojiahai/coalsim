@@ -632,10 +632,10 @@ class GeneTree(GenericTree):
             if (node.node_id == tree.root.node_id):
                 continue
             parent_walking_distance = tree.walking_distance(tree.node_by_id(node.parent).node_id, 0)
-            print('Parent: ' + str(parent_walking_distance))
+            # print('Parent: ' + str(parent_walking_distance))
             if (parent_walking_distance > height):
                 node_walking_distance = tree.walking_distance(node.node_id, 0)
-                print('Node: ' + str(node_walking_distance))
+                # print('Node: ' + str(node_walking_distance))
                 if (node_walking_distance <= height):
                     nodes_list.append(node.node_id)
         return np.random.choice(nodes_list)
@@ -699,7 +699,8 @@ class GeneTree(GenericTree):
                 'type': 'loss',
                 'node_id': node.node_id, 
                 'name': node.name, 
-                'distance': distance - distance_loss
+                'distance': distance - distance_loss,
+                'sub_tree_root_name': tree.name
             })
         else:   # reach the end the current branch, looking for events in the 2 children branches
             print('nothing happened at node ' + str(node.node_id) + ' (' + node.name + ')')
@@ -752,7 +753,8 @@ class GeneTree(GenericTree):
                 'type': 'loss',
                 'node_id': node.node_id, 
                 'name': node.name, 
-                'distance': distance - distance_loss
+                'distance': distance - distance_loss,
+                'sub_tree_root_name': tree.name
             })
         else:   # reach the end the current branch, looking for events in the 2 children branches
             print('nothing happened at node ' + str(node.node_id) + ' (' + node.name + ')')
@@ -811,6 +813,7 @@ class GeneTree(GenericTree):
             
             print('\ngene_subtree nodes:')
             gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
+            gene_subtree.skbio_tree.length = event['event_height'] - gene_subtree.total_distance
             gene_subtree.print_nodes()
             gene_subtree.save_to_file(path=subtree_file_name('output/subtrees', 'trans', node_id, distance_above_root), mode='a')
 
@@ -856,6 +859,7 @@ class GeneTree(GenericTree):
             
             print('\ngene_subtree nodes:')
             gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
+            gene_subtree.skbio_tree.length = event['event_height'] - gene_subtree.total_distance
             gene_subtree.print_nodes()
             gene_subtree.save_to_file(path=subtree_file_name('output/subtrees', 'dup', node_id, distance_above_root), mode='a')
 

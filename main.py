@@ -33,9 +33,9 @@ def main():
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
 
-    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     qiuyi_tree.GeneTree.lambda_loss = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
-    qiuyi_tree.GeneTree.lambda_trans = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_trans = np.random.gamma(shape=0.5, scale=0.1, size=len(qgtree.leaves))
 
     qgtree.save_to_file(path='output/gene_nodes_table.txt')
     f = open('output/newick_gene_subtrees/gene_tree.txt', 'w')
