@@ -791,6 +791,8 @@ class GeneTree(GenericTree):
     def duplication_subtree_recurse(self, event, node_id, coal_distance, path):
 
         if (event['type'] == 'transfer'): # node_id = target_id
+            print('\nCurrent event:')
+            pprint.pprint(event)
             tree = SpeciesTree.global_species_tree
             species_skbio_tree = tree.skbio_tree
             name = tree.nodes_id_dict[node_id].name
@@ -839,11 +841,13 @@ class GeneTree(GenericTree):
             os.mkdir(next_dir)
             file_name = 'event.txt'
             f = open(os.path.join(next_dir, file_name), 'w')
-            f.write(str(event['name']) + ',' + str(event['distance']))
+            f.write(str(event['name']) + ',' + str(event['distance']) + ',' + str(event['type']))
             f.close()
             gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events, path=next_dir)
 
         if (event['type'] == 'duplication'):
+            print('\nCurrent event:')
+            pprint.pprint(event)
             species_skbio_tree = self.species_tree.skbio_tree
             name = self.species_tree.nodes_id_dict[node_id].name
 
@@ -893,7 +897,7 @@ class GeneTree(GenericTree):
             os.mkdir(next_dir)
             file_name = 'event.txt'
             f = open(os.path.join(next_dir, file_name), 'w')
-            f.write(str(event['name']) + ',' + str(event['distance']))
+            f.write(str(event['name']) + ',' + str(event['distance']) + ',' + str(event['type']))
             f.close()
             gene_subtree.duplication_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events, path=next_dir)
         
@@ -937,20 +941,6 @@ class GeneTree(GenericTree):
                 target_height = SpeciesTree.global_species_tree.walking_distance(trans_target_id, 0)
                 distance_above_target = event['event_height'] - target_height
                 self.duplication_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=distance_above_target, path=path)
-                # if (coalescent_process):        # non-trivial
-                #     for k, v in coalescent_process.items():
-                #         for elem in v:
-                #             if (event['name'] in elem['to_set'] and event['name'] not in elem['from_set']):
-                #                 node_id = int(k)
-                #                 coal_distance = elem['distance']
-                #     if (node_id == None):
-                #         node_id = int(event['name'][:-1])
-                #         coal_distance = 0
-                #    self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
-                # else:       # trivial
-                #     node_id = int(event['name'][:-1])
-                #     coal_distance = 0
-                #     self.duplication_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance)
             elif (event['type'] == 'loss'):
                 file_name = 'loss_' + str(event['distance'])
                 f = open(os.path.join(path, file_name), 'w')

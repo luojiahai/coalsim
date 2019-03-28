@@ -6,13 +6,9 @@ import skbio
 
 
 def dir_recurse(gene_tree, path):
-    files = os.listdir(path)
-    for f in files:
-        f_path = os.path.join(path, f)
-        if os.path.isdir(f_path):
-            dir_recurse(gene_tree, f_path)
-            
     _id = '_' + path.split('_')[-1]
+    parent_name_splited = gene_tree.name.split('_')
+    _parent_id = '_' + parent_name_splited[-1] if len(parent_name_splited) > 1 else ''
 
     subtree_path = os.path.join(path, 'gene_tree.txt')
     f = open(subtree_path)
@@ -23,13 +19,18 @@ def dir_recurse(gene_tree, path):
     f = open(event_path)
     line = f.readline()
     splited = line.strip().split(',')
-    name = splited[0]
+    node_name = splited[0]
     distance = float(splited[1])
+    event_name = '_' + splited[2][0]
+    f.close()
 
     new_node = skbio.TreeNode()
-    child = gene_tree.find(name)
+    child = None
+    for node in gene_tree.traverse():
+        if node.name == (node_name + _parent_id):
+            child = node
     parent = child.parent
-    new_node.name = name + _id
+    new_node.name = node_name + event_name + _id
     new_node.length = child.length - distance
     new_node.parent = parent
     new_node.children.append(child)
@@ -44,6 +45,12 @@ def dir_recurse(gene_tree, path):
     subtree.parent = new_node
     for node in subtree.traverse():
         node.name = node.name + _id
+
+    files = os.listdir(path)
+    for f in files:
+        f_path = os.path.join(path, f)
+        if os.path.isdir(f_path):
+            dir_recurse(subtree, f_path)
 
 def build_tree(gene_tree, path):
     files = os.listdir(path)
@@ -61,7 +68,7 @@ def main():
     tree_path = './output/tree'
     os.mkdir(tree_path)
 
-    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
+    qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample1.txt')    # read newick species tree
     qstree.save_to_file(path='output/species_nodes_table.txt')
 
     qiuyi_tree.SpeciesTree.global_species_tree = qstree
@@ -84,7 +91,7 @@ def main():
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
 
-    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=2, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     qiuyi_tree.GeneTree.lambda_loss = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     qiuyi_tree.GeneTree.lambda_trans = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
 
@@ -109,9 +116,12 @@ def main():
     f = open('./output/final.txt', 'w')
     f.write(str(final))
     f.write(str(final.ascii_art()))
-    f.close
+    f.close()
 
-    # print('\nHAHAHAHAHAHA')
+    # for node in final.tips():
+    #     print(final.distance(node))
+
+    # print('\nTest')
     # print(qstree.node_by_id(10))
     # print(qstree.node_by_name('E'))
     # print(qgtree.node_by_id(10))

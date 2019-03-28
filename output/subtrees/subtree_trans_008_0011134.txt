@@ -1,0 +1,5 @@
+1.1134186935269303
+id	name	parent	d2p
+8	I	12	3.0
+id	name	parent	d2p
+0	8*	-1	-1.0

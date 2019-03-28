@@ -1,0 +1,7 @@
+0.14037358704021186
+id	name	parent	d2p
+4	E	9	1.0
+5	F	9	1.0
+9	EF	14	4.0
+id	name	parent	d2p
+0	4*	-1	-1.0
