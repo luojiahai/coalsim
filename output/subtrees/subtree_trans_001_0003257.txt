@@ -1,5 +1,0 @@
-0.3257027306466109
-id	name	parent	d2p
-1	B	13	5.0
-id	name	parent	d2p
-0	1*	-1	-1.0
