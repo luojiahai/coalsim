@@ -7,6 +7,7 @@ import time
 
 
 def build_tree_recurse(gene_tree, path):
+    loss_nodes = []
     current_tree = gene_tree
     path_splited = path.split('_')
     _id = '_' + path.split('_')[-1] if len(path_splited) > 1 else ''
@@ -53,6 +54,12 @@ def build_tree_recurse(gene_tree, path):
 
     files = os.listdir(path)
     for f in files:
+        file_path = os.path.join(path, f)
+        if os.path.isdir(file_path):
+            loss_nodes += build_tree_recurse(current_tree, file_path)
+
+    files = os.listdir(path)
+    for f in files:
         file_name = f.split('_')
         if (file_name and file_name[0] == 'loss'):
             loss_path = os.path.join(path, f)
@@ -79,18 +86,21 @@ def build_tree_recurse(gene_tree, path):
                     del parent.children[i]
                     break
             parent.children.append(new_l_node)
+            loss_nodes.append(new_l_node)
 
             file_.close()
-
-    files = os.listdir(path)
-    for f in files:
-        file_path = os.path.join(path, f)
-        if os.path.isdir(file_path):
-            build_tree_recurse(current_tree, file_path)
+    
+    return loss_nodes
 
 def build_tree(gene_tree, path):
-    build_tree_recurse(gene_tree, path)
-    return
+    return build_tree_recurse(gene_tree, path)
+
+def cut_tree(final_tree, loss_nodes):
+    final = final_tree.deepcopy()
+    for node in loss_nodes:
+        final.remove_deleted(lambda x: x.name == node.name)
+    final.prune()
+    return final
 
 def main(options):
     shutil.rmtree('./output')
@@ -149,15 +159,17 @@ def main(options):
 
 
     final_result = qgtree.skbio_tree.deepcopy()
-    build_tree(final_result, './output/tree')
+    loss_nodes = build_tree(final_result, './output/tree')
     qiuyi_tree.Debug.save_output(contents=[final_result,final_result.ascii_art()],
                                  path='./output/final_result.txt')
-
+    final_result_cut = cut_tree(final_result, loss_nodes)
+    qiuyi_tree.Debug.save_output(contents=[final_result_cut,final_result_cut.ascii_art()],
+                                 path='./output/final_result_cut.txt')
 
     qiuyi_tree.Debug.log_file.close()
 
-    # for node in final.tips():
-    #     print(final.distance(node))
+    # for node in final_result_cut.tips():
+    #     print(final_result_cut.distance(node))
 
     # print('\nTest')
     # print(qstree.node_by_id(10))
