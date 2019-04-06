@@ -1,0 +1,5 @@
+0.899695791179786
+id	name	parent	d2p
+7	H	10	2.0
+id	name	parent	d2p
+0	7*	-1	-1.0

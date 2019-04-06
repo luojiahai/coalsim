@@ -10,7 +10,7 @@ import os
 import pprint
 
 
-count = 1
+count = 0
 def increment():
     global count
     count += 1
@@ -20,6 +20,7 @@ def increment():
 class Debug(object):
     log_file = None
     random_state = None
+    event_count = {'d': 0, 'l': 0, 't': 0}
 
     def __init__(self):
         pass
@@ -856,7 +857,7 @@ class GeneTree(GenericTree):
             gene_subtree_height = gene_subtree.total_distance
             gene_subtree_events = gene_subtree.dlt_process(event=event, distance=event['event_height'] - gene_subtree_height)
             Debug.log(header='\ngene_subtree events:\n', bodies=[gene_subtree_events], pformat=True)
-
+            
             _id = 'trans_subtree_' + str(increment())
             next_dir = os.path.join(path, _id)
             os.mkdir(next_dir)
@@ -944,6 +945,7 @@ class GeneTree(GenericTree):
             return
         for event in events:
             if (event['type'] == 'duplication'):
+                Debug.event_count['d'] += 1
                 node_id = None
                 coal_distance = None
                 if (coalescent_process):        # non-trivial
@@ -961,11 +963,13 @@ class GeneTree(GenericTree):
                     coal_distance = 0
                     self.dt_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance, path=path)
             elif (event['type'] == 'transfer'):
+                Debug.event_count['t'] += 1
                 trans_target_id = event['target']
                 target_height = SpeciesTree.global_species_tree.distance_to_leaf(trans_target_id, 0)
                 distance_above_target = event['event_height'] - target_height
                 self.dt_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=distance_above_target, path=path)
             elif (event['type'] == 'loss'):
+                Debug.event_count['l'] += 1
                 file_name = 'loss_' + str(event['distance'])
                 f = open(os.path.join(path, file_name), 'w')
                 f.write(str(event['name']) + ',' + str(event['distance']))

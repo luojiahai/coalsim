@@ -169,7 +169,7 @@ def main(options):
                                  path='./output/final_result_cut.txt')
 
     qiuyi_tree.Debug.log_file.close()
-
+    print(qiuyi_tree.Debug.event_count)
     # for node in final_result_cut.tips():
     #     print(final_result_cut.distance(node))
 

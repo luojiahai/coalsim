@@ -1,4 +1,4 @@
-14.39970148065955
+7.088381594579709
 id	name	parent	d2p
 0	A	16	10.0
 id	name	parent	d2p
