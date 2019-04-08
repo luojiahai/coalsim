@@ -1,4 +1,4 @@
-0.7475604189150165
+0.3917802185643726
 id	name	parent	d2p
 6	G	10	2.0
 id	name	parent	d2p

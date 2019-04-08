@@ -70,16 +70,18 @@ class TreeNode(object):
         self.distance_to_parent = distance_to_parent
         self.children = children if children else []
         self.distance_to_children = []
+        self.clade_split = []
         return
     
     def __repr__(self):
-        return "node_id: {}, name: {}, parent: {}, distance_to_parent: {}, children: {}, distance_to_children: {}".format(
+        return "node_id: {}, name: {}, parent: {}, distance_to_parent: {}, children: {}, distance_to_children: {}, clade_split: {}".format(
                 self.node_id, 
                 self.name,
                 self.parent, 
                 self.distance_to_parent,
                 self.children,
-                self.distance_to_children)
+                self.distance_to_children,
+                self.clade_split)
 
 
 class GenericTree(object):
@@ -258,7 +260,17 @@ class SpeciesTree(GenericTree):
                 self.root = node
             self.nodes_id_dict[node.node_id] = node
             self.nodes_name_dict[node.name] = node
-        
+            node.clade_split = []
+            if (node.children and not node.clade_split):
+                for i in range(len(node.children)):
+                    node_name = self.node_by_id(node.children[i]).name
+                    split = []
+                    for j in range(len(node_name)):  
+                        char = node_name[j]
+                        node_id = self.node_by_name(char).node_id
+                        split.append(node_id)
+                    node.clade_split.append(split)
+
         self.leaves = [node.node_id for node in self.nodes if not node.children]
         self.total_distance = self.distance_to_root_recurse(node_id=self.leaves[0])
         return
@@ -559,6 +571,12 @@ class GeneTree(GenericTree):
                 self.root = node
             self.nodes_id_dict[node.node_id] = node
             self.nodes_name_dict[node.name] = node
+            if (node.children and not node.clade_split):
+                for i in range(len(node.children)):
+                    node_name = self.node_by_id(node.children[i]).name 
+                    clade = node_name.split('*')[:-1]
+                    clade = [int(j) for j in clade]
+                    node.clade_split.append(clade)
         
         self.species_tree = species_tree
         self.leaves = [node.node_id for node in self.nodes if not node.children]
