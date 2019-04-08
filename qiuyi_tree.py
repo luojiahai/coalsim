@@ -20,7 +20,7 @@ def increment():
 class Debug(object):
     log_file = None
     random_state = None
-    event_count = {'d': 0, 'l': 0, 't': 0}
+    event_count = {'d': 0, 'l': 0, 't': 0, 'i': 0}
 
     def __init__(self):
         pass

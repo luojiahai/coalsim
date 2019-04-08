@@ -171,7 +171,11 @@ def main(options):
     qiuyi_tree.Debug.log_file.close()
 
     print('Number of events: ')
-    print(qiuyi_tree.Debug.event_count)
+    print('Duplicaton: ' + str(qiuyi_tree.Debug.event_count['d']))
+    print('Loss: ' + str(qiuyi_tree.Debug.event_count['l']))
+    print('Transfer: ' + str(qiuyi_tree.Debug.event_count['t']))
+    print('ILS: ' + str(qiuyi_tree.Debug.event_count['i']))
+
     # for node in final_result_cut.tips():
     #     print(final_result_cut.distance(node))
 
