@@ -19,7 +19,6 @@ def increment():
 
 class Debug(object):
     log_file = None
-    random_state = None
     event_count = {'d': 0, 'l': 0, 't': 0, 'i': 0}
 
     def __init__(self):
@@ -317,13 +316,13 @@ class SpeciesTree(GenericTree):
             return
         else:
             lambda_c = len(clade_set[node_id]) * self.get_lambda_coal(clade_set[node_id])    # rate of coalescence
-            distance_fake = Debug.random_state.exponential(scale=1.0/lambda_c)
+            distance_fake = np.random.exponential(scale=1.0/lambda_c)
             if (distance < distance_fake):      # no coalescent event anymore in this branch
                 return
             else:
                 if (len(clade_set[node_id]) >= 2):   # when coalescent, randomly merge 2 elements in the gene sets
                     temp_set = sorted(clade_set[node_id])
-                    couple = Debug.random_state.choice(clade_set[node_id], size=2, replace=False)
+                    couple = np.random.choice(clade_set[node_id], size=2, replace=False)
                     clade_set[node_id] = [''.join(self.star_sorted(couple))] + [e for e in clade_set[node_id] if e not in couple]
 
                     # print process
@@ -490,7 +489,7 @@ class SpeciesTree(GenericTree):
 
     def incomplete_coalescent(self, distance_above_root):
         full_coal_process, genes_into_root = self.coalescent(distance_above_root=10000)
-        chosen_gene = Debug.random_state.choice(genes_into_root)
+        chosen_gene = np.random.choice(genes_into_root)
         sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
         return sub_coal_process, chosen_gene
 
@@ -704,14 +703,14 @@ class GeneTree(GenericTree):
                 node_height = tree.distance_to_leaf(node.node_id, 0)
                 if (node_height <= event_height):
                     nodes_list.append(node.node_id)
-        return Debug.random_state.choice(nodes_list)
+        return np.random.choice(nodes_list)
 
     # find the points of duplicatons and losses recursively
     def dlt_process_recurse(self, tree, distance, events):
         node = self.nodes_name_dict[tree.name]
-        distance_dup = Debug.random_state.exponential(scale=1.0/self.get_lambda_dup(node.name))
-        distance_loss = Debug.random_state.exponential(scale=1.0/self.get_lambda_loss(node.name))
-        distance_trans = Debug.random_state.exponential(scale=1.0/self.get_lambda_trans(node.name))
+        distance_dup = np.random.exponential(scale=1.0/self.get_lambda_dup(node.name))
+        distance_loss = np.random.exponential(scale=1.0/self.get_lambda_loss(node.name))
+        distance_trans = np.random.exponential(scale=1.0/self.get_lambda_trans(node.name))
         if (distance_dup < min(distance_loss, distance_trans) and distance_dup < distance):      # duplication happens first
             Debug.log(header='duplication at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_dup) + '\n')
             event_height = super().distance_to_leaf(node.node_id, 0) + distance - distance_dup
@@ -763,9 +762,9 @@ class GeneTree(GenericTree):
     # find the points of duplicatons and losses recursively
     def dt_process_recurse(self, tree, distance, events):
         node = self.nodes_name_dict[tree.name]
-        distance_dup = Debug.random_state.exponential(scale=1.0/self.get_lambda_dup(node.name))
+        distance_dup = np.random.exponential(scale=1.0/self.get_lambda_dup(node.name))
         distance_loss = 10000
-        distance_trans = Debug.random_state.exponential(scale=1.0/self.get_lambda_trans(node.name))
+        distance_trans = np.random.exponential(scale=1.0/self.get_lambda_trans(node.name))
         if (distance_dup < min(distance_loss, distance_trans) and distance_dup < distance):      # duplication happens first
             Debug.log(header='duplication at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_dup) + '\n')
             event_height = event_height = super().distance_to_leaf(node.node_id, 0) + distance - distance_dup
@@ -871,6 +870,10 @@ class GeneTree(GenericTree):
             Debug.save_output(contents=[gene_subtree.skbio_tree],
                               path=Debug.subtree_file_name('output/newick_gene_subtrees', 'trans', node_id, distance_above_root))
 
+            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+            function of locating ILS event
+            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
             Debug.log(header='\ngene_subtree dlt_process:\n')
             gene_subtree_height = gene_subtree.total_distance
             gene_subtree_events = gene_subtree.dlt_process(event=event, distance=event['event_height'] - gene_subtree_height)
@@ -928,6 +931,10 @@ class GeneTree(GenericTree):
 
             Debug.save_output(contents=[gene_subtree.skbio_tree],
                               path=Debug.subtree_file_name('output/newick_gene_subtrees', 'dup', node_id, distance_above_root))
+
+            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+            function of locating ILS event
+            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
             Debug.log(header='\ngene_subtree dlt_process:\n')
             gene_subtree_height = gene_subtree.total_distance

@@ -112,14 +112,12 @@ def main(options):
     os.mkdir(tree_path)
     qiuyi_tree.Debug.log_file = open('./output/log.txt', 'w')
     qiuyi_tree.Debug.log(header='Log created on ' + time.ctime() + '\n')
-    
-    qiuyi_tree.Debug.random_state = np.random.RandomState(seed=1)
 
     qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample1.txt')    # read newick species tree
     qiuyi_tree.Debug.save_tree_nodes(nodes=qstree.nodes, path='output/species_nodes_table.txt')
 
     qiuyi_tree.SpeciesTree.global_species_tree = qstree
-    qiuyi_tree.SpeciesTree.lambda_coal = qiuyi_tree.Debug.random_state.gamma(shape=3, scale=0.1, size=len(qstree.leaves))
+    qiuyi_tree.SpeciesTree.lambda_coal = qiuyi_tree.np.random.gamma(shape=3, scale=0.1, size=len(qstree.leaves))
 
     qiuyi_tree.Debug.log(header='\nspecies_tree ascii_art:\n',
                          bodies=[qstree.skbio_tree.ascii_art()])
@@ -138,9 +136,9 @@ def main(options):
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
 
-    qiuyi_tree.GeneTree.lambda_dup = qiuyi_tree.Debug.random_state.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    qiuyi_tree.GeneTree.lambda_loss = qiuyi_tree.Debug.random_state.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    qiuyi_tree.GeneTree.lambda_trans = qiuyi_tree.Debug.random_state.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_dup = qiuyi_tree.np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_loss = qiuyi_tree.np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_trans = qiuyi_tree.np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     qiuyi_tree.GeneTree.dup_recombination = options['dup_recombination']
     qiuyi_tree.GeneTree.trans_hemiplasy = options['trans_hemiplasy']
 
