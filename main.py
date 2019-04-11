@@ -89,7 +89,22 @@ def build_tree_recurse(gene_tree, path):
             loss_nodes.append(new_l_node)
 
             file_.close()
-    
+
+    for f in files:
+        file_name = f.split('_')
+        if (file_name and file_name[0] == 'ils'):
+            # do something
+            ils_path = os.path.join(path, f)
+            file_ = open(ils_path)
+            line = file_.readline()
+            splited = line.split(',')
+            node_name = splited[0]
+            for node in current_tree.traverse():
+                if node.name == (node_name + _id):
+                    node.name += '_i'
+                    break
+            file_.close()
+
     return loss_nodes
 
 def build_tree(gene_tree, path):
@@ -105,19 +120,18 @@ def cut_tree(final_tree, loss_nodes):
 def main(options):
     shutil.rmtree('./output')
     os.mkdir('./output')
-    os.mkdir('./output/newick_gene_subtrees')
-    os.mkdir('./output/subtrees')
+    # os.mkdir('./output/newick_gene_subtrees')
+    # os.mkdir('./output/subtrees')
     tree_path = './output/tree'
     os.mkdir(tree_path)
     qiuyi_tree.Debug.log_file = open('./output/log.txt', 'w')
     qiuyi_tree.Debug.log(header='Log created on ' + time.ctime() + '\n')
 
-
     qstree = qiuyi_tree.SpeciesTree(newick_path='data/tree_sample1.txt')    # read newick species tree
     qiuyi_tree.Debug.save_tree_nodes(nodes=qstree.nodes, path='output/species_nodes_table.txt')
 
     qiuyi_tree.SpeciesTree.global_species_tree = qstree
-    qiuyi_tree.SpeciesTree.lambda0 = np.random.gamma(shape=3, scale=0.1, size=len(qstree.leaves))
+    qiuyi_tree.SpeciesTree.lambda_coal = qiuyi_tree.np.random.gamma(shape=3, scale=0.1, size=len(qstree.leaves))
 
     qiuyi_tree.Debug.log(header='\nspecies_tree ascii_art:\n',
                          bodies=[qstree.skbio_tree.ascii_art()])
@@ -136,26 +150,26 @@ def main(options):
 
     qgtree = qiuyi_tree.GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
 
-    qiuyi_tree.GeneTree.lambda_dup = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    qiuyi_tree.GeneTree.lambda_loss = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    qiuyi_tree.GeneTree.lambda_trans = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_dup = qiuyi_tree.np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_loss = qiuyi_tree.np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    qiuyi_tree.GeneTree.lambda_trans = qiuyi_tree.np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     qiuyi_tree.GeneTree.dup_recombination = options['dup_recombination']
     qiuyi_tree.GeneTree.trans_hemiplasy = options['trans_hemiplasy']
 
     qiuyi_tree.Debug.save_tree_nodes(nodes=qgtree.nodes, path='output/gene_nodes_table.txt')
-    qiuyi_tree.Debug.save_output(contents=[qgtree.skbio_tree],
-                                 path='output/newick_gene_subtrees/gene_tree.txt')
+    # qiuyi_tree.Debug.save_output(contents=[qgtree.skbio_tree],
+    #                              path='output/newick_gene_subtrees/gene_tree.txt')
     qiuyi_tree.Debug.log(header='\ngene_tree ascii_art:\n',
                          bodies=[qgtree.skbio_tree.ascii_art()])
     qiuyi_tree.Debug.log(header='\ngene_nodes:\n',
                          bodies=qgtree.nodes)
     qiuyi_tree.Debug.log(header='\ngene_tree dlt_process:\n')
-    events = qgtree.dup_loss_process(distance=0)     # locate the duplication points on the coalescent tree
+    events = qgtree.dlt_process(distance=0)     # locate the duplication points on the coalescent tree
     qiuyi_tree.Debug.log(header='\ngene_tree events:\n',
                          bodies=[events],
                          pformat=True)
-    qiuyi_tree.Debug.log(header='\ngene_tree duplication_subtree:\n')
-    qgtree.duplication_subtree(coalescent_process=coalescent_process, events=events, path=tree_path)        # generate duplication subtrees
+    qiuyi_tree.Debug.log(header='\ngene_tree dt_subtree:\n')
+    qgtree.dt_subtree(coalescent_process=coalescent_process, events=events, path=tree_path)        # generate duplication subtrees
 
 
     final_result = qgtree.skbio_tree.deepcopy()
@@ -167,6 +181,12 @@ def main(options):
                                  path='./output/final_result_cut.txt')
 
     qiuyi_tree.Debug.log_file.close()
+
+    print('Number of events: ')
+    print('Duplicaton: ' + str(qiuyi_tree.Debug.event_count['d']))
+    print('Loss: ' + str(qiuyi_tree.Debug.event_count['l']))
+    print('Transfer: ' + str(qiuyi_tree.Debug.event_count['t']))
+    print('ILS: ' + str(qiuyi_tree.Debug.event_count['i']))
 
     # for node in final_result_cut.tips():
     #     print(final_result_cut.distance(node))
@@ -183,7 +203,7 @@ def main(options):
 
 if __name__ == "__main__":
     options = {
-        'dup_recombination': 1,
-        'trans_hemiplasy': 1
+        'dup_recombination': 0,
+        'trans_hemiplasy': 0
     }
     main(options)
