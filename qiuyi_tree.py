@@ -69,17 +69,19 @@ class TreeNode(object):
         self.distance_to_parent = distance_to_parent
         self.children = children if children else []
         self.distance_to_children = []
+        self.clade = []
         self.clade_split = []
         return
     
     def __repr__(self):
-        return "node_id: {}, name: {}, parent: {}, distance_to_parent: {}, children: {}, distance_to_children: {}, clade_split: {}".format(
+        return "node_id: {}, name: {}, parent: {}, distance_to_parent: {}, children: {}, distance_to_children: {}, clade: {}, clade_split: {}".format(
                 self.node_id, 
                 self.name,
                 self.parent, 
                 self.distance_to_parent,
                 self.children,
                 self.distance_to_children,
+                self.clade,
                 self.clade_split)
 
 
@@ -259,6 +261,13 @@ class SpeciesTree(GenericTree):
                 self.root = node
             self.nodes_id_dict[node.node_id] = node
             self.nodes_name_dict[node.name] = node
+
+            node.clade = []
+            for i in range(len(node.name)):  
+                char = node.name[i]
+                node_id = self.node_by_name(char).node_id
+                node.clade.append(node_id)
+
             node.clade_split = []
             if (node.children and not node.clade_split):
                 for i in range(len(node.children)):
@@ -313,12 +322,12 @@ class SpeciesTree(GenericTree):
     #   named "to_set", and the distance from the last coalescent event or the bottom of the branch.
     def coalescent_recurse(self, node_id, distance, clade_set, coalescent_process):
         if (len(clade_set[node_id]) <= 1):
-            return
+            return clade_set[node_id]
         else:
             lambda_c = len(clade_set[node_id]) * self.get_lambda_coal(clade_set[node_id])    # rate of coalescence
             distance_fake = np.random.exponential(scale=1.0/lambda_c)
             if (distance < distance_fake):      # no coalescent event anymore in this branch
-                return
+                return clade_set[node_id]
             else:
                 if (len(clade_set[node_id]) >= 2):   # when coalescent, randomly merge 2 elements in the gene sets
                     temp_set = sorted(clade_set[node_id])
@@ -336,13 +345,13 @@ class SpeciesTree(GenericTree):
                         'distance': distance_fake
                     })
                 else:
-                    return      # stop when gene set only has one single element
+                    return clade_set[node_id]     # stop when gene set only has one single element
                 distance = distance - distance_fake
                 self.coalescent_recurse(node_id=node_id, 
                                         distance=distance, 
                                         clade_set=clade_set,
                                         coalescent_process=coalescent_process)     # use recursion to simulate the case when there is more than one coalescent events in the branch
-        return
+        return clade_set[node_id]
 
     # the main multi-species coalecent function
     def coalescent(self, distance_above_root):
@@ -362,8 +371,7 @@ class SpeciesTree(GenericTree):
         while (True):
             for leaf in old_leaves:
                 if (leaf == root.node_id):
-                    clade_set_into_root = clade_set[leaf]
-                    self.coalescent_recurse(node_id=root.node_id, 
+                    clade_set_into_root = self.coalescent_recurse(node_id=root.node_id, 
                                             distance=distance_above_root, 
                                             clade_set=clade_set,
                                             coalescent_process=coalescent_process)
@@ -493,6 +501,13 @@ class SpeciesTree(GenericTree):
         sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
         return sub_coal_process, chosen_gene
 
+    def bounded_coalescent(self, distance_above_root):
+        coal_process, genes_into_root = self.coalescent(distance_above_root)
+        if (len(genes_into_root) == 1):
+            return coal_process
+        else:
+            return self.bounded_coalescent(distance_above_root)
+
     # given a coalescent process obtained by incomplete coalescent,
     # one may have more than one subtrees in the full_coal_process,
     # we can choose a subtree rooted at the chosen_gene,
@@ -570,13 +585,18 @@ class GeneTree(GenericTree):
                 self.root = node
             self.nodes_id_dict[node.node_id] = node
             self.nodes_name_dict[node.name] = node
+
+        for node in self.nodes:
+            clade = node.name.split('*')[:-1]
+            clade = [int(j) for j in clade]
+            node.clade = clade
             if (node.children and not node.clade_split):
                 for i in range(len(node.children)):
                     node_name = self.node_by_id(node.children[i]).name 
                     clade = node_name.split('*')[:-1]
                     clade = [int(j) for j in clade]
                     node.clade_split.append(clade)
-        
+    
         self.species_tree = species_tree
         self.leaves = [node.node_id for node in self.nodes if not node.children]
         self.total_distance = self.distance_to_root_recurse(node_id=self.leaves[0])
@@ -824,6 +844,38 @@ class GeneTree(GenericTree):
                                     events=events)  
         return events
     
+    def find_ils(self, path):
+        for i in range(len(self.nodes)):
+            j = len(self.nodes)-1-i
+            gene_node = self.node_by_id(j)
+            gene_clade = gene_node.clade
+            gene_splits = gene_node.clade_split
+            find_species_node = False
+            for node in self.species_tree.nodes:
+                if (node.clade == gene_clade):
+                    find_species_node = True
+                    species_node = node
+                    break
+            if not find_species_node:
+                continue
+            species_clade = species_node.clade
+            species_splits = species_node.clade_split
+            find_ils = False
+            if (gene_splits):
+                gene_split_0 = set(gene_splits[0])
+                gene_split_1 = set(gene_splits[1])
+                for species_split in species_splits:
+                    if (set(species_split).intersection(gene_split_0) and set(species_split).intersection(gene_split_1)):
+                        find_ils = True
+                        break
+            if (find_ils):
+                Debug.event_count['i'] += 1
+                file_name = 'ils_' + str(Debug.event_count['i'])
+                f = open(os.path.join(path, file_name), 'w')
+                f.write(str(gene_node.name) + ',' + str(gene_split_0) + ' ' + str(gene_split_1))
+                f.close()
+                print('find ils at gene node ' + str(gene_node.name) + ' split: ' + str(gene_split_0) + ' ' + str(gene_split_1))
+
     # find the duplication subtree and do subtree coalescence
     def dt_subtree_recurse(self, event, node_id, coal_distance, path):
 
@@ -846,7 +898,7 @@ class GeneTree(GenericTree):
             if (GeneTree.trans_hemiplasy == 1):
                 species_subtree_coal_process, chosen_gene = species_subtree.incomplete_coalescent(distance_above_root)
             elif (GeneTree.trans_hemiplasy == 0):
-                species_subtree_coal_process = species_subtree.sub_leaves_coalescent(distance_above_root=distance_above_root, sub_leaves=species_subtree.leaves)
+                species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root=distance_above_root)
 
             Debug.log(header='\nspecies_subtree_coal_process:\n', 
                       bodies=[species_subtree_coal_process], pformat=True)
@@ -869,10 +921,6 @@ class GeneTree(GenericTree):
 
             Debug.save_output(contents=[gene_subtree.skbio_tree],
                               path=Debug.subtree_file_name('output/newick_gene_subtrees', 'trans', node_id, distance_above_root))
-
-            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            function of locating ILS event
-            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
             Debug.log(header='\ngene_subtree dlt_process:\n')
             gene_subtree_height = gene_subtree.total_distance
@@ -932,10 +980,6 @@ class GeneTree(GenericTree):
             Debug.save_output(contents=[gene_subtree.skbio_tree],
                               path=Debug.subtree_file_name('output/newick_gene_subtrees', 'dup', node_id, distance_above_root))
 
-            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            function of locating ILS event
-            '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
             Debug.log(header='\ngene_subtree dlt_process:\n')
             gene_subtree_height = gene_subtree.total_distance
             gene_subtree_events = gene_subtree.dlt_process(event=event, distance=event['event_height'] - gene_subtree_height)
@@ -966,6 +1010,7 @@ class GeneTree(GenericTree):
             f = open(os.path.join(path, 'species_tree.txt'), 'w')
             f.write(str(self.species_tree.skbio_tree))
             f.close()
+            self.find_ils(path)
         if (not events):
             return
         for event in events:

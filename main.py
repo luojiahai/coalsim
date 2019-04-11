@@ -1,4 +1,3 @@
-# first comment
 import qiuyi_tree
 import pprint
 import os, shutil
@@ -90,7 +89,22 @@ def build_tree_recurse(gene_tree, path):
             loss_nodes.append(new_l_node)
 
             file_.close()
-    
+
+    for f in files:
+        file_name = f.split('_')
+        if (file_name and file_name[0] == 'ils'):
+            # do something
+            ils_path = os.path.join(path, f)
+            file_ = open(ils_path)
+            line = file_.readline()
+            splited = line.split(',')
+            node_name = splited[0]
+            for node in current_tree.traverse():
+                if node.name == (node_name + _id):
+                    node.name += '_i'
+                    break
+            file_.close()
+
     return loss_nodes
 
 def build_tree(gene_tree, path):
@@ -190,6 +204,6 @@ def main(options):
 if __name__ == "__main__":
     options = {
         'dup_recombination': 0,
-        'trans_hemiplasy': 1
+        'trans_hemiplasy': 0
     }
     main(options)
