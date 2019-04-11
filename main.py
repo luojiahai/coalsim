@@ -120,8 +120,8 @@ def cut_tree(final_tree, loss_nodes):
 def main(options):
     shutil.rmtree('./output')
     os.mkdir('./output')
-    os.mkdir('./output/newick_gene_subtrees')
-    os.mkdir('./output/subtrees')
+    # os.mkdir('./output/newick_gene_subtrees')
+    # os.mkdir('./output/subtrees')
     tree_path = './output/tree'
     os.mkdir(tree_path)
     qiuyi_tree.Debug.log_file = open('./output/log.txt', 'w')
@@ -157,8 +157,8 @@ def main(options):
     qiuyi_tree.GeneTree.trans_hemiplasy = options['trans_hemiplasy']
 
     qiuyi_tree.Debug.save_tree_nodes(nodes=qgtree.nodes, path='output/gene_nodes_table.txt')
-    qiuyi_tree.Debug.save_output(contents=[qgtree.skbio_tree],
-                                 path='output/newick_gene_subtrees/gene_tree.txt')
+    # qiuyi_tree.Debug.save_output(contents=[qgtree.skbio_tree],
+    #                              path='output/newick_gene_subtrees/gene_tree.txt')
     qiuyi_tree.Debug.log(header='\ngene_tree ascii_art:\n',
                          bodies=[qgtree.skbio_tree.ascii_art()])
     qiuyi_tree.Debug.log(header='\ngene_nodes:\n',

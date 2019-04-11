@@ -907,20 +907,21 @@ class GeneTree(GenericTree):
             Debug.log(header='\nspecies_subtree_time_seq:' + '\n',
                       bodies=[species_subtree_time_seq], pformat=True)
 
-            # save subtree
-            Debug.save_tree_nodes(nodes=species_subtree.nodes, 
-                                  path=Debug.subtree_file_name('output/subtrees', 'trans', node_id, distance_above_root), 
-                                  distance=distance_above_root)
+            # debug
+            # Debug.save_tree_nodes(nodes=species_subtree.nodes, 
+            #                       path=Debug.subtree_file_name('output/subtrees', 'trans', node_id, distance_above_root), 
+            #                       distance=distance_above_root)
             
             gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
             gene_subtree.skbio_tree.length = event['event_height'] - gene_subtree.total_distance
             Debug.log(header='\ngene_subtree nodes:\n', bodies=gene_subtree.nodes)
-            Debug.save_tree_nodes(nodes=gene_subtree.nodes, 
-                                  path=Debug.subtree_file_name('output/subtrees', 'trans', node_id, distance_above_root), 
-                                  mode='a')
+            # debug
+            # Debug.save_tree_nodes(nodes=gene_subtree.nodes, 
+            #                       path=Debug.subtree_file_name('output/subtrees', 'trans', node_id, distance_above_root), 
+            #                       mode='a')
 
-            Debug.save_output(contents=[gene_subtree.skbio_tree],
-                              path=Debug.subtree_file_name('output/newick_gene_subtrees', 'trans', node_id, distance_above_root))
+            # Debug.save_output(contents=[gene_subtree.skbio_tree],
+            #                   path=Debug.subtree_file_name('output/newick_gene_subtrees', 'trans', node_id, distance_above_root))
 
             Debug.log(header='\ngene_subtree dlt_process:\n')
             gene_subtree_height = gene_subtree.total_distance
@@ -966,19 +967,19 @@ class GeneTree(GenericTree):
                       bodies=[species_subtree_time_seq], pformat=True)
 
             # save subtree
-            Debug.save_tree_nodes(nodes=species_subtree.nodes, 
-                                  path=Debug.subtree_file_name('output/subtrees', 'dup', node_id, distance_above_root), 
-                                  distance=distance_above_root)
+            # Debug.save_tree_nodes(nodes=species_subtree.nodes, 
+            #                       path=Debug.subtree_file_name('output/subtrees', 'dup', node_id, distance_above_root), 
+            #                       distance=distance_above_root)
             
             gene_subtree = GeneTree(time_sequences=species_subtree_time_seq, species_tree=species_subtree)
             gene_subtree.skbio_tree.length = event['event_height'] - gene_subtree.total_distance
             Debug.log(header='\ngene_subtree nodes:\n', bodies=gene_subtree.nodes)
-            Debug.save_tree_nodes(nodes=gene_subtree.nodes, 
-                                  path=Debug.subtree_file_name('output/subtrees', 'dup', node_id, distance_above_root), 
-                                  mode='a')
+            # Debug.save_tree_nodes(nodes=gene_subtree.nodes, 
+            #                       path=Debug.subtree_file_name('output/subtrees', 'dup', node_id, distance_above_root), 
+            #                       mode='a')
 
-            Debug.save_output(contents=[gene_subtree.skbio_tree],
-                              path=Debug.subtree_file_name('output/newick_gene_subtrees', 'dup', node_id, distance_above_root))
+            # Debug.save_output(contents=[gene_subtree.skbio_tree],
+            #                   path=Debug.subtree_file_name('output/newick_gene_subtrees', 'dup', node_id, distance_above_root))
 
             Debug.log(header='\ngene_subtree dlt_process:\n')
             gene_subtree_height = gene_subtree.total_distance
