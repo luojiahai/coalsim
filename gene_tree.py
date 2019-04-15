@@ -1,4 +1,4 @@
-from utility import *
+from shared_utility import *
 from species_tree import *
 
 import os
@@ -293,7 +293,7 @@ class GeneTree(GenericTree):
             gene_splits = gene_node.clade_split
             find_species_node = False
             for node in self.species_tree.nodes:
-                if (node.clade == gene_clade):
+                if (set(node.clade).issuperset(set(gene_clade))):
                     find_species_node = True
                     species_node = node
                     break

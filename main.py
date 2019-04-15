@@ -1,4 +1,4 @@
-from utility import *
+from shared_utility import *
 from species_tree import *
 from gene_tree import *
 
@@ -205,8 +205,10 @@ def main(options):
     
 
 if __name__ == "__main__":
+    dup_recombination = int(input('dup_reconbination = '))
+    trans_hemiplasy = int(input('trans_hemiplasy = '))
     options = {
-        'dup_recombination': 0,
-        'trans_hemiplasy': 0
+        'dup_recombination': dup_recombination,
+        'trans_hemiplasy': trans_hemiplasy
     }
     main(options)

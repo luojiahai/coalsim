@@ -1,4 +1,4 @@
-from utility import *
+from shared_utility import *
 
 import numpy as np
 from statistics import mean
@@ -231,7 +231,7 @@ class SpeciesTree(GenericTree):
                                 new_leaves.append(parent)
                             elif not (mark[children[0]] or mark[children[1]]):      # when neither childer is marked, we mark the parent as FALSE
                                 mark[parent] = False
-                                clade_set[parent] = "$"
+                                clade_set[parent] = '$'
                                 if (len(new_leaves) > 0):
                                     new_leaves = [e for e in new_leaves if e != children[0] and e != children[1]]
                                 new_leaves.append(parent)
