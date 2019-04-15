@@ -189,15 +189,17 @@ class GeneTree(GenericTree):
             if (event_height < species_tree_height):
                 Debug.log(header='transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_trans) + '\n')
                 target = self.find_trans_target(event_height, node.node_id)
-                events.append({
-                    'type': 'transfer',
-                    'node_id': node.node_id, 
-                    'name': node.name, 
-                    'distance': distance - distance_trans,
-                    'target': target,
-                    'event_height': event_height
-                })
-            self.dt_process_recurse(tree, distance - distance_trans, events)
+                # if(target):
+                if True:
+                    events.append({
+                        'type': 'transfer',
+                        'node_id': node.node_id, 
+                        'name': node.name, 
+                        'distance': distance - distance_trans,
+                        'target': target,
+                        'event_height': event_height
+                    })
+            self.dlt_process_recurse(tree, distance - distance_trans, events)
         elif (distance_loss <= min(distance_dup, distance_trans) and distance_loss < distance):      # loss happens first, the seaching process stops at the loss point
             Debug.log(header='loss at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_loss) + '\n')
             events.append({
@@ -214,8 +216,8 @@ class GeneTree(GenericTree):
                 child_two = tree.children[1]
                 distance_to_child_one = node.distance_to_children[0]
                 distance_to_child_two = node.distance_to_children[1]
-                self.dt_process_recurse(child_one, distance_to_child_one, events)
-                self.dt_process_recurse(child_two, distance_to_child_two, events)
+                self.dlt_process_recurse(child_one, distance_to_child_one, events)
+                self.dlt_process_recurse(child_two, distance_to_child_two, events)
             else:       # if not exist, reach the leaves of the tree, searching process stops
                 Debug.log(header='reach the end of node ' + str(node.node_id) + ' (' + node.name + ')' + '\n')
         return
@@ -243,14 +245,16 @@ class GeneTree(GenericTree):
             if (event_height < species_tree_height):
                 Debug.log(header='transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_trans) + '\n')
                 target = self.find_trans_target(event_height, node.node_id)
-                events.append({
-                    'type': 'transfer',
-                    'node_id': node.node_id, 
-                    'name': node.name, 
-                    'distance': distance - distance_trans,
-                    'target': target,
-                    'event_height': event_height
-                })
+                # if (target):
+                if True:
+                    events.append({
+                        'type': 'transfer',
+                        'node_id': node.node_id, 
+                        'name': node.name, 
+                        'distance': distance - distance_trans,
+                        'target': target,
+                        'event_height': event_height
+                    })
             self.dlt_process_recurse(tree, distance - distance_trans, events)
         elif (distance_loss <= min(distance_dup, distance_trans) and distance_loss < distance):      # loss happens first, the seaching process stops at the loss point
             Debug.log(header='loss at node ' + str(node.node_id) + ' (' + node.name + ')' + ' with distance ' + str(distance - distance_loss) + '\n')
@@ -268,8 +272,8 @@ class GeneTree(GenericTree):
                 child_two = tree.children[1]
                 distance_to_child_one = node.distance_to_children[0]
                 distance_to_child_two = node.distance_to_children[1]
-                self.dlt_process_recurse(child_one, distance_to_child_one, events)
-                self.dlt_process_recurse(child_two, distance_to_child_two, events)
+                self.dt_process_recurse(child_one, distance_to_child_one, events)
+                self.dt_process_recurse(child_two, distance_to_child_two, events)
             else:       # if not exist, reach the leaves of the tree, searching process stops
                 Debug.log(header='reach the end of node ' + str(node.node_id) + ' (' + node.name + ')' + '\n')
         return
