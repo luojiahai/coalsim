@@ -7,6 +7,7 @@ import os, shutil
 import numpy as np
 import skbio
 import time
+import getopt, sys
 
 
 def build_tree_recurse(gene_tree, path):
@@ -202,13 +203,32 @@ def main(options):
     # print(qstree.node_by_id(0))
     # print(qgtree.node_by_id(14))
     return
-    
+
+
+def parse_arg(argv):
+    try: 
+        opts, args = getopt.getopt(argv,"hd:t:",
+        ["help","dup_recombination=","trans_hemiplasy="])
+    except getopt.GetoptError:
+        print('Usage: {} -d <dup_recombination> -t <trans_hemiplasy>'.format(sys.argv[0]))
+        sys.exit()
+    for opt, arg in opts:
+        if opt in ('-h', "--help"):
+            print('Usage: {} -d <dup_recombination> -t <trans_hemiplasy>'.format(sys.argv[0]))
+            sys.exit()
+        elif opt in ("-d", "--dup_recombination"):
+            dup_recombination = arg
+
+        elif opt in ("-t", "--trans_hemiplasy"):
+            trans_hemiplasy = arg
+
+    return dup_recombination, trans_hemiplasy
+
 
 if __name__ == "__main__":
-    dup_recombination = int(input('dup_reconbination = '))
-    trans_hemiplasy = int(input('trans_hemiplasy = '))
+    dup_recombination, trans_hemiplasy = parse_arg(sys.argv[1:])
     options = {
-        'dup_recombination': dup_recombination,
-        'trans_hemiplasy': trans_hemiplasy
+        'dup_recombination': int(dup_recombination),
+        'trans_hemiplasy': int(trans_hemiplasy)
     }
     main(options)
