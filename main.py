@@ -169,10 +169,6 @@ def main(options):
                          bodies=qgtree.nodes)
     Debug.log(header='\ngene_tree dlt_process:\n')
     events = qgtree.dlt_process(distance=0)     # locate the duplication points on the coalescent tree
-    for event in events:
-        species_id, distance_above_species_node = qgtree.map_event_to_species_id(event=event)
-        event['species_node_id'] = species_id
-        event['distance_to_species_node'] = distance_above_species_node
     Debug.log(header='\ngene_tree events:\n',
                          bodies=[events],
                          pformat=True)

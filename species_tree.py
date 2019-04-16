@@ -308,11 +308,11 @@ class SpeciesTree(GenericTree):
                 if (leaf_name in elem['from_set'] and leaf_name not in elem['to_set']):
                     for e in elem['to_set']:
                         if len(leaf_name) < len(e) and self.star_in_set(leaf_name, e):
-                            species_node_id = int(k)
-                            species_node_height = super().distance_to_leaf(int(k), branch_distance=0)
+                            # species_node_id = int(k)
+                            # species_node_height = super().distance_to_leaf(int(k), branch_distance=0)
                             coal_height = super().distance_to_leaf(int(k), branch_distance=branch_distance)
                             # pair = (ancestor, coal_height)
-                            pair = (e, coal_height, species_node_id)
+                            pair = (e, coal_height)
                             sequence.append(pair)
                             sequence += self.find_ancestors(leaf_name=e, 
                                                                 coalescent_process=coalescent_process)
