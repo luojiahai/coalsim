@@ -137,9 +137,9 @@ class SpeciesTree(GenericTree):
             for leaf in old_leaves:
                 if (leaf == root.node_id):
                     clade_set_into_root = self.coalescent_recurse(node_id=root.node_id, 
-                                            distance=distance_above_root, 
-                                            clade_set=clade_set,
-                                            coalescent_process=coalescent_process)
+                                                                  distance=distance_above_root, 
+                                                                  clade_set=clade_set,
+                                                                  coalescent_process=coalescent_process)
                     break
                 else:
                     parent = self.nodes_id_dict[leaf].parent_id
@@ -261,7 +261,7 @@ class SpeciesTree(GenericTree):
         return coalescent_process
 
     def incomplete_coalescent(self, distance_above_root):
-        full_coal_process, genes_into_root = self.coalescent(distance_above_root=10000)
+        full_coal_process, genes_into_root = self.coalescent(distance_above_root)
         chosen_gene = np.random.choice(genes_into_root)
         sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
         return sub_coal_process, chosen_gene
@@ -315,7 +315,7 @@ class SpeciesTree(GenericTree):
                             pair = (e, coal_height)
                             sequence.append(pair)
                             sequence += self.find_ancestors(leaf_name=e, 
-                                                                coalescent_process=coalescent_process)
+                                                            coalescent_process=coalescent_process)
         return sequence
 
     # backward-in-time coalescent process
@@ -324,5 +324,5 @@ class SpeciesTree(GenericTree):
         time_sequences = {}
         for leaf in self.leaves:
             time_sequences[str(leaf)] = self.find_ancestors(leaf_name=str(leaf)+'*', 
-                                                                coalescent_process=coalescent_process)
+                                                            coalescent_process=coalescent_process)
         return time_sequences
