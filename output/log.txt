@@ -1,4 +1,4 @@
-Log created on Mon Apr 15 03:57:50 2019
+Log created on Tue Apr 16 06:59:06 2019
 
 species_tree ascii_art:
           /-A
@@ -20,213 +20,267 @@ species_tree ascii_art:
                                         \-I
 
 species_nodes:
-node_id: 0, name: A, parent: 16, distance_to_parent: 10.0, children: [], distance_to_children: [], clade: [0], clade_split: []
-node_id: 1, name: B, parent: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
-node_id: 2, name: C, parent: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
-node_id: 3, name: D, parent: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
-node_id: 4, name: E, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 5, name: F, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 6, name: G, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 7, name: H, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 9, name: EF, parent: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
-node_id: 10, name: GH, parent: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
-node_id: 11, name: CD, parent: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
-node_id: 12, name: GHI, parent: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
-node_id: 13, name: BCD, parent: 15, distance_to_parent: 3.0, children: [1, 11], distance_to_children: [5.0, 2.0], clade: [1, 2, 3], clade_split: [[1], [2, 3]]
-node_id: 14, name: EFGHI, parent: 15, distance_to_parent: 3.0, children: [9, 12], distance_to_children: [4.0, 2.0], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
-node_id: 15, name: BCDEFGHI, parent: 16, distance_to_parent: 2.0, children: [13, 14], distance_to_children: [3.0, 3.0], clade: [1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[1, 2, 3], [4, 5, 6, 7, 8]]
-node_id: 16, name: ABCDEFGHI, parent: -1, distance_to_parent: -1.0, children: [0, 15], distance_to_children: [10.0, 2.0], clade: [0, 1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[0], [1, 2, 3, 4, 5, 6, 7, 8]]
+node_id: 0, name: A, parent_id: 16, distance_to_parent: 10.0, children: [], distance_to_children: [], clade: [0], clade_split: []
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 12, name: GHI, parent_id: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 13, name: BCD, parent_id: 15, distance_to_parent: 3.0, children: [1, 11], distance_to_children: [5.0, 2.0], clade: [1, 2, 3], clade_split: [[1], [2, 3]]
+node_id: 14, name: EFGHI, parent_id: 15, distance_to_parent: 3.0, children: [9, 12], distance_to_children: [4.0, 2.0], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
+node_id: 15, name: BCDEFGHI, parent_id: 16, distance_to_parent: 2.0, children: [13, 14], distance_to_children: [3.0, 3.0], clade: [1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[1, 2, 3], [4, 5, 6, 7, 8]]
+node_id: 16, name: ABCDEFGHI, parent_id: -1, distance_to_parent: -1.0, children: [0, 15], distance_to_children: [10.0, 2.0], clade: [0, 1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[0], [1, 2, 3, 4, 5, 6, 7, 8]]
 
 coalescent:
 initial node 10: ['6*', '7*']
-coalescent at node 10: ['6*7*'], distance = 0.8817482624133582
+coalescent at node 10: ['6*7*'], distance = 0.591454529719137
 initial node 11: ['2*', '3*']
-coalescent at node 11: ['2*3*'], distance = 0.08108489271187734
+coalescent at node 11: ['2*3*'], distance = 0.9010095373552469
 initial node 9: ['4*', '5*']
-coalescent at node 9: ['4*5*'], distance = 0.6583938212891084
+coalescent at node 9: ['4*5*'], distance = 1.1350162260355439
 initial node 12: ['6*7*', '8*']
-coalescent at node 12: ['6*7*8*'], distance = 0.422714847533178
+coalescent at node 12: ['6*7*8*'], distance = 1.6271276241719763
+initial node 13: ['1*', '2*3*']
+coalescent at node 13: ['1*2*3*'], distance = 0.8481411329710804
 initial node 14: ['4*5*', '6*7*8*']
-coalescent at node 14: ['4*5*6*7*8*'], distance = 0.8384841652104977
-initial node 15: ['1*', '2*3*', '4*5*6*7*8*']
-coalescent at node 15: ['1*2*3*', '4*5*6*7*8*'], distance = 0.2174893678174246
+coalescent at node 14: ['4*5*6*7*8*'], distance = 0.8279895785495471
 initial node 15: ['1*2*3*', '4*5*6*7*8*']
-coalescent at node 15: ['1*2*3*4*5*6*7*8*'], distance = 0.4418859413308386
+coalescent at node 15: ['1*2*3*4*5*6*7*8*'], distance = 0.1640626881289162
 initial node 16: ['0*', '1*2*3*4*5*6*7*8*']
-coalescent at node 16: ['0*1*2*3*4*5*6*7*8*'], distance = 0.20073029021124045
+coalescent at node 16: ['0*1*2*3*4*5*6*7*8*'], distance = 0.20108354720379296
 
 coalescent_process:
 defaultdict(<class 'list'>,
-            {'10': [{'distance': 0.8817482624133582,
+            {'10': [{'distance': 0.591454529719137,
                      'from_set': ['6*', '7*'],
                      'to_set': ['6*7*']}],
-             '11': [{'distance': 0.08108489271187734,
+             '11': [{'distance': 0.9010095373552469,
                      'from_set': ['2*', '3*'],
                      'to_set': ['2*3*']}],
-             '12': [{'distance': 0.422714847533178,
+             '12': [{'distance': 1.6271276241719763,
                      'from_set': ['6*7*', '8*'],
                      'to_set': ['6*7*8*']}],
-             '14': [{'distance': 0.8384841652104977,
+             '13': [{'distance': 0.8481411329710804,
+                     'from_set': ['1*', '2*3*'],
+                     'to_set': ['1*2*3*']}],
+             '14': [{'distance': 0.8279895785495471,
                      'from_set': ['4*5*', '6*7*8*'],
                      'to_set': ['4*5*6*7*8*']}],
-             '15': [{'distance': 0.2174893678174246,
-                     'from_set': ['1*', '2*3*', '4*5*6*7*8*'],
-                     'to_set': ['1*2*3*', '4*5*6*7*8*']},
-                    {'distance': 0.4418859413308386,
+             '15': [{'distance': 0.1640626881289162,
                      'from_set': ['1*2*3*', '4*5*6*7*8*'],
                      'to_set': ['1*2*3*4*5*6*7*8*']}],
-             '16': [{'distance': 0.20073029021124045,
+             '16': [{'distance': 0.20108354720379296,
                      'from_set': ['0*', '1*2*3*4*5*6*7*8*'],
                      'to_set': ['0*1*2*3*4*5*6*7*8*']}],
-             '9': [{'distance': 0.6583938212891084,
+             '9': [{'distance': 1.1350162260355439,
                     'from_set': ['4*', '5*'],
                     'to_set': ['4*5*']}]})
 
 time_sequences:
-{'0': [('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '1': [('1*2*3*', 8.217489367817425),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '2': [('2*3*', 3.0810848927118775),
-       ('1*2*3*', 8.217489367817425),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '3': [('2*3*', 3.0810848927118775),
-       ('1*2*3*', 8.217489367817425),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '4': [('4*5*', 1.6583938212891085),
-       ('4*5*6*7*8*', 5.838484165210498),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '5': [('4*5*', 1.6583938212891085),
-       ('4*5*6*7*8*', 5.838484165210498),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '6': [('6*7*', 2.881748262413358),
-       ('6*7*8*', 3.422714847533178),
-       ('4*5*6*7*8*', 5.838484165210498),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '7': [('6*7*', 2.881748262413358),
-       ('6*7*8*', 3.422714847533178),
-       ('4*5*6*7*8*', 5.838484165210498),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)],
- '8': [('6*7*8*', 3.422714847533178),
-       ('4*5*6*7*8*', 5.838484165210498),
-       ('1*2*3*4*5*6*7*8*', 8.659375309148263),
-       ('0*1*2*3*4*5*6*7*8*', 10.20073029021124)]}
+{'0': [('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '1': [('1*2*3*', 5.84814113297108, 13),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '2': [('2*3*', 3.9010095373552467, 11),
+       ('1*2*3*', 5.84814113297108, 13),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '3': [('2*3*', 3.9010095373552467, 11),
+       ('1*2*3*', 5.84814113297108, 13),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '4': [('4*5*', 2.135016226035544, 9),
+       ('4*5*6*7*8*', 5.8279895785495475, 14),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '5': [('4*5*', 2.135016226035544, 9),
+       ('4*5*6*7*8*', 5.8279895785495475, 14),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '6': [('6*7*', 2.591454529719137, 10),
+       ('6*7*8*', 4.627127624171976, 12),
+       ('4*5*6*7*8*', 5.8279895785495475, 14),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '7': [('6*7*', 2.591454529719137, 10),
+       ('6*7*8*', 4.627127624171976, 12),
+       ('4*5*6*7*8*', 5.8279895785495475, 14),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)],
+ '8': [('6*7*8*', 4.627127624171976, 12),
+       ('4*5*6*7*8*', 5.8279895785495475, 14),
+       ('1*2*3*4*5*6*7*8*', 8.164062688128917, 15),
+       ('0*1*2*3*4*5*6*7*8*', 10.201083547203792, 16)]}
 
 gene_tree ascii_art:
-                                                  /-6*
-                                        /6*7*----|
-                              /6*7*8*--|          \-7*
-                             |         |
-                    /4*5*6*7*8*         \-8*
-                   |         |
-                   |         |          /-4*
-                   |          \4*5*----|
-          /1*2*3*4*5*6*7*8*             \-5*
+                                        /-4*
+                              /4*5*----|
+                             |          \-5*
+                    /4*5*6*7*8*
+                   |         |                    /-6*
+                   |         |          /6*7*----|
+                   |          \6*7*8*--|          \-7*
+          /1*2*3*4*5*6*7*8*            |
+         |         |                    \-8*
          |         |
          |         |                    /-2*
-         |         |          /2*3*----|
--0*1*2*3*4*5*6*7*8* \1*2*3*--|          \-3*
+-0*1*2*3*4*5*6*7*8*|          /2*3*----|
+         |          \1*2*3*--|          \-3*
          |                   |
          |                    \-1*
          |
           \-0*
 
 gene_nodes:
-node_id: 0, name: 6*, parent: 10, distance_to_parent: 2.881748262413358, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 1, name: 7*, parent: 10, distance_to_parent: 2.881748262413358, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 2, name: 8*, parent: 12, distance_to_parent: 3.422714847533178, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 3, name: 4*, parent: 9, distance_to_parent: 1.6583938212891085, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 4, name: 5*, parent: 9, distance_to_parent: 1.6583938212891085, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 5, name: 2*, parent: 11, distance_to_parent: 3.0810848927118775, children: [], distance_to_children: [], clade: [2], clade_split: []
-node_id: 6, name: 3*, parent: 11, distance_to_parent: 3.0810848927118775, children: [], distance_to_children: [], clade: [3], clade_split: []
-node_id: 7, name: 1*, parent: 14, distance_to_parent: 8.217489367817425, children: [], distance_to_children: [], clade: [1], clade_split: []
-node_id: 8, name: 0*, parent: 16, distance_to_parent: 10.20073029021124, children: [], distance_to_children: [], clade: [0], clade_split: []
-node_id: 9, name: 4*5*, parent: 13, distance_to_parent: 4.180090343921389, children: [3, 4], distance_to_children: [1.6583938212891085, 1.6583938212891085], clade: [4, 5], clade_split: [[4], [5]]
-node_id: 10, name: 6*7*, parent: 12, distance_to_parent: 0.5409665851198198, children: [0, 1], distance_to_children: [2.881748262413358, 2.881748262413358], clade: [6, 7], clade_split: [[6], [7]]
-node_id: 11, name: 2*3*, parent: 14, distance_to_parent: 5.1364044751055475, children: [5, 6], distance_to_children: [3.0810848927118775, 3.0810848927118775], clade: [2, 3], clade_split: [[2], [3]]
-node_id: 12, name: 6*7*8*, parent: 13, distance_to_parent: 2.41576931767732, children: [10, 2], distance_to_children: [0.5409665851198198, 3.422714847533178], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
-node_id: 13, name: 4*5*6*7*8*, parent: 15, distance_to_parent: 2.8208911439377653, children: [12, 9], distance_to_children: [2.41576931767732, 4.180090343921389], clade: [4, 5, 6, 7, 8], clade_split: [[6, 7, 8], [4, 5]]
-node_id: 14, name: 1*2*3*, parent: 15, distance_to_parent: 0.44188594133083825, children: [11, 7], distance_to_children: [5.1364044751055475, 8.217489367817425], clade: [1, 2, 3], clade_split: [[2, 3], [1]]
-node_id: 15, name: 1*2*3*4*5*6*7*8*, parent: 16, distance_to_parent: 1.5413549810629767, children: [13, 14], distance_to_children: [2.8208911439377653, 0.44188594133083825], clade: [1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[4, 5, 6, 7, 8], [1, 2, 3]]
-node_id: 16, name: 0*1*2*3*4*5*6*7*8*, parent: -1, distance_to_parent: -1.0, children: [15, 8], distance_to_children: [1.5413549810629767, 10.20073029021124], clade: [0, 1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[1, 2, 3, 4, 5, 6, 7, 8], [0]]
+node_id: 0, name: 4*, parent_id: 9, distance_to_parent: 2.135016226035544, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 9, distance_to_parent: 2.135016226035544, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 6*, parent_id: 10, distance_to_parent: 2.591454529719137, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 3, name: 7*, parent_id: 10, distance_to_parent: 2.591454529719137, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 4, name: 8*, parent_id: 12, distance_to_parent: 4.627127624171976, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 5, name: 2*, parent_id: 11, distance_to_parent: 3.9010095373552467, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 6, name: 3*, parent_id: 11, distance_to_parent: 3.9010095373552467, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 7, name: 1*, parent_id: 14, distance_to_parent: 5.84814113297108, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 8, name: 0*, parent_id: 16, distance_to_parent: 10.201083547203792, children: [], distance_to_children: [], clade: [0], clade_split: []
+node_id: 9, name: 4*5*, parent_id: 13, distance_to_parent: 3.6929733525140036, children: [0, 1], distance_to_children: [2.135016226035544, 2.135016226035544], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 10, name: 6*7*, parent_id: 12, distance_to_parent: 2.035673094452839, children: [2, 3], distance_to_children: [2.591454529719137, 2.591454529719137], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 11, name: 2*3*, parent_id: 14, distance_to_parent: 1.9471315956158337, children: [5, 6], distance_to_children: [3.9010095373552467, 3.9010095373552467], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 12, name: 6*7*8*, parent_id: 13, distance_to_parent: 1.2008619543775714, children: [10, 4], distance_to_children: [2.035673094452839, 4.627127624171976], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 13, name: 4*5*6*7*8*, parent_id: 15, distance_to_parent: 2.3360731095793694, children: [9, 12], distance_to_children: [3.6929733525140036, 1.2008619543775714], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
+node_id: 14, name: 1*2*3*, parent_id: 15, distance_to_parent: 2.3159215551578365, children: [11, 7], distance_to_children: [1.9471315956158337, 5.84814113297108], clade: [1, 2, 3], clade_split: [[2, 3], [1]]
+node_id: 15, name: 1*2*3*4*5*6*7*8*, parent_id: 16, distance_to_parent: 2.0370208590748753, children: [13, 14], distance_to_children: [2.3360731095793694, 2.3159215551578365], clade: [1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[4, 5, 6, 7, 8], [1, 2, 3]]
+node_id: 16, name: 0*1*2*3*4*5*6*7*8*, parent_id: -1, distance_to_parent: -1.0, children: [15, 8], distance_to_children: [2.0370208590748753, 10.201083547203792], clade: [0, 1, 2, 3, 4, 5, 6, 7, 8], clade_split: [[1, 2, 3, 4, 5, 6, 7, 8], [0]]
 
 gene_tree dlt_process:
 nothing happened at node 16 (0*1*2*3*4*5*6*7*8*)
-transfer at node 15 (1*2*3*4*5*6*7*8*) with distance 0.3483617800443781
-transfer at node 15 (1*2*3*4*5*6*7*8*) with distance 0.03371543130916965
 nothing happened at node 15 (1*2*3*4*5*6*7*8*)
-transfer at node 13 (4*5*6*7*8*) with distance 0.5498349252783505
+duplication at node 13 (4*5*6*7*8*) with distance 1.4162249350736893
 nothing happened at node 13 (4*5*6*7*8*)
+duplication at node 9 (4*5*) with distance 3.091275515977002
+nothing happened at node 9 (4*5*)
+loss at node 0 (4*) with distance 1.7182044905634626
+nothing happened at node 1 (5*)
+reach the end of node 1 (5*)
 nothing happened at node 12 (6*7*8*)
 nothing happened at node 10 (6*7*)
-nothing happened at node 0 (6*)
-reach the end of node 0 (6*)
-nothing happened at node 1 (7*)
-reach the end of node 1 (7*)
-duplication at node 2 (8*) with distance 1.6059945904969442
-nothing happened at node 2 (8*)
-reach the end of node 2 (8*)
-loss at node 9 (4*5*) with distance 1.2774279905063626
+nothing happened at node 2 (6*)
+reach the end of node 2 (6*)
+nothing happened at node 3 (7*)
+reach the end of node 3 (7*)
+loss at node 4 (8*) with distance 4.014530618408971
+duplication at node 14 (1*2*3*) with distance 2.0194610478548816
 nothing happened at node 14 (1*2*3*)
-duplication at node 11 (2*3*) with distance 2.2356006225490495
+transfer at node 11 (2*3*) with distance 0.7799256749829193
 nothing happened at node 11 (2*3*)
+duplication at node 5 (2*) with distance 2.93470889049981
+duplication at node 5 (2*) with distance 2.365287747528611
 nothing happened at node 5 (2*)
 reach the end of node 5 (2*)
 nothing happened at node 6 (3*)
 reach the end of node 6 (3*)
+transfer at node 7 (1*) with distance 5.6440303592464565
+duplication at node 7 (1*) with distance 2.0991018395858863
+transfer at node 7 (1*) with distance 1.75554391718611
 nothing happened at node 7 (1*)
 reach the end of node 7 (1*)
-transfer at node 8 (0*) with distance 3.779594297439556
+duplication at node 8 (0*) with distance 4.462101736314875
 nothing happened at node 8 (0*)
 reach the end of node 8 (0*)
 
 gene_tree events:
-[{'distance': 0.3483617800443781,
-  'event_height': 9.007737089192641,
-  'name': '1*2*3*4*5*6*7*8*',
-  'node_id': 15,
-  'target': 0,
-  'type': 'transfer'},
- {'distance': 0.03371543130916965,
-  'event_height': 8.693090740457432,
-  'name': '1*2*3*4*5*6*7*8*',
-  'node_id': 15,
-  'target': 0,
-  'type': 'transfer'},
- {'distance': 0.5498349252783505,
-  'event_height': 6.3883190904888485,
+[{'distance': 1.4162249350736893,
+  'distance_to_species_node': 2.2442145136232368,
+  'event_height': 7.244214513623237,
   'name': '4*5*6*7*8*',
   'node_id': 13,
-  'target': 14,
-  'type': 'transfer'},
- {'distance': 1.6059945904969442,
-  'event_height': 1.6059945904969442,
-  'name': '8*',
-  'node_id': 2,
+  'species_node_id': 14,
   'type': 'duplication'},
- {'distance': 1.2774279905063626,
+ {'distance': 3.091275515977002,
+  'distance_to_species_node': 0.2262917420125472,
+  'event_height': 5.226291742012547,
   'name': '4*5*',
   'node_id': 9,
-  'sub_tree_root_name': '4*5*',
+  'species_node_id': 14,
+  'type': 'duplication'},
+ {'distance': 1.7182044905634626,
+  'distance_to_species_node': 0.7182044905634626,
+  'event_height': 1.7182044905634626,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': 9,
   'type': 'loss'},
- {'distance': 2.2356006225490495,
-  'event_height': 5.316685515260927,
+ {'distance': 4.014530618408971,
+  'distance_to_species_node': 1.0145306184089709,
+  'event_height': 4.014530618408971,
+  'name': '8*',
+  'node_id': 4,
+  'species_node_id': 12,
+  'type': 'loss'},
+ {'distance': 2.0194610478548816,
+  'distance_to_species_node': 2.867602180825962,
+  'event_height': 7.867602180825962,
+  'name': '1*2*3*',
+  'node_id': 14,
+  'species_node_id': 13,
+  'type': 'duplication'},
+ {'distance': 0.7799256749829193,
+  'distance_to_species_node': 1.6809352123381665,
+  'event_height': 4.6809352123381665,
   'name': '2*3*',
   'node_id': 11,
+  'species_node_id': 11,
+  'target': 1,
+  'type': 'transfer'},
+ {'distance': 2.93470889049981,
+  'distance_to_species_node': 2.93470889049981,
+  'event_height': 2.93470889049981,
+  'name': '2*',
+  'node_id': 5,
+  'species_node_id': 2,
   'type': 'duplication'},
- {'distance': 3.779594297439556,
-  'event_height': 3.779594297439556,
+ {'distance': 2.365287747528611,
+  'distance_to_species_node': 2.365287747528611,
+  'event_height': 2.365287747528611,
+  'name': '2*',
+  'node_id': 5,
+  'species_node_id': 2,
+  'type': 'duplication'},
+ {'distance': 5.6440303592464565,
+  'distance_to_species_node': 0.6440303592464565,
+  'event_height': 5.6440303592464565,
+  'name': '1*',
+  'node_id': 7,
+  'species_node_id': 13,
+  'target': 13,
+  'type': 'transfer'},
+ {'distance': 2.0991018395858863,
+  'distance_to_species_node': 2.0991018395858863,
+  'event_height': 2.0991018395858863,
+  'name': '1*',
+  'node_id': 7,
+  'species_node_id': 1,
+  'type': 'duplication'},
+ {'distance': 1.75554391718611,
+  'distance_to_species_node': 1.75554391718611,
+  'event_height': 1.75554391718611,
+  'name': '1*',
+  'node_id': 7,
+  'species_node_id': 1,
+  'target': 6,
+  'type': 'transfer'},
+ {'distance': 4.462101736314875,
+  'distance_to_species_node': 4.462101736314875,
+  'event_height': 4.462101736314875,
   'name': '0*',
   'node_id': 8,
-  'target': 12,
-  'type': 'transfer'}]
+  'species_node_id': 0,
+  'type': 'duplication'}]
 
 gene_tree dt_subtree:
 
@@ -234,497 +288,354 @@ gene_tree dt_subtree:
 
 ================================================================================
 Current event:
-{'distance': 0.3483617800443781,
- 'event_height': 9.007737089192641,
- 'name': '1*2*3*4*5*6*7*8*',
- 'node_id': 15,
- 'target': 0,
- 'type': 'transfer'}
-
-species_subtree_nodes:
-node_id: 0, name: A, parent: 16, distance_to_parent: 10.0, children: [], distance_to_children: [], clade: [0], clade_split: []
-
-species_subtree_coal:
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>, {})
-
-species_subtree_time_seq:
-{'0': []}
-
-gene_subtree nodes:
-node_id: 0, name: 0*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [0], clade_split: []
-
-gene_subtree dlt_process:
-nothing happened at node 0 (0*)
-reach the end of node 0 (0*)
-
-gene_subtree events:
-[]
-
-
-
-================================================================================
-Current event:
-{'distance': 0.03371543130916965,
- 'event_height': 8.693090740457432,
- 'name': '1*2*3*4*5*6*7*8*',
- 'node_id': 15,
- 'target': 0,
- 'type': 'transfer'}
-
-species_subtree_nodes:
-node_id: 0, name: A, parent: 16, distance_to_parent: 10.0, children: [], distance_to_children: [], clade: [0], clade_split: []
-
-species_subtree_coal:
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>, {})
-
-species_subtree_time_seq:
-{'0': []}
-
-gene_subtree nodes:
-node_id: 0, name: 0*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [0], clade_split: []
-
-gene_subtree dlt_process:
-nothing happened at node 0 (0*)
-reach the end of node 0 (0*)
-
-gene_subtree events:
-[]
-
-
-
-================================================================================
-Current event:
-{'distance': 0.5498349252783505,
- 'event_height': 6.3883190904888485,
+{'distance': 1.4162249350736893,
+ 'distance_to_species_node': 2.2442145136232368,
+ 'event_height': 7.244214513623237,
  'name': '4*5*6*7*8*',
  'node_id': 13,
- 'target': 14,
- 'type': 'transfer'}
+ 'species_node_id': 14,
+ 'type': 'duplication'}
 
 species_subtree_nodes:
-node_id: 4, name: E, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 5, name: F, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 6, name: G, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 7, name: H, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 9, name: EF, parent: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
-node_id: 10, name: GH, parent: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
-node_id: 12, name: GHI, parent: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
-node_id: 14, name: EFGHI, parent: 15, distance_to_parent: 3.0, children: [9, 12], distance_to_children: [4.0, 2.0], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 12, name: GHI, parent_id: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 14, name: EFGHI, parent_id: 15, distance_to_parent: 3.0, children: [9, 12], distance_to_children: [4.0, 2.0], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
 
 species_subtree_coal:
-initial node 10: ['6*', '7*']
-coalescent at node 10: ['6*7*'], distance = 0.005975332896738437
 initial node 9: ['4*', '5*']
-coalescent at node 9: ['4*5*'], distance = 0.4846934594661381
-initial node 12: ['6*7*', '8*']
-coalescent at node 12: ['6*7*8*'], distance = 0.5552303673574764
+coalescent at node 9: ['4*5*'], distance = 1.4418217683745163
+initial node 12: ['6*', '7*', '8*']
+coalescent at node 12: ['6*8*', '7*'], distance = 0.10599396209865747
+initial node 12: ['6*8*', '7*']
+coalescent at node 12: ['6*7*8*'], distance = 1.3251574097560384
 initial node 14: ['4*5*', '6*7*8*']
-coalescent at node 14: ['4*5*6*7*8*'], distance = 0.41931210495803944
+coalescent at node 14: ['4*5*6*7*8*'], distance = 0.016593013266143413
 
 species_subtree_coal_process:
 defaultdict(<class 'list'>,
-            {'10': [{'distance': 0.005975332896738437,
-                     'from_set': ['6*', '7*'],
-                     'to_set': ['6*7*']}],
-             '12': [{'distance': 0.5552303673574764,
-                     'from_set': ['6*7*', '8*'],
+            {'12': [{'distance': 0.10599396209865747,
+                     'from_set': ['6*', '7*', '8*'],
+                     'to_set': ['6*8*', '7*']},
+                    {'distance': 1.3251574097560384,
+                     'from_set': ['6*8*', '7*'],
                      'to_set': ['6*7*8*']}],
-             '14': [{'distance': 0.41931210495803944,
+             '14': [{'distance': 0.016593013266143413,
                      'from_set': ['4*5*', '6*7*8*'],
                      'to_set': ['4*5*6*7*8*']}],
-             '9': [{'distance': 0.4846934594661381,
+             '9': [{'distance': 1.4418217683745163,
                     'from_set': ['4*', '5*'],
                     'to_set': ['4*5*']}]})
 
 species_subtree_time_seq:
-{'4': [('4*5*', 1.484693459466138), ('4*5*6*7*8*', 5.419312104958039)],
- '5': [('4*5*', 1.484693459466138), ('4*5*6*7*8*', 5.419312104958039)],
- '6': [('6*7*', 2.0059753328967385),
-       ('6*7*8*', 3.5552303673574763),
-       ('4*5*6*7*8*', 5.419312104958039)],
- '7': [('6*7*', 2.0059753328967385),
-       ('6*7*8*', 3.5552303673574763),
-       ('4*5*6*7*8*', 5.419312104958039)],
- '8': [('6*7*8*', 3.5552303673574763), ('4*5*6*7*8*', 5.419312104958039)]}
+{'4': [('4*5*', 2.441821768374516, 9), ('4*5*6*7*8*', 5.016593013266143, 14)],
+ '5': [('4*5*', 2.441821768374516, 9), ('4*5*6*7*8*', 5.016593013266143, 14)],
+ '6': [('6*8*', 3.1059939620986574, 12),
+       ('6*7*8*', 4.431151371854696, 12),
+       ('4*5*6*7*8*', 5.016593013266143, 14)],
+ '7': [('6*7*8*', 4.431151371854696, 12),
+       ('4*5*6*7*8*', 5.016593013266143, 14)],
+ '8': [('6*8*', 3.1059939620986574, 12),
+       ('6*7*8*', 4.431151371854696, 12),
+       ('4*5*6*7*8*', 5.016593013266143, 14)]}
 
 gene_subtree nodes:
-node_id: 0, name: 4*, parent: 5, distance_to_parent: 1.484693459466138, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 1, name: 5*, parent: 5, distance_to_parent: 1.484693459466138, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 2, name: 6*, parent: 6, distance_to_parent: 2.0059753328967385, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 3, name: 7*, parent: 6, distance_to_parent: 2.0059753328967385, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 4, name: 8*, parent: 7, distance_to_parent: 3.5552303673574763, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 5, name: 4*5*, parent: 8, distance_to_parent: 3.934618645491901, children: [0, 1], distance_to_children: [1.484693459466138, 1.484693459466138], clade: [4, 5], clade_split: [[4], [5]]
-node_id: 6, name: 6*7*, parent: 7, distance_to_parent: 1.5492550344607379, children: [2, 3], distance_to_children: [2.0059753328967385, 2.0059753328967385], clade: [6, 7], clade_split: [[6], [7]]
-node_id: 7, name: 6*7*8*, parent: 8, distance_to_parent: 1.864081737600563, children: [6, 4], distance_to_children: [1.5492550344607379, 3.5552303673574763], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
-node_id: 8, name: 4*5*6*7*8*, parent: -1, distance_to_parent: -1.0, children: [5, 7], distance_to_children: [3.934618645491901, 1.864081737600563], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
+node_id: 0, name: 6*, parent_id: 6, distance_to_parent: 3.1059939620986574, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 8*, parent_id: 6, distance_to_parent: 3.1059939620986574, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 2, name: 7*, parent_id: 7, distance_to_parent: 4.431151371854696, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 3, name: 4*, parent_id: 5, distance_to_parent: 2.441821768374516, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 4, name: 5*, parent_id: 5, distance_to_parent: 2.441821768374516, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 5, name: 4*5*, parent_id: 8, distance_to_parent: 2.574771244891627, children: [3, 4], distance_to_children: [2.441821768374516, 2.441821768374516], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 6, name: 6*8*, parent_id: 7, distance_to_parent: 1.3251574097560388, children: [0, 1], distance_to_children: [3.1059939620986574, 3.1059939620986574], clade: [6, 8], clade_split: [[6], [8]]
+node_id: 7, name: 6*7*8*, parent_id: 8, distance_to_parent: 0.585441641411447, children: [6, 2], distance_to_children: [1.3251574097560388, 4.431151371854696], clade: [6, 7, 8], clade_split: [[6, 8], [7]]
+node_id: 8, name: 4*5*6*7*8*, parent_id: -1, distance_to_parent: -1.0, children: [7, 5], distance_to_children: [0.585441641411447, 2.574771244891627], clade: [4, 5, 6, 7, 8], clade_split: [[6, 7, 8], [4, 5]]
 
 gene_subtree dlt_process:
+transfer at node 8 (4*5*6*7*8*) with distance 0.0050988531615629995
 nothing happened at node 8 (4*5*6*7*8*)
-transfer at node 5 (4*5*) with distance 3.4033523334529576
-duplication at node 5 (4*5*) with distance 2.8926881913742117
-transfer at node 5 (4*5*) with distance 2.5378365786813313
-loss at node 5 (4*5*) with distance 1.5287159109519985
 nothing happened at node 7 (6*7*8*)
-nothing happened at node 6 (6*7*)
-loss at node 2 (6*) with distance 0.9140244267449511
-nothing happened at node 3 (7*)
-reach the end of node 3 (7*)
-nothing happened at node 4 (8*)
-reach the end of node 4 (8*)
+nothing happened at node 6 (6*8*)
+transfer at node 0 (6*) with distance 0.9653975305135427
+duplication at node 0 (6*) with distance 0.12930941644898108
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+loss at node 1 (8*) with distance 2.99130729472579
+transfer at node 2 (7*) with distance 2.930461774311504
+nothing happened at node 2 (7*)
+reach the end of node 2 (7*)
+nothing happened at node 5 (4*5*)
+nothing happened at node 3 (4*)
+reach the end of node 3 (4*)
+loss at node 4 (5*) with distance 1.2091852694379166
 
 gene_subtree events:
-[{'distance': 3.4033523334529576,
-  'event_height': 4.888045792919096,
-  'name': '4*5*',
-  'node_id': 5,
+[{'distance': 0.9653975305135427,
+  'distance_to_species_node': None,
+  'event_height': 0.9653975305135427,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 8,
+  'type': 'transfer'},
+ {'distance': 0.12930941644898108,
+  'distance_to_species_node': None,
+  'event_height': 0.12930941644898108,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 2.99130729472579,
+  'distance_to_species_node': None,
+  'event_height': 2.99130729472579,
+  'name': '8*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'loss'},
+ {'distance': 2.930461774311504,
+  'distance_to_species_node': None,
+  'event_height': 2.930461774311504,
+  'name': '7*',
+  'node_id': 2,
+  'species_node_id': None,
   'target': 9,
   'type': 'transfer'},
- {'distance': 2.8926881913742117,
-  'event_height': 4.37738165084035,
-  'name': '4*5*',
-  'node_id': 5,
-  'type': 'duplication'},
- {'distance': 2.5378365786813313,
-  'event_height': 4.02253003814747,
-  'name': '4*5*',
-  'node_id': 5,
-  'target': 12,
-  'type': 'transfer'},
- {'distance': 1.5287159109519985,
-  'name': '4*5*',
-  'node_id': 5,
-  'sub_tree_root_name': '4*5*',
-  'type': 'loss'},
- {'distance': 0.9140244267449511,
-  'name': '6*',
-  'node_id': 2,
-  'sub_tree_root_name': '6*',
+ {'distance': 1.2091852694379166,
+  'distance_to_species_node': None,
+  'event_height': 1.2091852694379166,
+  'name': '5*',
+  'node_id': 4,
+  'species_node_id': None,
   'type': 'loss'}]
 
 
 
 ================================================================================
 Current event:
-{'distance': 3.4033523334529576,
- 'event_height': 4.888045792919096,
- 'name': '4*5*',
- 'node_id': 5,
+{'distance': 0.9653975305135427,
+ 'distance_to_species_node': None,
+ 'event_height': 0.9653975305135427,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 8,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (8*) with distance 0.40875685785972526
+nothing happened at node 0 (8*)
+reach the end of node 0 (8*)
+
+gene_subtree events:
+[{'distance': 0.40875685785972526,
+  'distance_to_species_node': None,
+  'event_height': 0.40875685785972526,
+  'name': '8*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.40875685785972526,
+ 'distance_to_species_node': None,
+ 'event_height': 0.40875685785972526,
+ 'name': '8*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (8*) with distance 0.07981092618661273
+nothing happened at node 0 (8*)
+reach the end of node 0 (8*)
+
+gene_subtree events:
+[{'distance': 0.07981092618661273,
+  'distance_to_species_node': None,
+  'event_height': 0.07981092618661273,
+  'name': '8*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.07981092618661273,
+ 'distance_to_species_node': None,
+ 'event_height': 0.07981092618661273,
+ 'name': '8*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (8*)
+reach the end of node 0 (8*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.12930941644898108,
+ 'distance_to_species_node': None,
+ 'event_height': 0.12930941644898108,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'6': []}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.930461774311504,
+ 'distance_to_species_node': None,
+ 'event_height': 2.930461774311504,
+ 'name': '7*',
+ 'node_id': 2,
+ 'species_node_id': None,
  'target': 9,
  'type': 'transfer'}
 
 species_subtree_nodes:
-node_id: 4, name: E, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 5, name: F, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 9, name: EF, parent: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
 
 species_subtree_coal:
 initial node 9: ['4*', '5*']
-coalescent at node 9: ['4*5*'], distance = 0.9203552957857166
+coalescent at node 9: ['4*5*'], distance = 0.2841796726842993
 
 species_subtree_coal_process:
 defaultdict(<class 'list'>,
-            {'9': [{'distance': 0.9203552957857166,
+            {'9': [{'distance': 0.2841796726842993,
                     'from_set': ['4*', '5*'],
                     'to_set': ['4*5*']}]})
 
 species_subtree_time_seq:
-{'4': [('4*5*', 1.9203552957857166)], '5': [('4*5*', 1.9203552957857166)]}
+{'4': [('4*5*', 1.2841796726842993, 9)], '5': [('4*5*', 1.2841796726842993, 9)]}
 
 gene_subtree nodes:
-node_id: 0, name: 4*, parent: 2, distance_to_parent: 1.9203552957857166, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 1, name: 5*, parent: 2, distance_to_parent: 1.9203552957857166, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 2, name: 4*5*, parent: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [1.9203552957857166, 1.9203552957857166], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 1.2841796726842993, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 1.2841796726842993, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [1.2841796726842993, 1.2841796726842993], clade: [4, 5], clade_split: [[4], [5]]
 
 gene_subtree dlt_process:
+transfer at node 2 (4*5*) with distance 1.1633240944268284
 nothing happened at node 2 (4*5*)
-loss at node 0 (4*) with distance 1.2812609150574337
+duplication at node 0 (4*) with distance 0.04986176457150826
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
 nothing happened at node 1 (5*)
 reach the end of node 1 (5*)
 
 gene_subtree events:
-[{'distance': 1.2812609150574337,
-  'name': '4*',
-  'node_id': 0,
-  'sub_tree_root_name': '4*',
-  'type': 'loss'}]
-
-
-
-================================================================================
-Current event:
-{'distance': 2.8926881913742117,
- 'event_height': 4.37738165084035,
- 'name': '4*5*',
- 'node_id': 5,
- 'type': 'duplication'}
-
-species_subtree_nodes:
-node_id: 4, name: E, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 5, name: F, parent: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 9, name: EF, parent: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
-
-species_subtree_coal:
-initial node 9: ['4*', '5*']
-coalescent at node 9: ['4*5*'], distance = 0.9955074083715504
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>,
-            {'9': [{'distance': 0.9955074083715504,
-                    'from_set': ['4*', '5*'],
-                    'to_set': ['4*5*']}]})
-
-species_subtree_time_seq:
-{'4': [('4*5*', 1.9955074083715503)], '5': [('4*5*', 1.9955074083715503)]}
-
-gene_subtree nodes:
-node_id: 0, name: 4*, parent: 2, distance_to_parent: 1.9955074083715503, children: [], distance_to_children: [], clade: [4], clade_split: []
-node_id: 1, name: 5*, parent: 2, distance_to_parent: 1.9955074083715503, children: [], distance_to_children: [], clade: [5], clade_split: []
-node_id: 2, name: 4*5*, parent: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [1.9955074083715503, 1.9955074083715503], clade: [4, 5], clade_split: [[4], [5]]
-
-gene_subtree dlt_process:
-nothing happened at node 2 (4*5*)
-loss at node 0 (4*) with distance 1.0688821688633048
-nothing happened at node 1 (5*)
-reach the end of node 1 (5*)
-
-gene_subtree events:
-[{'distance': 1.0688821688633048,
-  'name': '4*',
-  'node_id': 0,
-  'sub_tree_root_name': '4*',
-  'type': 'loss'}]
-
-
-
-================================================================================
-Current event:
-{'distance': 2.5378365786813313,
- 'event_height': 4.02253003814747,
- 'name': '4*5*',
- 'node_id': 5,
- 'target': 12,
- 'type': 'transfer'}
-
-species_subtree_nodes:
-node_id: 6, name: G, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 7, name: H, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 10, name: GH, parent: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
-node_id: 12, name: GHI, parent: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
-
-species_subtree_coal:
-initial node 12: ['6*', '7*', '8*']
-coalescent at node 12: ['7*8*', '6*'], distance = 0.05783696232306008
-initial node 12: ['6*', '7*8*']
-coalescent at node 12: ['6*7*8*'], distance = 0.1889222224824587
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>,
-            {'12': [{'distance': 0.05783696232306008,
-                     'from_set': ['6*', '7*', '8*'],
-                     'to_set': ['7*8*', '6*']},
-                    {'distance': 0.1889222224824587,
-                     'from_set': ['6*', '7*8*'],
-                     'to_set': ['6*7*8*']}]})
-
-species_subtree_time_seq:
-{'6': [('6*7*8*', 3.246759184805519)],
- '7': [('7*8*', 3.05783696232306), ('6*7*8*', 3.246759184805519)],
- '8': [('7*8*', 3.05783696232306), ('6*7*8*', 3.246759184805519)]}
-
-gene_subtree nodes:
-node_id: 0, name: 7*, parent: 3, distance_to_parent: 3.05783696232306, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 1, name: 8*, parent: 3, distance_to_parent: 3.05783696232306, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 2, name: 6*, parent: 4, distance_to_parent: 3.246759184805519, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 3, name: 7*8*, parent: 4, distance_to_parent: 0.18892222248245893, children: [0, 1], distance_to_children: [3.05783696232306, 3.05783696232306], clade: [7, 8], clade_split: [[7], [8]]
-node_id: 4, name: 6*7*8*, parent: -1, distance_to_parent: -1.0, children: [3, 2], distance_to_children: [0.18892222248245893, 3.246759184805519], clade: [6, 7, 8], clade_split: [[7, 8], [6]]
-
-gene_subtree dlt_process:
-nothing happened at node 4 (6*7*8*)
-nothing happened at node 3 (7*8*)
-transfer at node 0 (7*) with distance 1.3544244040767468
-nothing happened at node 0 (7*)
-reach the end of node 0 (7*)
-duplication at node 1 (8*) with distance 2.1910448065503774
-duplication at node 1 (8*) with distance 0.8952295154304146
-transfer at node 1 (8*) with distance 0.8386835151117291
-nothing happened at node 1 (8*)
-reach the end of node 1 (8*)
-nothing happened at node 2 (6*)
-reach the end of node 2 (6*)
-
-gene_subtree events:
-[{'distance': 1.3544244040767468,
-  'event_height': 1.3544244040767468,
-  'name': '7*',
-  'node_id': 0,
-  'target': 8,
+[{'distance': 1.1633240944268284,
+  'distance_to_species_node': None,
+  'event_height': 2.4475037671111277,
+  'name': '4*5*',
+  'node_id': 2,
+  'species_node_id': None,
+  'target': 1,
   'type': 'transfer'},
- {'distance': 2.1910448065503774,
-  'event_height': 2.1910448065503774,
-  'name': '8*',
-  'node_id': 1,
-  'type': 'duplication'},
- {'distance': 0.8952295154304146,
-  'event_height': 0.8952295154304146,
-  'name': '8*',
-  'node_id': 1,
-  'type': 'duplication'},
- {'distance': 0.8386835151117291,
-  'event_height': 0.8386835151117291,
-  'name': '8*',
-  'node_id': 1,
-  'target': 8,
-  'type': 'transfer'}]
-
-
-
-================================================================================
-Current event:
-{'distance': 1.3544244040767468,
- 'event_height': 1.3544244040767468,
- 'name': '7*',
- 'node_id': 0,
- 'target': 8,
- 'type': 'transfer'}
-
-species_subtree_nodes:
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-species_subtree_coal:
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>, {})
-
-species_subtree_time_seq:
-{'8': []}
-
-gene_subtree nodes:
-node_id: 0, name: 8*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-gene_subtree dlt_process:
-duplication at node 0 (8*) with distance 0.30947417065840144
-nothing happened at node 0 (8*)
-reach the end of node 0 (8*)
-
-gene_subtree events:
-[{'distance': 0.30947417065840144,
-  'event_height': 0.30947417065840144,
-  'name': '8*',
+ {'distance': 0.04986176457150826,
+  'distance_to_species_node': None,
+  'event_height': 0.04986176457150826,
+  'name': '4*',
   'node_id': 0,
+  'species_node_id': None,
   'type': 'duplication'}]
 
 
 
 ================================================================================
 Current event:
-{'distance': 0.30947417065840144,
- 'event_height': 0.30947417065840144,
- 'name': '8*',
- 'node_id': 0,
- 'type': 'duplication'}
-
-species_subtree_nodes:
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-species_subtree_coal:
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>, {})
-
-species_subtree_time_seq:
-{'8': []}
-
-gene_subtree nodes:
-node_id: 0, name: 8*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-gene_subtree dlt_process:
-nothing happened at node 0 (8*)
-reach the end of node 0 (8*)
-
-gene_subtree events:
-[]
-
-
-
-================================================================================
-Current event:
-{'distance': 2.1910448065503774,
- 'event_height': 2.1910448065503774,
- 'name': '8*',
- 'node_id': 1,
- 'type': 'duplication'}
-
-species_subtree_nodes:
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-species_subtree_coal:
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>, {})
-
-species_subtree_time_seq:
-{'8': []}
-
-gene_subtree nodes:
-node_id: 0, name: 8*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-gene_subtree dlt_process:
-nothing happened at node 0 (8*)
-reach the end of node 0 (8*)
-
-gene_subtree events:
-[]
-
-
-
-================================================================================
-Current event:
-{'distance': 0.8952295154304146,
- 'event_height': 0.8952295154304146,
- 'name': '8*',
- 'node_id': 1,
- 'type': 'duplication'}
-
-species_subtree_nodes:
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-species_subtree_coal:
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>, {})
-
-species_subtree_time_seq:
-{'8': []}
-
-gene_subtree nodes:
-node_id: 0, name: 8*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-
-gene_subtree dlt_process:
-nothing happened at node 0 (8*)
-reach the end of node 0 (8*)
-
-gene_subtree events:
-[]
-
-
-
-================================================================================
-Current event:
-{'distance': 0.8386835151117291,
- 'event_height': 0.8386835151117291,
- 'name': '8*',
- 'node_id': 1,
- 'target': 8,
+{'distance': 1.1633240944268284,
+ 'distance_to_species_node': None,
+ 'event_height': 2.4475037671111277,
+ 'name': '4*5*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'target': 1,
  'type': 'transfer'}
 
 species_subtree_nodes:
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
 
 species_subtree_coal:
 
@@ -732,14 +643,14 @@ species_subtree_coal_process:
 defaultdict(<class 'list'>, {})
 
 species_subtree_time_seq:
-{'8': []}
+{'1': []}
 
 gene_subtree nodes:
-node_id: 0, name: 8*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
 
 gene_subtree dlt_process:
-nothing happened at node 0 (8*)
-reach the end of node 0 (8*)
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
 
 gene_subtree events:
 []
@@ -748,14 +659,16 @@ gene_subtree events:
 
 ================================================================================
 Current event:
-{'distance': 1.6059945904969442,
- 'event_height': 1.6059945904969442,
- 'name': '8*',
- 'node_id': 2,
+{'distance': 0.04986176457150826,
+ 'distance_to_species_node': None,
+ 'event_height': 0.04986176457150826,
+ 'name': '4*',
+ 'node_id': 0,
+ 'species_node_id': None,
  'type': 'duplication'}
 
 species_subtree_nodes:
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
 
 species_subtree_coal:
 
@@ -763,14 +676,14 @@ species_subtree_coal_process:
 defaultdict(<class 'list'>, {})
 
 species_subtree_time_seq:
-{'8': []}
+{'4': []}
 
 gene_subtree nodes:
-node_id: 0, name: 8*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 0, name: 4*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
 
 gene_subtree dlt_process:
-nothing happened at node 0 (8*)
-reach the end of node 0 (8*)
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
 
 gene_subtree events:
 []
@@ -779,62 +692,278 @@ gene_subtree events:
 
 ================================================================================
 Current event:
-{'distance': 2.2356006225490495,
- 'event_height': 5.316685515260927,
- 'name': '2*3*',
- 'node_id': 11,
+{'distance': 3.091275515977002,
+ 'distance_to_species_node': 0.2262917420125472,
+ 'event_height': 5.226291742012547,
+ 'name': '4*5*',
+ 'node_id': 9,
+ 'species_node_id': 14,
  'type': 'duplication'}
 
 species_subtree_nodes:
-node_id: 2, name: C, parent: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
-node_id: 3, name: D, parent: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
-node_id: 11, name: CD, parent: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
 
 species_subtree_coal:
-initial node 11: ['2*', '3*']
-coalescent at node 11: ['2*3*'], distance = 0.6873400335810047
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 0.5157762143308094
 
 species_subtree_coal_process:
 defaultdict(<class 'list'>,
-            {'11': [{'distance': 0.6873400335810047,
+            {'9': [{'distance': 0.5157762143308094,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 1.5157762143308093, 9)], '5': [('4*5*', 1.5157762143308093, 9)]}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 1.5157762143308093, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 1.5157762143308093, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [1.5157762143308093, 1.5157762143308093], clade: [4, 5], clade_split: [[4], [5]]
+
+gene_subtree dlt_process:
+duplication at node 2 (4*5*) with distance 0.5829766396663758
+nothing happened at node 2 (4*5*)
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
+nothing happened at node 1 (5*)
+reach the end of node 1 (5*)
+
+gene_subtree events:
+[{'distance': 0.5829766396663758,
+  'distance_to_species_node': None,
+  'event_height': 2.098752853997185,
+  'name': '4*5*',
+  'node_id': 2,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.5829766396663758,
+ 'distance_to_species_node': None,
+ 'event_height': 2.098752853997185,
+ 'name': '4*5*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+
+species_subtree_coal:
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 0.7091717854732099
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'9': [{'distance': 0.7091717854732099,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 1.70917178547321, 9)], '5': [('4*5*', 1.70917178547321, 9)]}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 1.70917178547321, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 1.70917178547321, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [1.70917178547321, 1.70917178547321], clade: [4, 5], clade_split: [[4], [5]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (4*5*)
+loss at node 0 (4*) with distance 1.5233646754816308
+nothing happened at node 1 (5*)
+reach the end of node 1 (5*)
+
+gene_subtree events:
+[{'distance': 1.5233646754816308,
+  'distance_to_species_node': None,
+  'event_height': 1.5233646754816308,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.0194610478548816,
+ 'distance_to_species_node': 2.867602180825962,
+ 'event_height': 7.867602180825962,
+ 'name': '1*2*3*',
+ 'node_id': 14,
+ 'species_node_id': 13,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 13, name: BCD, parent_id: 15, distance_to_parent: 3.0, children: [1, 11], distance_to_children: [5.0, 2.0], clade: [1, 2, 3], clade_split: [[1], [2, 3]]
+
+species_subtree_coal:
+initial node 11: ['2*', '3*']
+coalescent at node 11: ['2*3*'], distance = 1.4377568112024572
+initial node 13: ['1*', '2*3*']
+coalescent at node 13: ['1*2*3*'], distance = 0.27861594990066424
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'11': [{'distance': 1.4377568112024572,
+                     'from_set': ['2*', '3*'],
+                     'to_set': ['2*3*']}],
+             '13': [{'distance': 0.27861594990066424,
+                     'from_set': ['1*', '2*3*'],
+                     'to_set': ['1*2*3*']}]})
+
+species_subtree_time_seq:
+{'1': [('1*2*3*', 5.278615949900664, 13)],
+ '2': [('2*3*', 4.4377568112024575, 11), ('1*2*3*', 5.278615949900664, 13)],
+ '3': [('2*3*', 4.4377568112024575, 11), ('1*2*3*', 5.278615949900664, 13)]}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: 3, distance_to_parent: 4.4377568112024575, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 1, name: 3*, parent_id: 3, distance_to_parent: 4.4377568112024575, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 2, name: 1*, parent_id: 4, distance_to_parent: 5.278615949900664, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 3, name: 2*3*, parent_id: 4, distance_to_parent: 0.8408591386982067, children: [0, 1], distance_to_children: [4.4377568112024575, 4.4377568112024575], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 4, name: 1*2*3*, parent_id: -1, distance_to_parent: -1.0, children: [3, 2], distance_to_children: [0.8408591386982067, 5.278615949900664], clade: [1, 2, 3], clade_split: [[2, 3], [1]]
+
+gene_subtree dlt_process:
+transfer at node 4 (1*2*3*) with distance 0.9682464100276074
+transfer at node 4 (1*2*3*) with distance 0.08526462830167669
+nothing happened at node 4 (1*2*3*)
+duplication at node 3 (2*3*) with distance 0.47157699144060794
+nothing happened at node 3 (2*3*)
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+transfer at node 1 (3*) with distance 4.260763794999083
+duplication at node 1 (3*) with distance 3.915433399243706
+nothing happened at node 1 (3*)
+reach the end of node 1 (3*)
+duplication at node 2 (1*) with distance 0.028619332801808284
+nothing happened at node 2 (1*)
+reach the end of node 2 (1*)
+
+gene_subtree events:
+[{'distance': 0.47157699144060794,
+  'distance_to_species_node': None,
+  'event_height': 4.909333802643065,
+  'name': '2*3*',
+  'node_id': 3,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 4.260763794999083,
+  'distance_to_species_node': None,
+  'event_height': 4.260763794999083,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'target': 9,
+  'type': 'transfer'},
+ {'distance': 3.915433399243706,
+  'distance_to_species_node': None,
+  'event_height': 3.915433399243706,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 0.028619332801808284,
+  'distance_to_species_node': None,
+  'event_height': 0.028619332801808284,
+  'name': '1*',
+  'node_id': 2,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.47157699144060794,
+ 'distance_to_species_node': None,
+ 'event_height': 4.909333802643065,
+ 'name': '2*3*',
+ 'node_id': 3,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+
+species_subtree_coal:
+initial node 11: ['2*', '3*']
+coalescent at node 11: ['2*3*'], distance = 0.8093434397756339
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'11': [{'distance': 0.8093434397756339,
                      'from_set': ['2*', '3*'],
                      'to_set': ['2*3*']}]})
 
 species_subtree_time_seq:
-{'2': [('2*3*', 3.6873400335810045)], '3': [('2*3*', 3.6873400335810045)]}
+{'2': [('2*3*', 3.809343439775634, 11)], '3': [('2*3*', 3.809343439775634, 11)]}
 
 gene_subtree nodes:
-node_id: 0, name: 2*, parent: 2, distance_to_parent: 3.6873400335810045, children: [], distance_to_children: [], clade: [2], clade_split: []
-node_id: 1, name: 3*, parent: 2, distance_to_parent: 3.6873400335810045, children: [], distance_to_children: [], clade: [3], clade_split: []
-node_id: 2, name: 2*3*, parent: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [3.6873400335810045, 3.6873400335810045], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 0, name: 2*, parent_id: 2, distance_to_parent: 3.809343439775634, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 1, name: 3*, parent_id: 2, distance_to_parent: 3.809343439775634, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 2, name: 2*3*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [3.809343439775634, 3.809343439775634], clade: [2, 3], clade_split: [[2], [3]]
 
 gene_subtree dlt_process:
 nothing happened at node 2 (2*3*)
-duplication at node 0 (2*) with distance 0.6544576168001721
+duplication at node 0 (2*) with distance 2.822443685401641
 nothing happened at node 0 (2*)
 reach the end of node 0 (2*)
-nothing happened at node 1 (3*)
-reach the end of node 1 (3*)
+transfer at node 1 (3*) with distance 2.0785407193839722
+loss at node 1 (3*) with distance 1.3515217882319739
 
 gene_subtree events:
-[{'distance': 0.6544576168001721,
-  'event_height': 0.6544576168001721,
+[{'distance': 2.822443685401641,
+  'distance_to_species_node': None,
+  'event_height': 2.822443685401641,
   'name': '2*',
   'node_id': 0,
-  'type': 'duplication'}]
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 2.0785407193839722,
+  'distance_to_species_node': None,
+  'event_height': 2.0785407193839722,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'target': 10,
+  'type': 'transfer'},
+ {'distance': 1.3515217882319739,
+  'distance_to_species_node': None,
+  'event_height': 1.3515217882319739,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'loss'}]
 
 
 
 ================================================================================
 Current event:
-{'distance': 0.6544576168001721,
- 'event_height': 0.6544576168001721,
+{'distance': 2.822443685401641,
+ 'distance_to_species_node': None,
+ 'event_height': 2.822443685401641,
  'name': '2*',
  'node_id': 0,
+ 'species_node_id': None,
  'type': 'duplication'}
 
 species_subtree_nodes:
-node_id: 2, name: C, parent: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
 
 species_subtree_coal:
 
@@ -845,7 +974,7 @@ species_subtree_time_seq:
 {'2': []}
 
 gene_subtree nodes:
-node_id: 0, name: 2*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
 
 gene_subtree dlt_process:
 nothing happened at node 0 (2*)
@@ -858,103 +987,38 @@ gene_subtree events:
 
 ================================================================================
 Current event:
-{'distance': 3.779594297439556,
- 'event_height': 3.779594297439556,
- 'name': '0*',
- 'node_id': 8,
- 'target': 12,
+{'distance': 2.0785407193839722,
+ 'distance_to_species_node': None,
+ 'event_height': 2.0785407193839722,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'target': 10,
  'type': 'transfer'}
 
 species_subtree_nodes:
-node_id: 6, name: G, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 7, name: H, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 10, name: GH, parent: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
-node_id: 12, name: GHI, parent: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
 
 species_subtree_coal:
 initial node 10: ['6*', '7*']
-coalescent at node 10: ['6*7*'], distance = 0.39676931892377787
-initial node 12: ['6*7*', '8*']
-coalescent at node 12: ['6*7*8*'], distance = 1.823194502952441
+coalescent at node 10: ['6*7*'], distance = 2.0035079144370735
 
 species_subtree_coal_process:
 defaultdict(<class 'list'>,
-            {'10': [{'distance': 0.39676931892377787,
-                     'from_set': ['6*', '7*'],
-                     'to_set': ['6*7*']}],
-             '12': [{'distance': 1.823194502952441,
-                     'from_set': ['6*7*', '8*'],
-                     'to_set': ['6*7*8*']}]})
-
-species_subtree_time_seq:
-{'6': [('6*7*', 2.396769318923778), ('6*7*8*', 4.8231945029524415)],
- '7': [('6*7*', 2.396769318923778), ('6*7*8*', 4.8231945029524415)],
- '8': [('6*7*8*', 4.8231945029524415)]}
-
-gene_subtree nodes:
-node_id: 0, name: 6*, parent: 3, distance_to_parent: 2.396769318923778, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 1, name: 7*, parent: 3, distance_to_parent: 2.396769318923778, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 2, name: 8*, parent: 4, distance_to_parent: 4.8231945029524415, children: [], distance_to_children: [], clade: [8], clade_split: []
-node_id: 3, name: 6*7*, parent: 4, distance_to_parent: 2.4264251840286635, children: [0, 1], distance_to_children: [2.396769318923778, 2.396769318923778], clade: [6, 7], clade_split: [[6], [7]]
-node_id: 4, name: 6*7*8*, parent: -1, distance_to_parent: -1.0, children: [3, 2], distance_to_children: [2.4264251840286635, 4.8231945029524415], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
-
-gene_subtree dlt_process:
-nothing happened at node 4 (6*7*8*)
-duplication at node 3 (6*7*) with distance 1.8914300245515543
-nothing happened at node 3 (6*7*)
-nothing happened at node 0 (6*)
-reach the end of node 0 (6*)
-nothing happened at node 1 (7*)
-reach the end of node 1 (7*)
-duplication at node 2 (8*) with distance 4.7126183011448175
-nothing happened at node 2 (8*)
-reach the end of node 2 (8*)
-
-gene_subtree events:
-[{'distance': 1.8914300245515543,
-  'event_height': 4.288199343475332,
-  'name': '6*7*',
-  'node_id': 3,
-  'type': 'duplication'},
- {'distance': 4.7126183011448175,
-  'event_height': 4.7126183011448175,
-  'name': '8*',
-  'node_id': 2,
-  'type': 'duplication'}]
-
-
-
-================================================================================
-Current event:
-{'distance': 1.8914300245515543,
- 'event_height': 4.288199343475332,
- 'name': '6*7*',
- 'node_id': 3,
- 'type': 'duplication'}
-
-species_subtree_nodes:
-node_id: 6, name: G, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 7, name: H, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 10, name: GH, parent: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
-
-species_subtree_coal:
-initial node 10: ['6*', '7*']
-coalescent at node 10: ['6*7*'], distance = 0.20924634673967993
-
-species_subtree_coal_process:
-defaultdict(<class 'list'>,
-            {'10': [{'distance': 0.20924634673967993,
+            {'10': [{'distance': 2.0035079144370735,
                      'from_set': ['6*', '7*'],
                      'to_set': ['6*7*']}]})
 
 species_subtree_time_seq:
-{'6': [('6*7*', 2.20924634673968)], '7': [('6*7*', 2.20924634673968)]}
+{'6': [('6*7*', 4.0035079144370735, 10)],
+ '7': [('6*7*', 4.0035079144370735, 10)]}
 
 gene_subtree nodes:
-node_id: 0, name: 6*, parent: 2, distance_to_parent: 2.20924634673968, children: [], distance_to_children: [], clade: [6], clade_split: []
-node_id: 1, name: 7*, parent: 2, distance_to_parent: 2.20924634673968, children: [], distance_to_children: [], clade: [7], clade_split: []
-node_id: 2, name: 6*7*, parent: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [2.20924634673968, 2.20924634673968], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 0, name: 6*, parent_id: 2, distance_to_parent: 4.0035079144370735, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 7*, parent_id: 2, distance_to_parent: 4.0035079144370735, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 2, name: 6*7*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [4.0035079144370735, 4.0035079144370735], clade: [6, 7], clade_split: [[6], [7]]
 
 gene_subtree dlt_process:
 nothing happened at node 2 (6*7*)
@@ -970,14 +1034,601 @@ gene_subtree events:
 
 ================================================================================
 Current event:
-{'distance': 4.7126183011448175,
- 'event_height': 4.7126183011448175,
- 'name': '8*',
- 'node_id': 2,
+{'distance': 4.260763794999083,
+ 'distance_to_species_node': None,
+ 'event_height': 4.260763794999083,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'target': 9,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+
+species_subtree_coal:
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 1.611009076315263
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'9': [{'distance': 1.611009076315263,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 2.6110090763152627, 9)], '5': [('4*5*', 2.6110090763152627, 9)]}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 2.6110090763152627, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 2.6110090763152627, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [2.6110090763152627, 2.6110090763152627], clade: [4, 5], clade_split: [[4], [5]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (4*5*)
+duplication at node 0 (4*) with distance 2.470759381992719
+transfer at node 0 (4*) with distance 1.1635227686707732
+duplication at node 0 (4*) with distance 0.16025314136664148
+transfer at node 0 (4*) with distance 0.07162576796837263
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
+duplication at node 1 (5*) with distance 0.9517171258174586
+nothing happened at node 1 (5*)
+reach the end of node 1 (5*)
+
+gene_subtree events:
+[{'distance': 2.470759381992719,
+  'distance_to_species_node': None,
+  'event_height': 2.470759381992719,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 1.1635227686707732,
+  'distance_to_species_node': None,
+  'event_height': 1.1635227686707732,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 2,
+  'type': 'transfer'},
+ {'distance': 0.16025314136664148,
+  'distance_to_species_node': None,
+  'event_height': 0.16025314136664148,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 0.07162576796837263,
+  'distance_to_species_node': None,
+  'event_height': 0.07162576796837263,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 3,
+  'type': 'transfer'},
+ {'distance': 0.9517171258174586,
+  'distance_to_species_node': None,
+  'event_height': 0.9517171258174586,
+  'name': '5*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.470759381992719,
+ 'distance_to_species_node': None,
+ 'event_height': 2.470759381992719,
+ 'name': '4*',
+ 'node_id': 0,
+ 'species_node_id': None,
  'type': 'duplication'}
 
 species_subtree_nodes:
-node_id: 8, name: I, parent: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'4': []}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (4*) with distance 2.3810880874121194
+loss at node 0 (4*) with distance 1.3627115074031781
+
+gene_subtree events:
+[{'distance': 2.3810880874121194,
+  'distance_to_species_node': None,
+  'event_height': 2.3810880874121194,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 1,
+  'type': 'transfer'},
+ {'distance': 1.3627115074031781,
+  'distance_to_species_node': None,
+  'event_height': 1.3627115074031781,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.3810880874121194,
+ 'distance_to_species_node': None,
+ 'event_height': 2.3810880874121194,
+ 'name': '4*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 1,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.1635227686707732,
+ 'distance_to_species_node': None,
+ 'event_height': 1.1635227686707732,
+ 'name': '4*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 2,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (2*) with distance 0.10677306846399603
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[{'distance': 0.10677306846399603,
+  'distance_to_species_node': None,
+  'event_height': 0.10677306846399603,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.10677306846399603,
+ 'distance_to_species_node': None,
+ 'event_height': 0.10677306846399603,
+ 'name': '2*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.16025314136664148,
+ 'distance_to_species_node': None,
+ 'event_height': 0.16025314136664148,
+ 'name': '4*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'4': []}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.07162576796837263,
+ 'distance_to_species_node': None,
+ 'event_height': 0.07162576796837263,
+ 'name': '4*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 3,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.9517171258174586,
+ 'distance_to_species_node': None,
+ 'event_height': 0.9517171258174586,
+ 'name': '5*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'5': []}
+
+gene_subtree nodes:
+node_id: 0, name: 5*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (5*)
+reach the end of node 0 (5*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 3.915433399243706,
+ 'distance_to_species_node': None,
+ 'event_height': 3.915433399243706,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (3*) with distance 0.8799176419942851
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[{'distance': 0.8799176419942851,
+  'distance_to_species_node': None,
+  'event_height': 0.8799176419942851,
+  'name': '3*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 4,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.8799176419942851,
+ 'distance_to_species_node': None,
+ 'event_height': 0.8799176419942851,
+ 'name': '3*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 4,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'4': []}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.028619332801808284,
+ 'distance_to_species_node': None,
+ 'event_height': 0.028619332801808284,
+ 'name': '1*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.7799256749829193,
+ 'distance_to_species_node': 1.6809352123381665,
+ 'event_height': 4.6809352123381665,
+ 'name': '2*3*',
+ 'node_id': 11,
+ 'species_node_id': 11,
+ 'target': 1,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (1*) with distance 0.7688930776495545
+transfer at node 0 (1*) with distance 0.6976747902845852
+transfer at node 0 (1*) with distance 0.23323418650040167
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
+
+gene_subtree events:
+[{'distance': 0.7688930776495545,
+  'distance_to_species_node': None,
+  'event_height': 0.7688930776495545,
+  'name': '1*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 0.6976747902845852,
+  'distance_to_species_node': None,
+  'event_height': 0.6976747902845852,
+  'name': '1*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 8,
+  'type': 'transfer'},
+ {'distance': 0.23323418650040167,
+  'distance_to_species_node': None,
+  'event_height': 0.23323418650040167,
+  'name': '1*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 8,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.7688930776495545,
+ 'distance_to_species_node': None,
+ 'event_height': 0.7688930776495545,
+ 'name': '1*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (1*) with distance 0.05274747853513895
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
+
+gene_subtree events:
+[{'distance': 0.05274747853513895,
+  'distance_to_species_node': None,
+  'event_height': 0.05274747853513895,
+  'name': '1*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 7,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.05274747853513895,
+ 'distance_to_species_node': None,
+ 'event_height': 0.05274747853513895,
+ 'name': '1*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 7,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'7': []}
+
+gene_subtree nodes:
+node_id: 0, name: 7*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (7*)
+reach the end of node 0 (7*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.6976747902845852,
+ 'distance_to_species_node': None,
+ 'event_height': 0.6976747902845852,
+ 'name': '1*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 8,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
 
 species_subtree_coal:
 
@@ -988,34 +1639,1276 @@ species_subtree_time_seq:
 {'8': []}
 
 gene_subtree nodes:
-node_id: 0, name: 8*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
 
 gene_subtree dlt_process:
-transfer at node 0 (8*) with distance 0.9913200473962682
 nothing happened at node 0 (8*)
 reach the end of node 0 (8*)
 
 gene_subtree events:
-[{'distance': 0.9913200473962682,
-  'event_height': 0.9913200473962682,
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.23323418650040167,
+ 'distance_to_species_node': None,
+ 'event_height': 0.23323418650040167,
+ 'name': '1*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 8,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (8*) with distance 0.041169086078282374
+nothing happened at node 0 (8*)
+reach the end of node 0 (8*)
+
+gene_subtree events:
+[{'distance': 0.041169086078282374,
+  'distance_to_species_node': None,
+  'event_height': 0.041169086078282374,
   'name': '8*',
   'node_id': 0,
-  'target': 6,
+  'species_node_id': None,
+  'target': 4,
   'type': 'transfer'}]
 
 
 
 ================================================================================
 Current event:
-{'distance': 0.9913200473962682,
- 'event_height': 0.9913200473962682,
+{'distance': 0.041169086078282374,
+ 'distance_to_species_node': None,
+ 'event_height': 0.041169086078282374,
  'name': '8*',
  'node_id': 0,
- 'target': 6,
+ 'species_node_id': None,
+ 'target': 4,
  'type': 'transfer'}
 
 species_subtree_nodes:
-node_id: 6, name: G, parent: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'4': []}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.93470889049981,
+ 'distance_to_species_node': 2.93470889049981,
+ 'event_height': 2.93470889049981,
+ 'name': '2*',
+ 'node_id': 5,
+ 'species_node_id': 2,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+loss at node 0 (2*) with distance 2.236607285730607
+
+gene_subtree events:
+[{'distance': 2.236607285730607,
+  'distance_to_species_node': None,
+  'event_height': 2.236607285730607,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.365287747528611,
+ 'distance_to_species_node': 2.365287747528611,
+ 'event_height': 2.365287747528611,
+ 'name': '2*',
+ 'node_id': 5,
+ 'species_node_id': 2,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 5.6440303592464565,
+ 'distance_to_species_node': 0.6440303592464565,
+ 'event_height': 5.6440303592464565,
+ 'name': '1*',
+ 'node_id': 7,
+ 'species_node_id': 13,
+ 'target': 13,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 13, name: BCD, parent_id: 15, distance_to_parent: 3.0, children: [1, 11], distance_to_children: [5.0, 2.0], clade: [1, 2, 3], clade_split: [[1], [2, 3]]
+
+species_subtree_coal:
+initial node 11: ['2*', '3*']
+coalescent at node 11: ['2*3*'], distance = 1.1350707887467417
+initial node 13: ['1*', '2*3*']
+coalescent at node 13: ['1*2*3*'], distance = 5.32438469989748
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'11': [{'distance': 1.1350707887467417,
+                     'from_set': ['2*', '3*'],
+                     'to_set': ['2*3*']}],
+             '13': [{'distance': 5.32438469989748,
+                     'from_set': ['1*', '2*3*'],
+                     'to_set': ['1*2*3*']}]})
+
+species_subtree_time_seq:
+{'1': [('1*2*3*', 10.324384699897479, 13)],
+ '2': [('2*3*', 4.1350707887467415, 11), ('1*2*3*', 10.324384699897479, 13)],
+ '3': [('2*3*', 4.1350707887467415, 11), ('1*2*3*', 10.324384699897479, 13)]}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: 3, distance_to_parent: 4.1350707887467415, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 1, name: 3*, parent_id: 3, distance_to_parent: 4.1350707887467415, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 2, name: 1*, parent_id: 4, distance_to_parent: 10.324384699897479, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 3, name: 2*3*, parent_id: 4, distance_to_parent: 6.189313911150737, children: [0, 1], distance_to_children: [4.1350707887467415, 4.1350707887467415], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 4, name: 1*2*3*, parent_id: -1, distance_to_parent: -1.0, children: [3, 2], distance_to_children: [6.189313911150737, 10.324384699897479], clade: [1, 2, 3], clade_split: [[2, 3], [1]]
+
+gene_subtree dlt_process:
+nothing happened at node 4 (1*2*3*)
+nothing happened at node 3 (2*3*)
+duplication at node 0 (2*) with distance 1.4394949575467888
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+transfer at node 1 (3*) with distance 3.874934131326489
+transfer at node 1 (3*) with distance 1.2175207395810084
+duplication at node 1 (3*) with distance 1.156572065802829
+duplication at node 1 (3*) with distance 0.09671480874221583
+nothing happened at node 1 (3*)
+reach the end of node 1 (3*)
+transfer at node 2 (1*) with distance 6.338989789904309
+transfer at node 2 (1*) with distance 5.32232269989114
+transfer at node 2 (1*) with distance 4.136829778139615
+transfer at node 2 (1*) with distance 2.214051620845729
+transfer at node 2 (1*) with distance 2.0535318851795137
+nothing happened at node 2 (1*)
+reach the end of node 2 (1*)
+
+gene_subtree events:
+[{'distance': 1.4394949575467888,
+  'distance_to_species_node': None,
+  'event_height': 1.4394949575467888,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 3.874934131326489,
+  'distance_to_species_node': None,
+  'event_height': 3.874934131326489,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'target': 11,
+  'type': 'transfer'},
+ {'distance': 1.2175207395810084,
+  'distance_to_species_node': None,
+  'event_height': 1.2175207395810084,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'target': 7,
+  'type': 'transfer'},
+ {'distance': 1.156572065802829,
+  'distance_to_species_node': None,
+  'event_height': 1.156572065802829,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 0.09671480874221583,
+  'distance_to_species_node': None,
+  'event_height': 0.09671480874221583,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 6.338989789904309,
+  'distance_to_species_node': None,
+  'event_height': 6.338989789904309,
+  'name': '1*',
+  'node_id': 2,
+  'species_node_id': None,
+  'target': 13,
+  'type': 'transfer'},
+ {'distance': 4.136829778139615,
+  'distance_to_species_node': None,
+  'event_height': 4.136829778139615,
+  'name': '1*',
+  'node_id': 2,
+  'species_node_id': None,
+  'target': 11,
+  'type': 'transfer'},
+ {'distance': 2.214051620845729,
+  'distance_to_species_node': None,
+  'event_height': 2.214051620845729,
+  'name': '1*',
+  'node_id': 2,
+  'species_node_id': None,
+  'target': 2,
+  'type': 'transfer'},
+ {'distance': 2.0535318851795137,
+  'distance_to_species_node': None,
+  'event_height': 2.0535318851795137,
+  'name': '1*',
+  'node_id': 2,
+  'species_node_id': None,
+  'target': 9,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.4394949575467888,
+ 'distance_to_species_node': None,
+ 'event_height': 1.4394949575467888,
+ 'name': '2*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 3.874934131326489,
+ 'distance_to_species_node': None,
+ 'event_height': 3.874934131326489,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'target': 11,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+
+species_subtree_coal:
+initial node 11: ['2*', '3*']
+coalescent at node 11: ['2*3*'], distance = 9.475778895095033
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'11': [{'distance': 9.475778895095033,
+                     'from_set': ['2*', '3*'],
+                     'to_set': ['2*3*']}]})
+
+species_subtree_time_seq:
+{'2': [('2*3*', 12.475778895095033, 11)],
+ '3': [('2*3*', 12.475778895095033, 11)]}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: 2, distance_to_parent: 12.475778895095033, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 1, name: 3*, parent_id: 2, distance_to_parent: 12.475778895095033, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 2, name: 2*3*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [12.475778895095033, 12.475778895095033], clade: [2, 3], clade_split: [[2], [3]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (2*3*)
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+duplication at node 1 (3*) with distance 6.4231535319999224
+transfer at node 1 (3*) with distance 6.173283668453787
+loss at node 1 (3*) with distance 5.214072024406197
+
+gene_subtree events:
+[{'distance': 6.4231535319999224,
+  'distance_to_species_node': None,
+  'event_height': 6.4231535319999224,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 6.173283668453787,
+  'distance_to_species_node': None,
+  'event_height': 6.173283668453787,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'target': 14,
+  'type': 'transfer'},
+ {'distance': 5.214072024406197,
+  'distance_to_species_node': None,
+  'event_height': 5.214072024406197,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 6.4231535319999224,
+ 'distance_to_species_node': None,
+ 'event_height': 6.4231535319999224,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (3*) with distance 0.019436075261678454
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[{'distance': 0.019436075261678454,
+  'distance_to_species_node': None,
+  'event_height': 0.019436075261678454,
+  'name': '3*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.019436075261678454,
+ 'distance_to_species_node': None,
+ 'event_height': 0.019436075261678454,
+ 'name': '3*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 6.173283668453787,
+ 'distance_to_species_node': None,
+ 'event_height': 6.173283668453787,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'target': 14,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 12, name: GHI, parent_id: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 14, name: EFGHI, parent_id: 15, distance_to_parent: 3.0, children: [9, 12], distance_to_children: [4.0, 2.0], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
+
+species_subtree_coal:
+initial node 10: ['6*', '7*']
+coalescent at node 10: ['6*7*'], distance = 0.023886748641650076
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 0.7104327252824516
+initial node 12: ['6*7*', '8*']
+coalescent at node 12: ['6*7*8*'], distance = 0.35739415822421877
+initial node 14: ['4*5*', '6*7*8*']
+coalescent at node 14: ['4*5*6*7*8*'], distance = 0.7621414482255232
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'10': [{'distance': 0.023886748641650076,
+                     'from_set': ['6*', '7*'],
+                     'to_set': ['6*7*']}],
+             '12': [{'distance': 0.35739415822421877,
+                     'from_set': ['6*7*', '8*'],
+                     'to_set': ['6*7*8*']}],
+             '14': [{'distance': 0.7621414482255232,
+                     'from_set': ['4*5*', '6*7*8*'],
+                     'to_set': ['4*5*6*7*8*']}],
+             '9': [{'distance': 0.7104327252824516,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 1.7104327252824516, 9), ('4*5*6*7*8*', 5.762141448225523, 14)],
+ '5': [('4*5*', 1.7104327252824516, 9), ('4*5*6*7*8*', 5.762141448225523, 14)],
+ '6': [('6*7*', 2.02388674864165, 10),
+       ('6*7*8*', 3.357394158224219, 12),
+       ('4*5*6*7*8*', 5.762141448225523, 14)],
+ '7': [('6*7*', 2.02388674864165, 10),
+       ('6*7*8*', 3.357394158224219, 12),
+       ('4*5*6*7*8*', 5.762141448225523, 14)],
+ '8': [('6*7*8*', 3.357394158224219, 12),
+       ('4*5*6*7*8*', 5.762141448225523, 14)]}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: 6, distance_to_parent: 2.02388674864165, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 7*, parent_id: 6, distance_to_parent: 2.02388674864165, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 2, name: 8*, parent_id: 7, distance_to_parent: 3.357394158224219, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 3, name: 4*, parent_id: 5, distance_to_parent: 1.7104327252824516, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 4, name: 5*, parent_id: 5, distance_to_parent: 1.7104327252824516, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 5, name: 4*5*, parent_id: 8, distance_to_parent: 4.051708722943071, children: [3, 4], distance_to_children: [1.7104327252824516, 1.7104327252824516], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 6, name: 6*7*, parent_id: 7, distance_to_parent: 1.3335074095825687, children: [0, 1], distance_to_children: [2.02388674864165, 2.02388674864165], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 7, name: 6*7*8*, parent_id: 8, distance_to_parent: 2.4047472900013043, children: [6, 2], distance_to_children: [1.3335074095825687, 3.357394158224219], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 8, name: 4*5*6*7*8*, parent_id: -1, distance_to_parent: -1.0, children: [7, 5], distance_to_children: [2.4047472900013043, 4.051708722943071], clade: [4, 5, 6, 7, 8], clade_split: [[6, 7, 8], [4, 5]]
+
+gene_subtree dlt_process:
+nothing happened at node 8 (4*5*6*7*8*)
+duplication at node 7 (6*7*8*) with distance 1.9129137577227893
+nothing happened at node 7 (6*7*8*)
+nothing happened at node 6 (6*7*)
+transfer at node 0 (6*) with distance 1.9128686993328994
+transfer at node 0 (6*) with distance 1.6361530171110363
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+nothing happened at node 1 (7*)
+reach the end of node 1 (7*)
+loss at node 2 (8*) with distance 0.8015271792496268
+nothing happened at node 5 (4*5*)
+nothing happened at node 3 (4*)
+reach the end of node 3 (4*)
+nothing happened at node 4 (5*)
+reach the end of node 4 (5*)
+
+gene_subtree events:
+[{'distance': 1.9129137577227893,
+  'distance_to_species_node': None,
+  'event_height': 5.270307915947008,
+  'name': '6*7*8*',
+  'node_id': 7,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 1.9128686993328994,
+  'distance_to_species_node': None,
+  'event_height': 1.9128686993328994,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 2,
+  'type': 'transfer'},
+ {'distance': 1.6361530171110363,
+  'distance_to_species_node': None,
+  'event_height': 1.6361530171110363,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 8,
+  'type': 'transfer'},
+ {'distance': 0.8015271792496268,
+  'distance_to_species_node': None,
+  'event_height': 0.8015271792496268,
+  'name': '8*',
+  'node_id': 2,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.9129137577227893,
+ 'distance_to_species_node': None,
+ 'event_height': 5.270307915947008,
+ 'name': '6*7*8*',
+ 'node_id': 7,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 12, name: GHI, parent_id: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+
+species_subtree_coal:
+initial node 10: ['6*', '7*']
+coalescent at node 10: ['6*7*'], distance = 0.2204031434750341
+initial node 12: ['6*7*', '8*']
+coalescent at node 12: ['6*7*8*'], distance = 1.1256954440334936
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'10': [{'distance': 0.2204031434750341,
+                     'from_set': ['6*', '7*'],
+                     'to_set': ['6*7*']}],
+             '12': [{'distance': 1.1256954440334936,
+                     'from_set': ['6*7*', '8*'],
+                     'to_set': ['6*7*8*']}]})
+
+species_subtree_time_seq:
+{'6': [('6*7*', 2.220403143475034, 10), ('6*7*8*', 4.125695444033494, 12)],
+ '7': [('6*7*', 2.220403143475034, 10), ('6*7*8*', 4.125695444033494, 12)],
+ '8': [('6*7*8*', 4.125695444033494, 12)]}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: 3, distance_to_parent: 2.220403143475034, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 7*, parent_id: 3, distance_to_parent: 2.220403143475034, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 2, name: 8*, parent_id: 4, distance_to_parent: 4.125695444033494, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 3, name: 6*7*, parent_id: 4, distance_to_parent: 1.9052923005584597, children: [0, 1], distance_to_children: [2.220403143475034, 2.220403143475034], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 4, name: 6*7*8*, parent_id: -1, distance_to_parent: -1.0, children: [3, 2], distance_to_children: [1.9052923005584597, 4.125695444033494], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+
+gene_subtree dlt_process:
+loss at node 4 (6*7*8*) with distance 0.825055798801632
+
+gene_subtree events:
+[{'distance': 0.825055798801632,
+  'distance_to_species_node': None,
+  'event_height': 4.950751242835126,
+  'name': '6*7*8*',
+  'node_id': 4,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.9128686993328994,
+ 'distance_to_species_node': None,
+ 'event_height': 1.9128686993328994,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 2,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+loss at node 0 (2*) with distance 0.20037694447234355
+
+gene_subtree events:
+[{'distance': 0.20037694447234355,
+  'distance_to_species_node': None,
+  'event_height': 0.20037694447234355,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.6361530171110363,
+ 'distance_to_species_node': None,
+ 'event_height': 1.6361530171110363,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 8,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (8*)
+reach the end of node 0 (8*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.2175207395810084,
+ 'distance_to_species_node': None,
+ 'event_height': 1.2175207395810084,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'target': 7,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'7': []}
+
+gene_subtree nodes:
+node_id: 0, name: 7*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (7*) with distance 1.203012599139354
+nothing happened at node 0 (7*)
+reach the end of node 0 (7*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.156572065802829,
+ 'distance_to_species_node': None,
+ 'event_height': 1.156572065802829,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.09671480874221583,
+ 'distance_to_species_node': None,
+ 'event_height': 0.09671480874221583,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 6.338989789904309,
+ 'distance_to_species_node': None,
+ 'event_height': 6.338989789904309,
+ 'name': '1*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'target': 13,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 13, name: BCD, parent_id: 15, distance_to_parent: 3.0, children: [1, 11], distance_to_children: [5.0, 2.0], clade: [1, 2, 3], clade_split: [[1], [2, 3]]
+
+species_subtree_coal:
+initial node 11: ['2*', '3*']
+coalescent at node 11: ['2*3*'], distance = 0.26822163795619464
+initial node 13: ['1*', '2*3*']
+coalescent at node 13: ['1*2*3*'], distance = 0.9321924203213818
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'11': [{'distance': 0.26822163795619464,
+                     'from_set': ['2*', '3*'],
+                     'to_set': ['2*3*']}],
+             '13': [{'distance': 0.9321924203213818,
+                     'from_set': ['1*', '2*3*'],
+                     'to_set': ['1*2*3*']}]})
+
+species_subtree_time_seq:
+{'1': [('1*2*3*', 5.932192420321382, 13)],
+ '2': [('2*3*', 3.2682216379561946, 11), ('1*2*3*', 5.932192420321382, 13)],
+ '3': [('2*3*', 3.2682216379561946, 11), ('1*2*3*', 5.932192420321382, 13)]}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: 3, distance_to_parent: 3.2682216379561946, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 1, name: 3*, parent_id: 3, distance_to_parent: 3.2682216379561946, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 2, name: 1*, parent_id: 4, distance_to_parent: 5.932192420321382, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 3, name: 2*3*, parent_id: 4, distance_to_parent: 2.6639707823651873, children: [0, 1], distance_to_children: [3.2682216379561946, 3.2682216379561946], clade: [2, 3], clade_split: [[2], [3]]
+node_id: 4, name: 1*2*3*, parent_id: -1, distance_to_parent: -1.0, children: [3, 2], distance_to_children: [2.6639707823651873, 5.932192420321382], clade: [1, 2, 3], clade_split: [[2, 3], [1]]
+
+gene_subtree dlt_process:
+transfer at node 4 (1*2*3*) with distance 0.12498152603731844
+nothing happened at node 4 (1*2*3*)
+duplication at node 3 (2*3*) with distance 1.4114505714121177
+transfer at node 3 (2*3*) with distance 1.330046579483412
+nothing happened at node 3 (2*3*)
+duplication at node 0 (2*) with distance 1.7023657888815242
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+loss at node 1 (3*) with distance 1.2014641240956832
+loss at node 2 (1*) with distance 4.546247785541558
+
+gene_subtree events:
+[{'distance': 0.12498152603731844,
+  'distance_to_species_node': None,
+  'event_height': 6.0571739463587,
+  'name': '1*2*3*',
+  'node_id': 4,
+  'species_node_id': None,
+  'target': 14,
+  'type': 'transfer'},
+ {'distance': 1.4114505714121177,
+  'distance_to_species_node': None,
+  'event_height': 4.679672209368312,
+  'name': '2*3*',
+  'node_id': 3,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 1.7023657888815242,
+  'distance_to_species_node': None,
+  'event_height': 1.7023657888815242,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 1.2014641240956832,
+  'distance_to_species_node': None,
+  'event_height': 1.2014641240956832,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'loss'},
+ {'distance': 4.546247785541558,
+  'distance_to_species_node': None,
+  'event_height': 4.546247785541558,
+  'name': '1*',
+  'node_id': 2,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.12498152603731844,
+ 'distance_to_species_node': None,
+ 'event_height': 6.0571739463587,
+ 'name': '1*2*3*',
+ 'node_id': 4,
+ 'species_node_id': None,
+ 'target': 14,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 12, name: GHI, parent_id: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 14, name: EFGHI, parent_id: 15, distance_to_parent: 3.0, children: [9, 12], distance_to_children: [4.0, 2.0], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
+
+species_subtree_coal:
+initial node 10: ['6*', '7*']
+coalescent at node 10: ['6*7*'], distance = 0.5180666417345302
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 2.1411832561492297
+initial node 12: ['6*7*', '8*']
+coalescent at node 12: ['6*7*8*'], distance = 0.6209344654146925
+initial node 14: ['4*5*', '6*7*8*']
+coalescent at node 14: ['4*5*6*7*8*'], distance = 4.308578041745363
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'10': [{'distance': 0.5180666417345302,
+                     'from_set': ['6*', '7*'],
+                     'to_set': ['6*7*']}],
+             '12': [{'distance': 0.6209344654146925,
+                     'from_set': ['6*7*', '8*'],
+                     'to_set': ['6*7*8*']}],
+             '14': [{'distance': 4.308578041745363,
+                     'from_set': ['4*5*', '6*7*8*'],
+                     'to_set': ['4*5*6*7*8*']}],
+             '9': [{'distance': 2.1411832561492297,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 3.1411832561492297, 9), ('4*5*6*7*8*', 9.308578041745363, 14)],
+ '5': [('4*5*', 3.1411832561492297, 9), ('4*5*6*7*8*', 9.308578041745363, 14)],
+ '6': [('6*7*', 2.51806664173453, 10),
+       ('6*7*8*', 3.6209344654146927, 12),
+       ('4*5*6*7*8*', 9.308578041745363, 14)],
+ '7': [('6*7*', 2.51806664173453, 10),
+       ('6*7*8*', 3.6209344654146927, 12),
+       ('4*5*6*7*8*', 9.308578041745363, 14)],
+ '8': [('6*7*8*', 3.6209344654146927, 12),
+       ('4*5*6*7*8*', 9.308578041745363, 14)]}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: 5, distance_to_parent: 2.51806664173453, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 7*, parent_id: 5, distance_to_parent: 2.51806664173453, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 2, name: 8*, parent_id: 7, distance_to_parent: 3.6209344654146927, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 3, name: 4*, parent_id: 6, distance_to_parent: 3.1411832561492297, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 4, name: 5*, parent_id: 6, distance_to_parent: 3.1411832561492297, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 5, name: 6*7*, parent_id: 7, distance_to_parent: 1.1028678236801626, children: [0, 1], distance_to_children: [2.51806664173453, 2.51806664173453], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 6, name: 4*5*, parent_id: 8, distance_to_parent: 6.167394785596134, children: [3, 4], distance_to_children: [3.1411832561492297, 3.1411832561492297], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 7, name: 6*7*8*, parent_id: 8, distance_to_parent: 5.687643576330671, children: [5, 2], distance_to_children: [1.1028678236801626, 3.6209344654146927], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 8, name: 4*5*6*7*8*, parent_id: -1, distance_to_parent: -1.0, children: [7, 6], distance_to_children: [5.687643576330671, 6.167394785596134], clade: [4, 5, 6, 7, 8], clade_split: [[6, 7, 8], [4, 5]]
+
+gene_subtree dlt_process:
+nothing happened at node 8 (4*5*6*7*8*)
+transfer at node 7 (6*7*8*) with distance 2.6113583361076835
+nothing happened at node 7 (6*7*8*)
+transfer at node 5 (6*7*) with distance 0.7165756003681473
+nothing happened at node 5 (6*7*)
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+nothing happened at node 1 (7*)
+reach the end of node 1 (7*)
+nothing happened at node 2 (8*)
+reach the end of node 2 (8*)
+duplication at node 6 (4*5*) with distance 5.085883882063923
+duplication at node 6 (4*5*) with distance 3.091642278095618
+nothing happened at node 6 (4*5*)
+transfer at node 3 (4*) with distance 2.135811698439942
+transfer at node 3 (4*) with distance 1.2361686766659934
+loss at node 3 (4*) with distance 0.9523834561214262
+nothing happened at node 4 (5*)
+reach the end of node 4 (5*)
+
+gene_subtree events:
+[{'distance': 2.6113583361076835,
+  'distance_to_species_node': None,
+  'event_height': 6.232292801522377,
+  'name': '6*7*8*',
+  'node_id': 7,
+  'species_node_id': None,
+  'target': 14,
+  'type': 'transfer'},
+ {'distance': 0.7165756003681473,
+  'distance_to_species_node': None,
+  'event_height': 3.234642242102677,
+  'name': '6*7*',
+  'node_id': 5,
+  'species_node_id': None,
+  'target': 9,
+  'type': 'transfer'},
+ {'distance': 5.085883882063923,
+  'distance_to_species_node': None,
+  'event_height': 8.227067138213153,
+  'name': '4*5*',
+  'node_id': 6,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 3.091642278095618,
+  'distance_to_species_node': None,
+  'event_height': 6.2328255342448475,
+  'name': '4*5*',
+  'node_id': 6,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 2.135811698439942,
+  'distance_to_species_node': None,
+  'event_height': 2.135811698439942,
+  'name': '4*',
+  'node_id': 3,
+  'species_node_id': None,
+  'target': 8,
+  'type': 'transfer'},
+ {'distance': 1.2361686766659934,
+  'distance_to_species_node': None,
+  'event_height': 1.2361686766659934,
+  'name': '4*',
+  'node_id': 3,
+  'species_node_id': None,
+  'target': 3,
+  'type': 'transfer'},
+ {'distance': 0.9523834561214262,
+  'distance_to_species_node': None,
+  'event_height': 0.9523834561214262,
+  'name': '4*',
+  'node_id': 3,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.6113583361076835,
+ 'distance_to_species_node': None,
+ 'event_height': 6.232292801522377,
+ 'name': '6*7*8*',
+ 'node_id': 7,
+ 'species_node_id': None,
+ 'target': 14,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 12, name: GHI, parent_id: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+node_id: 14, name: EFGHI, parent_id: 15, distance_to_parent: 3.0, children: [9, 12], distance_to_children: [4.0, 2.0], clade: [4, 5, 6, 7, 8], clade_split: [[4, 5], [6, 7, 8]]
+
+species_subtree_coal:
+initial node 10: ['6*', '7*']
+coalescent at node 10: ['6*7*'], distance = 0.3701046805788102
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 0.8787119064274196
+initial node 14: ['4*5*', '6*7*', '8*']
+coalescent at node 14: ['4*5*8*', '6*7*'], distance = 2.970445487366336
+initial node 14: ['4*5*8*', '6*7*']
+coalescent at node 14: ['4*5*6*7*8*'], distance = 0.9138481961326205
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'10': [{'distance': 0.3701046805788102,
+                     'from_set': ['6*', '7*'],
+                     'to_set': ['6*7*']}],
+             '14': [{'distance': 2.970445487366336,
+                     'from_set': ['4*5*', '6*7*', '8*'],
+                     'to_set': ['4*5*8*', '6*7*']},
+                    {'distance': 0.9138481961326205,
+                     'from_set': ['4*5*8*', '6*7*'],
+                     'to_set': ['4*5*6*7*8*']}],
+             '9': [{'distance': 0.8787119064274196,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 1.8787119064274196, 9),
+       ('4*5*8*', 7.9704454873663355, 14),
+       ('4*5*6*7*8*', 8.884293683498957, 14)],
+ '5': [('4*5*', 1.8787119064274196, 9),
+       ('4*5*8*', 7.9704454873663355, 14),
+       ('4*5*6*7*8*', 8.884293683498957, 14)],
+ '6': [('6*7*', 2.37010468057881, 10), ('4*5*6*7*8*', 8.884293683498957, 14)],
+ '7': [('6*7*', 2.37010468057881, 10), ('4*5*6*7*8*', 8.884293683498957, 14)],
+ '8': [('4*5*8*', 7.9704454873663355, 14),
+       ('4*5*6*7*8*', 8.884293683498957, 14)]}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: 6, distance_to_parent: 2.37010468057881, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 7*, parent_id: 6, distance_to_parent: 2.37010468057881, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 2, name: 4*, parent_id: 5, distance_to_parent: 1.8787119064274196, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 3, name: 5*, parent_id: 5, distance_to_parent: 1.8787119064274196, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 4, name: 8*, parent_id: 7, distance_to_parent: 7.9704454873663355, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 5, name: 4*5*, parent_id: 7, distance_to_parent: 6.091733580938916, children: [2, 3], distance_to_children: [1.8787119064274196, 1.8787119064274196], clade: [4, 5], clade_split: [[4], [5]]
+node_id: 6, name: 6*7*, parent_id: 8, distance_to_parent: 6.514189002920146, children: [0, 1], distance_to_children: [2.37010468057881, 2.37010468057881], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 7, name: 4*5*8*, parent_id: 8, distance_to_parent: 0.913848196132621, children: [5, 4], distance_to_children: [6.091733580938916, 7.9704454873663355], clade: [4, 5, 8], clade_split: [[4, 5], [8]]
+node_id: 8, name: 4*5*6*7*8*, parent_id: -1, distance_to_parent: -1.0, children: [6, 7], distance_to_children: [6.514189002920146, 0.913848196132621], clade: [4, 5, 6, 7, 8], clade_split: [[6, 7], [4, 5, 8]]
+
+gene_subtree dlt_process:
+nothing happened at node 8 (4*5*6*7*8*)
+duplication at node 6 (6*7*) with distance 0.7577423966095722
+nothing happened at node 6 (6*7*)
+duplication at node 0 (6*) with distance 2.069509528434311
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+transfer at node 1 (7*) with distance 1.8892495128541122
+transfer at node 1 (7*) with distance 0.7726482845019098
+nothing happened at node 1 (7*)
+reach the end of node 1 (7*)
+nothing happened at node 7 (4*5*8*)
+loss at node 5 (4*5*) with distance 5.0149747642535125
+transfer at node 4 (8*) with distance 4.784908198094865
+loss at node 4 (8*) with distance 4.6019281771710645
+
+gene_subtree events:
+[{'distance': 0.7577423966095722,
+  'distance_to_species_node': None,
+  'event_height': 3.127847077188383,
+  'name': '6*7*',
+  'node_id': 6,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 2.069509528434311,
+  'distance_to_species_node': None,
+  'event_height': 2.069509528434311,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 1.8892495128541122,
+  'distance_to_species_node': None,
+  'event_height': 1.8892495128541122,
+  'name': '7*',
+  'node_id': 1,
+  'species_node_id': None,
+  'target': 6,
+  'type': 'transfer'},
+ {'distance': 0.7726482845019098,
+  'distance_to_species_node': None,
+  'event_height': 0.7726482845019098,
+  'name': '7*',
+  'node_id': 1,
+  'species_node_id': None,
+  'target': 3,
+  'type': 'transfer'},
+ {'distance': 5.0149747642535125,
+  'distance_to_species_node': None,
+  'event_height': 6.893686670680932,
+  'name': '4*5*',
+  'node_id': 5,
+  'species_node_id': None,
+  'type': 'loss'},
+ {'distance': 4.784908198094865,
+  'distance_to_species_node': None,
+  'event_height': 4.784908198094865,
+  'name': '8*',
+  'node_id': 4,
+  'species_node_id': None,
+  'target': 12,
+  'type': 'transfer'},
+ {'distance': 4.6019281771710645,
+  'distance_to_species_node': None,
+  'event_height': 4.6019281771710645,
+  'name': '8*',
+  'node_id': 4,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.7577423966095722,
+ 'distance_to_species_node': None,
+ 'event_height': 3.127847077188383,
+ 'name': '6*7*',
+ 'node_id': 6,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+
+species_subtree_coal:
+initial node 10: ['6*', '7*']
+coalescent at node 10: ['6*7*'], distance = 0.006511371149546688
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'10': [{'distance': 0.006511371149546688,
+                     'from_set': ['6*', '7*'],
+                     'to_set': ['6*7*']}]})
+
+species_subtree_time_seq:
+{'6': [('6*7*', 2.006511371149547, 10)], '7': [('6*7*', 2.006511371149547, 10)]}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: 2, distance_to_parent: 2.006511371149547, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 7*, parent_id: 2, distance_to_parent: 2.006511371149547, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 2, name: 6*7*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [2.006511371149547, 2.006511371149547], clade: [6, 7], clade_split: [[6], [7]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (6*7*)
+transfer at node 0 (6*) with distance 1.8037251849087095
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+nothing happened at node 1 (7*)
+reach the end of node 1 (7*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.069509528434311,
+ 'distance_to_species_node': None,
+ 'event_height': 2.069509528434311,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
 
 species_subtree_coal:
 
@@ -1026,11 +2919,1549 @@ species_subtree_time_seq:
 {'6': []}
 
 gene_subtree nodes:
-node_id: 0, name: 6*, parent: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (6*) with distance 1.252808727833948
+duplication at node 0 (6*) with distance 0.5802872893235442
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+
+gene_subtree events:
+[{'distance': 1.252808727833948,
+  'distance_to_species_node': None,
+  'event_height': 1.252808727833948,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 2,
+  'type': 'transfer'},
+ {'distance': 0.5802872893235442,
+  'distance_to_species_node': None,
+  'event_height': 0.5802872893235442,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.252808727833948,
+ 'distance_to_species_node': None,
+ 'event_height': 1.252808727833948,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 2,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.5802872893235442,
+ 'distance_to_species_node': None,
+ 'event_height': 0.5802872893235442,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'6': []}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
 
 gene_subtree dlt_process:
 nothing happened at node 0 (6*)
 reach the end of node 0 (6*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.8892495128541122,
+ 'distance_to_species_node': None,
+ 'event_height': 1.8892495128541122,
+ 'name': '7*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'target': 6,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'6': []}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (6*) with distance 1.7617571349161723
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+
+gene_subtree events:
+[{'distance': 1.7617571349161723,
+  'distance_to_species_node': None,
+  'event_height': 1.7617571349161723,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.7617571349161723,
+ 'distance_to_species_node': None,
+ 'event_height': 1.7617571349161723,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'6': []}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.7726482845019098,
+ 'distance_to_species_node': None,
+ 'event_height': 0.7726482845019098,
+ 'name': '7*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'target': 3,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 4.784908198094865,
+ 'distance_to_species_node': None,
+ 'event_height': 4.784908198094865,
+ 'name': '8*',
+ 'node_id': 4,
+ 'species_node_id': None,
+ 'target': 12,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 10, name: GH, parent_id: 12, distance_to_parent: 1.0, children: [6, 7], distance_to_children: [2.0, 2.0], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 12, name: GHI, parent_id: 14, distance_to_parent: 2.0, children: [10, 8], distance_to_children: [1.0, 3.0], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+
+species_subtree_coal:
+initial node 10: ['6*', '7*']
+coalescent at node 10: ['6*7*'], distance = 0.006013189391312631
+initial node 12: ['6*7*', '8*']
+coalescent at node 12: ['6*7*8*'], distance = 0.3074577382015639
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'10': [{'distance': 0.006013189391312631,
+                     'from_set': ['6*', '7*'],
+                     'to_set': ['6*7*']}],
+             '12': [{'distance': 0.3074577382015639,
+                     'from_set': ['6*7*', '8*'],
+                     'to_set': ['6*7*8*']}]})
+
+species_subtree_time_seq:
+{'6': [('6*7*', 2.0060131893913127, 10), ('6*7*8*', 3.3074577382015637, 12)],
+ '7': [('6*7*', 2.0060131893913127, 10), ('6*7*8*', 3.3074577382015637, 12)],
+ '8': [('6*7*8*', 3.3074577382015637, 12)]}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: 3, distance_to_parent: 2.0060131893913127, children: [], distance_to_children: [], clade: [6], clade_split: []
+node_id: 1, name: 7*, parent_id: 3, distance_to_parent: 2.0060131893913127, children: [], distance_to_children: [], clade: [7], clade_split: []
+node_id: 2, name: 8*, parent_id: 4, distance_to_parent: 3.3074577382015637, children: [], distance_to_children: [], clade: [8], clade_split: []
+node_id: 3, name: 6*7*, parent_id: 4, distance_to_parent: 1.301444548810251, children: [0, 1], distance_to_children: [2.0060131893913127, 2.0060131893913127], clade: [6, 7], clade_split: [[6], [7]]
+node_id: 4, name: 6*7*8*, parent_id: -1, distance_to_parent: -1.0, children: [3, 2], distance_to_children: [1.301444548810251, 3.3074577382015637], clade: [6, 7, 8], clade_split: [[6, 7], [8]]
+
+gene_subtree dlt_process:
+nothing happened at node 4 (6*7*8*)
+nothing happened at node 3 (6*7*)
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+duplication at node 1 (7*) with distance 1.1044674989612682
+nothing happened at node 1 (7*)
+reach the end of node 1 (7*)
+duplication at node 2 (8*) with distance 1.2888432444086382
+nothing happened at node 2 (8*)
+reach the end of node 2 (8*)
+
+gene_subtree events:
+[{'distance': 1.1044674989612682,
+  'distance_to_species_node': None,
+  'event_height': 1.1044674989612682,
+  'name': '7*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 1.2888432444086382,
+  'distance_to_species_node': None,
+  'event_height': 1.2888432444086382,
+  'name': '8*',
+  'node_id': 2,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.1044674989612682,
+ 'distance_to_species_node': None,
+ 'event_height': 1.1044674989612682,
+ 'name': '7*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'7': []}
+
+gene_subtree nodes:
+node_id: 0, name: 7*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (7*)
+reach the end of node 0 (7*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.2888432444086382,
+ 'distance_to_species_node': None,
+ 'event_height': 1.2888432444086382,
+ 'name': '8*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (8*) with distance 0.4562489227013895
+nothing happened at node 0 (8*)
+reach the end of node 0 (8*)
+
+gene_subtree events:
+[{'distance': 0.4562489227013895,
+  'distance_to_species_node': None,
+  'event_height': 0.4562489227013895,
+  'name': '8*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.4562489227013895,
+ 'distance_to_species_node': None,
+ 'event_height': 0.4562489227013895,
+ 'name': '8*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (8*)
+reach the end of node 0 (8*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.7165756003681473,
+ 'distance_to_species_node': None,
+ 'event_height': 3.234642242102677,
+ 'name': '6*7*',
+ 'node_id': 5,
+ 'species_node_id': None,
+ 'target': 9,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+
+species_subtree_coal:
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 1.1326794971869942
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'9': [{'distance': 1.1326794971869942,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 2.1326794971869942, 9)], '5': [('4*5*', 2.1326794971869942, 9)]}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 2.1326794971869942, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 2.1326794971869942, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [2.1326794971869942, 2.1326794971869942], clade: [4, 5], clade_split: [[4], [5]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (4*5*)
+loss at node 0 (4*) with distance 1.9205750408196052
+nothing happened at node 1 (5*)
+reach the end of node 1 (5*)
+
+gene_subtree events:
+[{'distance': 1.9205750408196052,
+  'distance_to_species_node': None,
+  'event_height': 1.9205750408196052,
+  'name': '4*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 5.085883882063923,
+ 'distance_to_species_node': None,
+ 'event_height': 8.227067138213153,
+ 'name': '4*5*',
+ 'node_id': 6,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+
+species_subtree_coal:
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 0.22760058604146313
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'9': [{'distance': 0.22760058604146313,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 1.2276005860414632, 9)], '5': [('4*5*', 1.2276005860414632, 9)]}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 1.2276005860414632, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 1.2276005860414632, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [1.2276005860414632, 1.2276005860414632], clade: [4, 5], clade_split: [[4], [5]]
+
+gene_subtree dlt_process:
+loss at node 2 (4*5*) with distance 4.672514085714225
+
+gene_subtree events:
+[{'distance': 4.672514085714225,
+  'distance_to_species_node': None,
+  'event_height': 5.900114671755688,
+  'name': '4*5*',
+  'node_id': 2,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 3.091642278095618,
+ 'distance_to_species_node': None,
+ 'event_height': 6.2328255342448475,
+ 'name': '4*5*',
+ 'node_id': 6,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+
+species_subtree_coal:
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 0.15084192975712796
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'9': [{'distance': 0.15084192975712796,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 1.150841929757128, 9)], '5': [('4*5*', 1.150841929757128, 9)]}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 1.150841929757128, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 1.150841929757128, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [1.150841929757128, 1.150841929757128], clade: [4, 5], clade_split: [[4], [5]]
+
+gene_subtree dlt_process:
+loss at node 2 (4*5*) with distance 2.8645760859573053
+
+gene_subtree events:
+[{'distance': 2.8645760859573053,
+  'distance_to_species_node': None,
+  'event_height': 4.015418015714433,
+  'name': '4*5*',
+  'node_id': 2,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.135811698439942,
+ 'distance_to_species_node': None,
+ 'event_height': 2.135811698439942,
+ 'name': '4*',
+ 'node_id': 3,
+ 'species_node_id': None,
+ 'target': 8,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (8*) with distance 1.371359770831729
+loss at node 0 (8*) with distance 1.3153729581705333
+
+gene_subtree events:
+[{'distance': 1.371359770831729,
+  'distance_to_species_node': None,
+  'event_height': 1.371359770831729,
+  'name': '8*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 6,
+  'type': 'transfer'},
+ {'distance': 1.3153729581705333,
+  'distance_to_species_node': None,
+  'event_height': 1.3153729581705333,
+  'name': '8*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.371359770831729,
+ 'distance_to_species_node': None,
+ 'event_height': 1.371359770831729,
+ 'name': '8*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 6,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'6': []}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (6*) with distance 0.7696400559550579
+transfer at node 0 (6*) with distance 0.4619822665109428
+transfer at node 0 (6*) with distance 0.0854411730589722
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+
+gene_subtree events:
+[{'distance': 0.7696400559550579,
+  'distance_to_species_node': None,
+  'event_height': 0.7696400559550579,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 0.4619822665109428,
+  'distance_to_species_node': None,
+  'event_height': 0.4619822665109428,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 7,
+  'type': 'transfer'},
+ {'distance': 0.0854411730589722,
+  'distance_to_species_node': None,
+  'event_height': 0.0854411730589722,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 2,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.7696400559550579,
+ 'distance_to_species_node': None,
+ 'event_height': 0.7696400559550579,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'6': []}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.4619822665109428,
+ 'distance_to_species_node': None,
+ 'event_height': 0.4619822665109428,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 7,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 7, name: H, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'7': []}
+
+gene_subtree nodes:
+node_id: 0, name: 7*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [7], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (7*)
+reach the end of node 0 (7*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.0854411730589722,
+ 'distance_to_species_node': None,
+ 'event_height': 0.0854411730589722,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 2,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.2361686766659934,
+ 'distance_to_species_node': None,
+ 'event_height': 1.2361686766659934,
+ 'name': '4*',
+ 'node_id': 3,
+ 'species_node_id': None,
+ 'target': 3,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.4114505714121177,
+ 'distance_to_species_node': None,
+ 'event_height': 4.679672209368312,
+ 'name': '2*3*',
+ 'node_id': 3,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+
+species_subtree_coal:
+initial node 11: ['2*', '3*']
+coalescent at node 11: ['2*3*'], distance = 0.827804696276595
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'11': [{'distance': 0.827804696276595,
+                     'from_set': ['2*', '3*'],
+                     'to_set': ['2*3*']}]})
+
+species_subtree_time_seq:
+{'2': [('2*3*', 3.827804696276595, 11)], '3': [('2*3*', 3.827804696276595, 11)]}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: 2, distance_to_parent: 3.827804696276595, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 1, name: 3*, parent_id: 2, distance_to_parent: 3.827804696276595, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 2, name: 2*3*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [3.827804696276595, 3.827804696276595], clade: [2, 3], clade_split: [[2], [3]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (2*3*)
+duplication at node 0 (2*) with distance 0.4189421608094479
+duplication at node 0 (2*) with distance 0.35183877377340167
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+duplication at node 1 (3*) with distance 3.6996085395330423
+nothing happened at node 1 (3*)
+reach the end of node 1 (3*)
+
+gene_subtree events:
+[{'distance': 0.4189421608094479,
+  'distance_to_species_node': None,
+  'event_height': 0.4189421608094479,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 0.35183877377340167,
+  'distance_to_species_node': None,
+  'event_height': 0.35183877377340167,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 3.6996085395330423,
+  'distance_to_species_node': None,
+  'event_height': 3.6996085395330423,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.4189421608094479,
+ 'distance_to_species_node': None,
+ 'event_height': 0.4189421608094479,
+ 'name': '2*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.35183877377340167,
+ 'distance_to_species_node': None,
+ 'event_height': 0.35183877377340167,
+ 'name': '2*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 3.6996085395330423,
+ 'distance_to_species_node': None,
+ 'event_height': 3.6996085395330423,
+ 'name': '3*',
+ 'node_id': 1,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'3': []}
+
+gene_subtree nodes:
+node_id: 0, name: 3*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (3*) with distance 1.776327370852353
+nothing happened at node 0 (3*)
+reach the end of node 0 (3*)
+
+gene_subtree events:
+[{'distance': 1.776327370852353,
+  'distance_to_species_node': None,
+  'event_height': 1.776327370852353,
+  'name': '3*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 1,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.776327370852353,
+ 'distance_to_species_node': None,
+ 'event_height': 1.776327370852353,
+ 'name': '3*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 1,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.7023657888815242,
+ 'distance_to_species_node': None,
+ 'event_height': 1.7023657888815242,
+ 'name': '2*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 4.136829778139615,
+ 'distance_to_species_node': None,
+ 'event_height': 4.136829778139615,
+ 'name': '1*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'target': 11,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 11, name: CD, parent_id: 13, distance_to_parent: 2.0, children: [2, 3], distance_to_children: [3.0, 3.0], clade: [2, 3], clade_split: [[2], [3]]
+
+species_subtree_coal:
+initial node 11: ['2*', '3*']
+coalescent at node 11: ['2*3*'], distance = 1.4650768672835552
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'11': [{'distance': 1.4650768672835552,
+                     'from_set': ['2*', '3*'],
+                     'to_set': ['2*3*']}]})
+
+species_subtree_time_seq:
+{'2': [('2*3*', 4.465076867283555, 11)], '3': [('2*3*', 4.465076867283555, 11)]}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: 2, distance_to_parent: 4.465076867283555, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 1, name: 3*, parent_id: 2, distance_to_parent: 4.465076867283555, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 2, name: 2*3*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [4.465076867283555, 4.465076867283555], clade: [2, 3], clade_split: [[2], [3]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (2*3*)
+duplication at node 0 (2*) with distance 3.0166470763959197
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+loss at node 1 (3*) with distance 1.4514656388218454
+
+gene_subtree events:
+[{'distance': 3.0166470763959197,
+  'distance_to_species_node': None,
+  'event_height': 3.0166470763959197,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'},
+ {'distance': 1.4514656388218454,
+  'distance_to_species_node': None,
+  'event_height': 1.4514656388218454,
+  'name': '3*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 3.0166470763959197,
+ 'distance_to_species_node': None,
+ 'event_height': 3.0166470763959197,
+ 'name': '2*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.214051620845729,
+ 'distance_to_species_node': None,
+ 'event_height': 2.214051620845729,
+ 'name': '1*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'target': 2,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.0535318851795137,
+ 'distance_to_species_node': None,
+ 'event_height': 2.0535318851795137,
+ 'name': '1*',
+ 'node_id': 2,
+ 'species_node_id': None,
+ 'target': 9,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 4, name: E, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 5, name: F, parent_id: 9, distance_to_parent: 1.0, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 9, name: EF, parent_id: 14, distance_to_parent: 4.0, children: [4, 5], distance_to_children: [1.0, 1.0], clade: [4, 5], clade_split: [[4], [5]]
+
+species_subtree_coal:
+initial node 9: ['4*', '5*']
+coalescent at node 9: ['4*5*'], distance = 2.1089489142028945
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>,
+            {'9': [{'distance': 2.1089489142028945,
+                    'from_set': ['4*', '5*'],
+                    'to_set': ['4*5*']}]})
+
+species_subtree_time_seq:
+{'4': [('4*5*', 3.1089489142028945, 9)], '5': [('4*5*', 3.1089489142028945, 9)]}
+
+gene_subtree nodes:
+node_id: 0, name: 4*, parent_id: 2, distance_to_parent: 3.1089489142028945, children: [], distance_to_children: [], clade: [4], clade_split: []
+node_id: 1, name: 5*, parent_id: 2, distance_to_parent: 3.1089489142028945, children: [], distance_to_children: [], clade: [5], clade_split: []
+node_id: 2, name: 4*5*, parent_id: -1, distance_to_parent: -1.0, children: [0, 1], distance_to_children: [3.1089489142028945, 3.1089489142028945], clade: [4, 5], clade_split: [[4], [5]]
+
+gene_subtree dlt_process:
+nothing happened at node 2 (4*5*)
+nothing happened at node 0 (4*)
+reach the end of node 0 (4*)
+loss at node 1 (5*) with distance 1.7390827709513885
+
+gene_subtree events:
+[{'distance': 1.7390827709513885,
+  'distance_to_species_node': None,
+  'event_height': 1.7390827709513885,
+  'name': '5*',
+  'node_id': 1,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 2.0991018395858863,
+ 'distance_to_species_node': 2.0991018395858863,
+ 'event_height': 2.0991018395858863,
+ 'name': '1*',
+ 'node_id': 7,
+ 'species_node_id': 1,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (1*) with distance 1.6386237336909248
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
+
+gene_subtree events:
+[{'distance': 1.6386237336909248,
+  'distance_to_species_node': None,
+  'event_height': 1.6386237336909248,
+  'name': '1*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 2,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.6386237336909248,
+ 'distance_to_species_node': None,
+ 'event_height': 1.6386237336909248,
+ 'name': '1*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 2,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (2*) with distance 1.3026907995610162
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[{'distance': 1.3026907995610162,
+  'distance_to_species_node': None,
+  'event_height': 1.3026907995610162,
+  'name': '2*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.3026907995610162,
+ 'distance_to_species_node': None,
+ 'event_height': 1.3026907995610162,
+ 'name': '2*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.75554391718611,
+ 'distance_to_species_node': 1.75554391718611,
+ 'event_height': 1.75554391718611,
+ 'name': '1*',
+ 'node_id': 7,
+ 'species_node_id': 1,
+ 'target': 6,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 6, name: G, parent_id: 10, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'6': []}
+
+gene_subtree nodes:
+node_id: 0, name: 6*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [6], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (6*) with distance 0.665391877555406
+nothing happened at node 0 (6*)
+reach the end of node 0 (6*)
+
+gene_subtree events:
+[{'distance': 0.665391877555406,
+  'distance_to_species_node': None,
+  'event_height': 0.665391877555406,
+  'name': '6*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 2,
+  'type': 'transfer'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 0.665391877555406,
+ 'distance_to_species_node': None,
+ 'event_height': 0.665391877555406,
+ 'name': '6*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 2,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 2, name: C, parent_id: 11, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'2': []}
+
+gene_subtree nodes:
+node_id: 0, name: 2*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (2*)
+reach the end of node 0 (2*)
+
+gene_subtree events:
+[]
+
+
+
+================================================================================
+Current event:
+{'distance': 4.462101736314875,
+ 'distance_to_species_node': 4.462101736314875,
+ 'event_height': 4.462101736314875,
+ 'name': '0*',
+ 'node_id': 8,
+ 'species_node_id': 0,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 0, name: A, parent_id: 16, distance_to_parent: 10.0, children: [], distance_to_children: [], clade: [0], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'0': []}
+
+gene_subtree nodes:
+node_id: 0, name: 0*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [0], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (0*) with distance 1.8678551696911887
+loss at node 0 (0*) with distance 1.6211893334487681
+
+gene_subtree events:
+[{'distance': 1.8678551696911887,
+  'distance_to_species_node': None,
+  'event_height': 1.8678551696911887,
+  'name': '0*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 8,
+  'type': 'transfer'},
+ {'distance': 1.6211893334487681,
+  'distance_to_species_node': None,
+  'event_height': 1.6211893334487681,
+  'name': '0*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.8678551696911887,
+ 'distance_to_species_node': None,
+ 'event_height': 1.8678551696911887,
+ 'name': '0*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 8,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 8, name: I, parent_id: 12, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'8': []}
+
+gene_subtree nodes:
+node_id: 0, name: 8*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [8], clade_split: []
+
+gene_subtree dlt_process:
+transfer at node 0 (8*) with distance 1.804091747077639
+loss at node 0 (8*) with distance 1.7871867090076279
+
+gene_subtree events:
+[{'distance': 1.804091747077639,
+  'distance_to_species_node': None,
+  'event_height': 1.804091747077639,
+  'name': '8*',
+  'node_id': 0,
+  'species_node_id': None,
+  'target': 1,
+  'type': 'transfer'},
+ {'distance': 1.7871867090076279,
+  'distance_to_species_node': None,
+  'event_height': 1.7871867090076279,
+  'name': '8*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'loss'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.804091747077639,
+ 'distance_to_species_node': None,
+ 'event_height': 1.804091747077639,
+ 'name': '8*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'target': 1,
+ 'type': 'transfer'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+duplication at node 0 (1*) with distance 1.0469029968427663
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
+
+gene_subtree events:
+[{'distance': 1.0469029968427663,
+  'distance_to_species_node': None,
+  'event_height': 1.0469029968427663,
+  'name': '1*',
+  'node_id': 0,
+  'species_node_id': None,
+  'type': 'duplication'}]
+
+
+
+================================================================================
+Current event:
+{'distance': 1.0469029968427663,
+ 'distance_to_species_node': None,
+ 'event_height': 1.0469029968427663,
+ 'name': '1*',
+ 'node_id': 0,
+ 'species_node_id': None,
+ 'type': 'duplication'}
+
+species_subtree_nodes:
+node_id: 1, name: B, parent_id: 13, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+species_subtree_coal:
+
+species_subtree_coal_process:
+defaultdict(<class 'list'>, {})
+
+species_subtree_time_seq:
+{'1': []}
+
+gene_subtree nodes:
+node_id: 0, name: 1*, parent_id: -1, distance_to_parent: -1.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+
+gene_subtree dlt_process:
+nothing happened at node 0 (1*)
+reach the end of node 0 (1*)
 
 gene_subtree events:
 []

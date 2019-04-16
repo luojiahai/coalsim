@@ -21,7 +21,7 @@ def build_tree_recurse(gene_tree, path):
     if (_id):
         subtree_path = os.path.join(path, 'gene_tree.txt')
         f = open(subtree_path)
-        subtree = skbio.read(f, format="newick", into=skbio.tree.TreeNode)
+        subtree = skbio.read(f, format='newick', into=skbio.tree.TreeNode)
         f.close()
         current_tree = subtree
 
@@ -152,7 +152,7 @@ def main(options):
                          pformat=True)
     
 
-    qgtree = GeneTree(time_sequences=time_sequences, species_tree=qstree)        # construct newick coalescent tree
+    qgtree = GeneTree(time_sequences=time_sequences, species_tree=qstree, coalescent_process=coalescent_process)        # construct newick coalescent tree
 
     GeneTree.lambda_dup = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     GeneTree.lambda_loss = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
@@ -169,6 +169,10 @@ def main(options):
                          bodies=qgtree.nodes)
     Debug.log(header='\ngene_tree dlt_process:\n')
     events = qgtree.dlt_process(distance=0)     # locate the duplication points on the coalescent tree
+    for event in events:
+        species_id, distance_above_species_node = qgtree.map_event_to_species_id(event=event)
+        event['species_node_id'] = species_id
+        event['distance_to_species_node'] = distance_above_species_node
     Debug.log(header='\ngene_tree events:\n',
                          bodies=[events],
                          pformat=True)
@@ -207,25 +211,28 @@ def main(options):
 
 def parse_arg(argv):
     try: 
-        opts, args = getopt.getopt(argv,"hd:t:",
-        ["help","dup_recombination=","trans_hemiplasy="])
+        opts, args = getopt.getopt(argv,'hd:t:',
+        ['help','dup_recombination=','trans_hemiplasy='])
     except getopt.GetoptError:
         print('Usage: {} -d <dup_recombination> -t <trans_hemiplasy>'.format(sys.argv[0]))
         sys.exit()
-    for opt, arg in opts:
-        if opt in ('-h', "--help"):
-            print('Usage: {} -d <dup_recombination> -t <trans_hemiplasy>'.format(sys.argv[0]))
-            sys.exit()
-        elif opt in ("-d", "--dup_recombination"):
-            dup_recombination = arg
-
-        elif opt in ("-t", "--trans_hemiplasy"):
-            trans_hemiplasy = arg
+    if(opts):
+        for opt, arg in opts:
+            if opt in ('-h', '--help'):
+                print('Usage: {} -d <dup_recombination> -t <trans_hemiplasy>'.format(sys.argv[0]))
+                sys.exit()
+            elif opt in ('-d', '--dup_recombination'):
+                dup_recombination = arg
+            elif opt in ('-t', '--trans_hemiplasy'):
+                trans_hemiplasy = arg
+    else:
+        dup_recombination = 1
+        trans_hemiplasy = 1
 
     return dup_recombination, trans_hemiplasy
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     dup_recombination, trans_hemiplasy = parse_arg(sys.argv[1:])
     options = {
         'dup_recombination': int(dup_recombination),

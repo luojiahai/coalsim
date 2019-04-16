@@ -142,7 +142,7 @@ class SpeciesTree(GenericTree):
                                             coalescent_process=coalescent_process)
                     break
                 else:
-                    parent = self.nodes_id_dict[leaf].parent
+                    parent = self.nodes_id_dict[leaf].parent_id
                     children = self.nodes_id_dict[parent].children
                     if (labelled[leaf]):
                         continue
@@ -209,7 +209,7 @@ class SpeciesTree(GenericTree):
                     if len(clade_set[root.node_id]) == 1: break
                     else: return self.sub_leaves_coalescent(distance_above_root, sub_leaves)
                 else:
-                    parent = self.nodes_id_dict[leaf].parent
+                    parent = self.nodes_id_dict[leaf].parent_id
                     children = self.nodes_id_dict[parent].children
                     if (labelled[leaf]):
                         continue
@@ -312,7 +312,7 @@ class SpeciesTree(GenericTree):
                             species_node_height = super().distance_to_leaf(int(k), branch_distance=0)
                             coal_height = super().distance_to_leaf(int(k), branch_distance=branch_distance)
                             # pair = (ancestor, coal_height)
-                            pair = (e, coal_height)
+                            pair = (e, coal_height, species_node_id)
                             sequence.append(pair)
                             sequence += self.find_ancestors(leaf_name=e, 
                                                                 coalescent_process=coalescent_process)

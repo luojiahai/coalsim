@@ -28,7 +28,7 @@ class Debug(object):
         if (distance): f.write(str(distance) + '\n')
         f.write('id\tname\tparent\td2p\n')
         for node in nodes:
-            f.write(str(node.node_id) + '\t' + node.name + '\t' + str(node.parent) + '\t' + str(node.distance_to_parent) + '\n')
+            f.write(str(node.node_id) + '\t' + node.name + '\t' + str(node.parent_id) + '\t' + str(node.distance_to_parent) + '\n')
         f.close()
 
     @staticmethod
@@ -59,7 +59,7 @@ class TreeNode(object):
                  children=None):
         self.node_id = node_id
         self.name = name
-        self.parent = parent
+        self.parent_id = parent
         self.distance_to_parent = distance_to_parent
         self.children = children if children else []
         self.distance_to_children = []
@@ -68,10 +68,10 @@ class TreeNode(object):
         return
     
     def __repr__(self):
-        return "node_id: {}, name: {}, parent: {}, distance_to_parent: {}, children: {}, distance_to_children: {}, clade: {}, clade_split: {}".format(
+        return "node_id: {}, name: {}, parent_id: {}, distance_to_parent: {}, children: {}, distance_to_children: {}, clade: {}, clade_split: {}".format(
                 self.node_id, 
                 self.name,
-                self.parent, 
+                self.parent_id, 
                 self.distance_to_parent,
                 self.children,
                 self.distance_to_children,
@@ -219,12 +219,12 @@ class GenericTree(object):
     # find the distance of a given node to the root
     # needed when finding the walking distance
     def distance_to_root_recurse(self, node_id):        
-        if (self.nodes_id_dict[node_id].parent < 0 or 
+        if (self.nodes_id_dict[node_id].parent_id < 0 or 
             node_id == self.root.node_id):
             return 0
         else:
             d2p = self.nodes_id_dict[node_id].distance_to_parent
-            parent = self.nodes_id_dict[node_id].parent
+            parent = self.nodes_id_dict[node_id].parent_id
             return d2p + self.distance_to_root_recurse(parent)
 
     # given a coalescent event happening at "branch_distance" above a speices node with "node_id"
