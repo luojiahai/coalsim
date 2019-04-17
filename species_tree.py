@@ -202,12 +202,11 @@ class SpeciesTree(GenericTree):
         while (True):
             for leaf in old_leaves:
                 if (leaf == root.node_id):
-                    self.coalescent_recurse(node_id=root.node_id, 
+                    clade_set_into_root = self.coalescent_recurse(node_id=root.node_id, 
                                             distance=distance_above_root, 
                                             clade_set=clade_set,
                                             coalescent_process=coalescent_process)
-                    if len(clade_set[root.node_id]) == 1: break
-                    else: return self.sub_leaves_coalescent(distance_above_root, sub_leaves)
+                    break
                 else:
                     parent = self.nodes_id_dict[leaf].parent_id
                     children = self.nodes_id_dict[parent].children
@@ -258,20 +257,26 @@ class SpeciesTree(GenericTree):
             labelled = {}
             for node in nodes:
                 labelled[node.node_id] = False
-        return coalescent_process
+        return coalescent_process, clade_set_into_root
 
-    def incomplete_coalescent(self, distance_above_root):
-        full_coal_process, genes_into_root = self.coalescent(distance_above_root)
+    def incomplete_coalescent(self, distance_above_root, recombination=1, sub_leaves=None): # hemiplasy
+        if (recombination == 1):
+            full_coal_process, genes_into_root = self.coalescent(distance_above_root)
+        elif (recombination == 0):
+            full_coal_process, genes_into_root = self.sub_leaves_coalescent(distance_above_root, sub_leaves)
         chosen_gene = np.random.choice(genes_into_root)
         sub_coal_process = self.filter_coal_process(full_coal_process, chosen_gene)
         return sub_coal_process, chosen_gene
 
-    def bounded_coalescent(self, distance_above_root):
-        coal_process, genes_into_root = self.coalescent(distance_above_root)
+    def bounded_coalescent(self, distance_above_root, recombination=1, sub_leaves=None): # no hemiplasy
+        if (recombination == 0):
+            coal_process, genes_into_root = self.sub_leaves_coalescent(distance_above_root, sub_leaves)
+        elif (recombination == 1):
+            coal_process, genes_into_root = self.coalescent(distance_above_root)
         if (len(genes_into_root) == 1):
             return coal_process
         else:
-            return self.bounded_coalescent(distance_above_root)
+            return self.bounded_coalescent(distance_above_root, recombination, sub_leaves)
 
     # given a coalescent process obtained by incomplete coalescent,
     # one may have more than one subtrees in the full_coal_process,

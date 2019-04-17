@@ -167,7 +167,7 @@ class GeneTree(GenericTree):
             species_id = int(gene_name[:-1])     
         return species_id
 
-    def map_event_to_species_id(self, gene_id, event_height, species_id=None):
+    def map_event_to_species_tree(self, gene_id, event_height, species_id=None):
         if (species_id == None):
             species_id = self.map_gene_id_to_species_id(gene_id)
         distance_above_species_node = event_height - SpeciesTree.global_species_tree.distance_to_leaf(species_id, 0)
@@ -179,7 +179,7 @@ class GeneTree(GenericTree):
             if (species_distance_parent > event_height):
                 return species_id, distance_above_species_node
             else:
-                return self.map_event_to_species_id(gene_id, event_height, species_id=species_id_parent)
+                return self.map_event_to_species_tree(gene_id, event_height, species_id=species_id_parent)
 
     def find_trans_target(self, event_height, node_id):
         tree = SpeciesTree.global_species_tree
@@ -208,7 +208,7 @@ class GeneTree(GenericTree):
             Debug.log(header='duplication at node ' + str(node.node_id) + ' (' + node.name + ')' + 
                       ' with distance ' + str(distance - distance_dup) + '\n')
             event_height = super().distance_to_leaf(node.node_id, 0) + distance - distance_dup
-            species_id, distance_above_species_node = self.map_event_to_species_id(gene_id=node.node_id, 
+            species_id, distance_above_species_node = self.map_event_to_species_tree(gene_id=node.node_id, 
                                                                                    event_height=event_height, 
                                                                                    species_id=None)
             events.append({
@@ -229,7 +229,7 @@ class GeneTree(GenericTree):
                 Debug.log(header='transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + 
                           ' with distance ' + str(distance - distance_trans) + '\n')
                 target, origin_species_id = self.find_trans_target(event_height, node.node_id)
-                species_id, distance_above_species_node = self.map_event_to_species_id(gene_id=node.node_id, 
+                species_id, distance_above_species_node = self.map_event_to_species_tree(gene_id=node.node_id, 
                                                                                        event_height=event_height, 
                                                                                        species_id=None)
                 if(target):
@@ -249,7 +249,7 @@ class GeneTree(GenericTree):
             event_height = super().distance_to_leaf(node.node_id, 0) + distance - distance_loss
             Debug.log(header='loss at node ' + str(node.node_id) + ' (' + node.name + ')' + 
                       ' with distance ' + str(distance - distance_loss) + '\n')
-            species_id, distance_above_species_node = self.map_event_to_species_id(gene_id=node.node_id, 
+            species_id, distance_above_species_node = self.map_event_to_species_tree(gene_id=node.node_id, 
                                                                                    event_height=event_height, 
                                                                                    species_id=None)
             events.append({
@@ -284,7 +284,7 @@ class GeneTree(GenericTree):
             Debug.log(header='duplication at node ' + str(node.node_id) + ' (' + node.name + ')' + 
                       ' with distance ' + str(distance - distance_dup) + '\n')
             event_height = event_height = super().distance_to_leaf(node.node_id, 0) + distance - distance_dup
-            species_id, distance_above_species_node = self.map_event_to_species_id(gene_id=node.node_id, 
+            species_id, distance_above_species_node = self.map_event_to_species_tree(gene_id=node.node_id, 
                                                                                    event_height=event_height, 
                                                                                    species_id=None)
             events.append({
@@ -304,7 +304,7 @@ class GeneTree(GenericTree):
                 Debug.log(header='transfer at node ' + str(node.node_id) + ' (' + node.name + ')' + 
                           ' with distance ' + str(distance - distance_trans) + '\n')
                 target, origin_species_id = self.find_trans_target(event_height, node.node_id)
-                species_id, distance_above_species_node = self.map_event_to_species_id(gene_id=node.node_id, 
+                species_id, distance_above_species_node = self.map_event_to_species_tree(gene_id=node.node_id, 
                                                                                        event_height=event_height, 
                                                                                        species_id=None)
                 if (target):
@@ -323,7 +323,7 @@ class GeneTree(GenericTree):
             # loss happens first, the seaching process stops at the loss point
             Debug.log(header='loss at node ' + str(node.node_id) + ' (' + node.name + ')' + 
                       ' with distance ' + str(distance - distance_loss) + '\n')
-            species_id, distance_above_species_node = self.map_event_to_species_id(gene_id=node.node_id, 
+            species_id, distance_above_species_node = self.map_event_to_species_tree(gene_id=node.node_id, 
                                                                                    event_height=event_height, 
                                                                                    species_id=None)
             events.append({
@@ -411,9 +411,9 @@ class GeneTree(GenericTree):
             distance_above_root = coal_distance
             Debug.log(header='\nspecies_subtree_coal:\n')
             if (GeneTree.trans_hemiplasy == 1):
-                species_subtree_coal_process, chosen_gene = species_subtree.incomplete_coalescent(distance_above_root)
+                species_subtree_coal_process, chosen_gene_name = species_subtree.incomplete_coalescent(distance_above_root)
             elif (GeneTree.trans_hemiplasy == 0):
-                species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root=distance_above_root)
+                species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root)
 
             Debug.log(header='\nspecies_subtree_coal_process:\n', 
                       bodies=[species_subtree_coal_process], pformat=True)
@@ -471,11 +471,21 @@ class GeneTree(GenericTree):
             distance_above_root = event['distance_to_gene_node'] + coal_distance
             sub_leaves = [int(node_id) for node_id in event['gene_node_name'].strip().split('*')[:-1]]
             Debug.log(header='\nspecies_subtree_coal:\n')
-            if (GeneTree.dup_recombination == 0):
-                species_subtree_coal_process, chosen_gene = species_subtree.incomplete_coalescent(distance_above_root)
-            elif (GeneTree.dup_recombination == 1):
-                species_subtree_coal_process = species_subtree.sub_leaves_coalescent(distance_above_root=distance_above_root, 
-                                                                                     sub_leaves=sub_leaves)
+            if (GeneTree.dup_recombination == 1):
+                if (GeneTree.trans_hemiplasy == 1):
+                    species_subtree_coal_process, chosen_gene_name = species_subtree.incomplete_coalescent(distance_above_root, recombination=1)
+                elif (GeneTree.trans_hemiplasy == 0):
+                    species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root, recombination=1)       
+                # original_gene_name = event['gene_node_name']
+                # chosen_gene_set = set(chosen_gene_name.split('*')[:-1])
+                # original_gene_set = set(original_gene_name.split('*')[:-1])
+                # union_gene_set = original_gene_set.union(chosen_gene_set)
+                # print(union_gene_set)
+            elif (GeneTree.dup_recombination == 0):
+                if (GeneTree.trans_hemiplasy == 1):
+                    species_subtree_coal_process, chosen_gene_name = species_subtree.incomplete_coalescent(distance_above_root, recombination=0, sub_leaves=sub_leaves)
+                elif (GeneTree.trans_hemiplasy == 0):
+                    species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root, recombination=0, sub_leaves=sub_leaves)        
 
             Debug.log(header='\nspecies_subtree_coal_process:\n',
                       bodies=[species_subtree_coal_process], pformat=True)
