@@ -157,8 +157,8 @@ def main(options):
     GeneTree.lambda_dup = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     GeneTree.lambda_loss = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
     GeneTree.lambda_trans = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    GeneTree.dup_recombination = options['dup_recombination']
-    GeneTree.trans_hemiplasy = options['trans_hemiplasy']
+    GeneTree.recombination = options['recombination']
+    GeneTree.hemiplasy = options['hemiplasy']
 
     Debug.save_tree_nodes(nodes=qgtree.nodes, path='output/gene_nodes_table.txt')
     # Debug.save_output(contents=[qgtree.skbio_tree],
@@ -207,31 +207,31 @@ def main(options):
 
 def parse_arg(argv):
     try: 
-        opts, args = getopt.getopt(argv,'hd:t:',
-        ['help','dup_recombination=','trans_hemiplasy='])
+        opts, args = getopt.getopt(argv,'r:h:',
+        ['recombination=','hemiplasy=','help'])
     except getopt.GetoptError:
-        print('Usage: {} -d <dup_recombination> -t <trans_hemiplasy>'.format(sys.argv[0]))
+        print('Usage: {} -r <recombination> -h <hemiplasy>'.format(sys.argv[0]))
         sys.exit()
     if(opts):
         for opt, arg in opts:
-            if opt in ('-h', '--help'):
-                print('Usage: {} -d <dup_recombination> -t <trans_hemiplasy>'.format(sys.argv[0]))
+            if opt in ('-r', '--recombination'):
+                recombination = arg
+            elif opt in ('-h', '--hemiplasy'):
+                hemiplasy = arg
+            elif opt in ('--help'):
+                print('Usage: {} -r <recombination> -h <hemiplasy>'.format(sys.argv[0]))
                 sys.exit()
-            elif opt in ('-d', '--dup_recombination'):
-                dup_recombination = arg
-            elif opt in ('-t', '--trans_hemiplasy'):
-                trans_hemiplasy = arg
     else:
-        dup_recombination = 1
-        trans_hemiplasy = 1
+        recombination = 1
+        hemiplasy = 1
 
-    return dup_recombination, trans_hemiplasy
+    return recombination, hemiplasy
 
 
 if __name__ == '__main__':
-    dup_recombination, trans_hemiplasy = parse_arg(sys.argv[1:])
+    recombination, hemiplasy = parse_arg(sys.argv[1:])
     options = {
-        'dup_recombination': int(dup_recombination),
-        'trans_hemiplasy': int(trans_hemiplasy)
+        'recombination': int(recombination),
+        'hemiplasy': int(hemiplasy)
     }
     main(options)

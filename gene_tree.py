@@ -7,7 +7,7 @@ import os
 class GeneTree(GenericTree):
     # static properties
     dup_recombination = 0
-    trans_hemiplasy = 0
+    hemiplasy = 0
     lambda_dup = None
     lambda_loss = None
     lambda_trans = None
@@ -410,9 +410,9 @@ class GeneTree(GenericTree):
 
             distance_above_root = coal_distance
             Debug.log(header='\nspecies_subtree_coal:\n')
-            if (GeneTree.trans_hemiplasy == 1):
+            if (GeneTree.hemiplasy == 1):
                 species_subtree_coal_process, chosen_gene_name = species_subtree.incomplete_coalescent(distance_above_root)
-            elif (GeneTree.trans_hemiplasy == 0):
+            elif (GeneTree.hemiplasy == 0):
                 species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root)
 
             Debug.log(header='\nspecies_subtree_coal_process:\n', 
@@ -471,10 +471,10 @@ class GeneTree(GenericTree):
             distance_above_root = event['distance_to_gene_node'] + coal_distance
             sub_leaves = [int(node_id) for node_id in event['gene_node_name'].strip().split('*')[:-1]]
             Debug.log(header='\nspecies_subtree_coal:\n')
-            if (GeneTree.dup_recombination == 1):
-                if (GeneTree.trans_hemiplasy == 1):
+            if (GeneTree.recombination == 1):
+                if (GeneTree.hemiplasy == 1):
                     species_subtree_coal_process, chosen_gene_name = species_subtree.incomplete_coalescent(distance_above_root, recombination=1)
-                elif (GeneTree.trans_hemiplasy == 0):
+                elif (GeneTree.hemiplasy == 0):
                     species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root, recombination=1)       
                 # original_gene_name = event['gene_node_name']
                 # chosen_gene_set = set(chosen_gene_name.split('*')[:-1])
@@ -482,9 +482,9 @@ class GeneTree(GenericTree):
                 # union_gene_set = original_gene_set.union(chosen_gene_set)
                 # print(union_gene_set)
             elif (GeneTree.dup_recombination == 0):
-                if (GeneTree.trans_hemiplasy == 1):
+                if (GeneTree.hemiplasy == 1):
                     species_subtree_coal_process, chosen_gene_name = species_subtree.incomplete_coalescent(distance_above_root, recombination=0, sub_leaves=sub_leaves)
-                elif (GeneTree.trans_hemiplasy == 0):
+                elif (GeneTree.hemiplasy == 0):
                     species_subtree_coal_process = species_subtree.bounded_coalescent(distance_above_root, recombination=0, sub_leaves=sub_leaves)        
 
             Debug.log(header='\nspecies_subtree_coal_process:\n',
