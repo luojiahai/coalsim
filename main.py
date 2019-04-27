@@ -183,8 +183,27 @@ def main(options):
     final_result_cut = cut_tree(final_result, loss_nodes)
     Debug.save_output(contents=[final_result_cut,final_result_cut.ascii_art()],
                                  path='./output/final_result_cut.txt')
-
     Debug.log_file.close()
+    
+    Debug.save_output(contents=[final_result_cut],path='./output/final_result_cut_newick.txt')
+
+    Debug.save_output(contents='species_tree: \n',path='./output/final_result_details.txt')
+    qgtree.construct_final_gene_nodes(final_result_cut)
+    # Debug.save_output(contents=qgtree.nodes,path='./output/final_result_details.txt')
+        # print(node)
+    # gene_root = qgtree.nodes[-1]
+    qgtree.post_order_fake_id()
+    l = []
+    for node in qgtree.nodes:
+        l.append(str('real_id: '+ str(node.node_id) + ' fake_id: '+ str(node.fake_node_id)))
+    Debug.save_output(contents=qgtree.nodes + l, path='./output/final_result_details.txt')
+
+
+    # species_root = SpeciesTree.global_species_tree.root
+    # SpeciesTree.global_species_tree.post_order_fake_id(species_root)
+    # for node in SpeciesTree.global_species_tree.nodes:
+    #     print('real_id: ', node.node_id, ' fake_id: ', node.fake_node_id)
+
 
     print('Number of events: ')
     print('Duplicaton: ' + str(Debug.event_count['d']))

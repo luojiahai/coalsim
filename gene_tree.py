@@ -131,6 +131,22 @@ class GeneTree(GenericTree):
                                        distance_to_parent=-1.0))
         return
 
+    def construct_final_gene_nodes(self, tree):
+        self.nodes = []
+        self.nodes_id_dict = {}
+        self.nodes_name_dict = {}
+        output_path = 'output/temp_final_gene_nodes_table.txt'
+        self.skbio_tree = super().newick_to_table(skbio_tree=tree, output_path=output_path)
+        super().construct_nodes(path=output_path, process_tree=True)
+        max_node_id = -1
+        for node in self.nodes:
+            if (node.node_id > max_node_id):
+                max_node_id = node.node_id
+                self.root = node
+            self.nodes_id_dict[node.node_id] = node
+            self.nodes_name_dict[node.name] = node
+        return
+
     def get_lambda_dup(self, clade):
             indices = []
             splited = clade.split('*')[:-1]
