@@ -13,6 +13,7 @@ class Utility(object):
 
 class Debug(object):
     log_file = None
+    summary_file = None
     event_count = {'d': 0, 'l': 0, 't': 0, 'i': 0}
 
     def __init__(self):
@@ -48,6 +49,16 @@ class Debug(object):
             else:
                 Debug.log_file.write(str(body))
             Debug.log_file.write('\n')
+
+    @staticmethod
+    def summary(header, bodies=[], pformat=False):
+        Debug.summary_file.write(header)
+        for body in bodies:
+            if (pformat):
+                Debug.summary_file.write(pprint.pformat(body))
+            else:
+                Debug.summary_file.write(str(body))
+            Debug.summary_file.write('\n')
 
 
 class TreeNode(object):

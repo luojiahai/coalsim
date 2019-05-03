@@ -1,0 +1,32 @@
+Summary created on Thu May  2 20:14:05 2019
+Events:
+{'type': 'loss', 'gene_node_id': 4, 'gene_node_name': '1*2*', 'distance_to_gene_node': 0.3731658209722556, 'event_height': 2.8312461786576733, 'species_node_id': 4, 'distance_to_species_node': 0.8312461786576733}
+{'type': 'duplication', 'gene_node_id': 2, 'gene_node_name': '0*', 'distance_to_gene_node': 1.1539921724801752, 'event_height': 1.1539921724801752, 'species_node_id': 0, 'distance_to_species_node': 1.1539921724801752}
+
+Gene_tree:
+node_id: 0, name: 3*, parent_id: 4, distance_to_parent: 5.346604599875782, children: [], distance_to_children: [], clade: [], clade_split: []
+node_id: 1, name: 0*, parent_id: 3, distance_to_parent: 1.1539921724801752, children: [], distance_to_children: [], clade: [], clade_split: []
+node_id: 2, name: 0*_1, parent_id: 3, distance_to_parent: 1.1539921724801752, children: [], distance_to_children: [], clade: [], clade_split: []
+node_id: 3, name: 0*_d_1, parent_id: 4, distance_to_parent: 4.192612427395607, children: [1, 2], distance_to_children: [1.1539921724801752, 1.1539921724801752], clade: [], clade_split: []
+node_id: 4, name: 0*1*2*3*, parent_id: -1, distance_to_parent: -1.0, children: [0, 3], distance_to_children: [5.346604599875782, 4.192612427395607], clade: [], clade_split: []
+real_id: 0 fake_id: 0
+real_id: 1 fake_id: 1
+real_id: 2 fake_id: 2
+real_id: 3 fake_id: 3
+real_id: 4 fake_id: 4
+
+Species_tree:
+node_id: 0, name: A, parent_id: 5, distance_to_parent: 3.0, children: [], distance_to_children: [], clade: [0], clade_split: []
+node_id: 1, name: B, parent_id: 4, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [1], clade_split: []
+node_id: 2, name: C, parent_id: 4, distance_to_parent: 2.0, children: [], distance_to_children: [], clade: [2], clade_split: []
+node_id: 3, name: D, parent_id: 6, distance_to_parent: 5.0, children: [], distance_to_children: [], clade: [3], clade_split: []
+node_id: 4, name: BC, parent_id: 5, distance_to_parent: 1.0, children: [1, 2], distance_to_children: [2.0, 2.0], clade: [1, 2], clade_split: [[1], [2]]
+node_id: 5, name: ABC, parent_id: 6, distance_to_parent: 2.0, children: [0, 4], distance_to_children: [3.0, 1.0], clade: [0, 1, 2], clade_split: [[0], [1, 2]]
+node_id: 6, name: ABCD, parent_id: -1, distance_to_parent: -1.0, children: [5, 3], distance_to_children: [2.0, 5.0], clade: [0, 1, 2, 3], clade_split: [[0, 1, 2], [3]]
+real_id: 0 fake_id: 0
+real_id: 1 fake_id: 1
+real_id: 2 fake_id: 2
+real_id: 3 fake_id: 5
+real_id: 4 fake_id: 3
+real_id: 5 fake_id: 4
+real_id: 6 fake_id: 6

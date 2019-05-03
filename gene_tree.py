@@ -370,7 +370,7 @@ class GeneTree(GenericTree):
 
         if (len(self.nodes) == 1):
             distance = event['distance_to_gene_node']
-        self.dlt_process_recurse(self.skbio_tree, 
+        self.dt_process_recurse(self.skbio_tree, 
                                     distance=distance, 
                                     events=events)  
         return events
@@ -560,6 +560,7 @@ class GeneTree(GenericTree):
             self.find_ils(path)
         if (not events):
             return
+        Debug.summary(header='', bodies=events)
         for event in events:
             if (event['type'] == 'duplication'):
                 Debug.event_count['d'] += 1

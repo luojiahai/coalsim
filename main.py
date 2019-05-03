@@ -97,7 +97,6 @@ def build_tree_recurse(gene_tree, path):
     for f in files:
         file_name = f.split('_')
         if (file_name and file_name[0] == 'ils'):
-            # do something
             ils_path = os.path.join(path, f)
             file_ = open(ils_path)
             line = file_.readline()
@@ -130,8 +129,11 @@ def main(options):
     os.mkdir(tree_path)
     Debug.log_file = open('./output/log.txt', 'w')
     Debug.log(header='Log created on ' + time.ctime() + '\n')
+    Debug.summary_file = open('./output/summary.txt', 'w')
+    Debug.summary(header='Summary created on ' + time.ctime() + '\n')
+    Debug.summary(header='Events:\n')    
 
-    qstree = SpeciesTree(newick_path='data/tree_sample1.txt')    # read newick species tree
+    qstree = SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
     Debug.save_tree_nodes(nodes=qstree.nodes, path='output/species_nodes_table.txt')
 
     SpeciesTree.global_species_tree = qstree
@@ -154,9 +156,9 @@ def main(options):
 
     qgtree = GeneTree(time_sequences=time_sequences, species_tree=qstree, coalescent_process=coalescent_process)        # construct newick coalescent tree
 
-    GeneTree.lambda_dup = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    GeneTree.lambda_loss = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
-    GeneTree.lambda_trans = np.random.gamma(shape=1, scale=0.1, size=len(qgtree.leaves))
+    GeneTree.lambda_dup = np.random.gamma(shape=0.5, scale=0.1, size=len(qgtree.leaves))
+    GeneTree.lambda_loss = np.random.gamma(shape=0.5, scale=0.1, size=len(qgtree.leaves))
+    GeneTree.lambda_trans = np.random.gamma(shape=0.3, scale=0.1, size=len(qgtree.leaves))
     GeneTree.recombination = options['recombination']
     GeneTree.hemiplasy = options['hemiplasy']
 
@@ -175,7 +177,7 @@ def main(options):
     Debug.log(header='\ngene_tree dt_subtree:\n')
     qgtree.dt_subtree(coalescent_process=coalescent_process, events=events, path=tree_path)        # generate duplication subtrees
 
-
+    # save final gene tree
     final_result = qgtree.skbio_tree.deepcopy()
     loss_nodes = build_tree(final_result, './output/tree')
     Debug.save_output(contents=[final_result,final_result.ascii_art()],
@@ -183,27 +185,22 @@ def main(options):
     final_result_cut = cut_tree(final_result, loss_nodes)
     Debug.save_output(contents=[final_result_cut,final_result_cut.ascii_art()],
                                  path='./output/final_result_cut.txt')
-    Debug.log_file.close()
-    
     Debug.save_output(contents=[final_result_cut],path='./output/final_result_cut_newick.txt')
 
-    Debug.save_output(contents='species_tree: \n',path='./output/final_result_details.txt')
-    qgtree.construct_final_gene_nodes(final_result_cut)
-    # Debug.save_output(contents=qgtree.nodes,path='./output/final_result_details.txt')
-        # print(node)
-    # gene_root = qgtree.nodes[-1]
+    # species tree table
+    SpeciesTree.global_species_tree.post_order_fake_id()
+    Debug.summary(header='\nSpecies_tree:\n',
+                         bodies=SpeciesTree.global_species_tree.nodes)
+    for node in SpeciesTree.global_species_tree.nodes:
+        Debug.summary(header=str('real_id: '+ str(node.node_id) + ' fake_id: '+ str(node.fake_node_id)) + '\n')
+    
+    # gene tree table
     qgtree.post_order_fake_id()
-    l = []
+    qgtree.construct_final_gene_nodes(final_result_cut)
+    Debug.summary(header='\nGene_tree:\n',
+                         bodies=qgtree.nodes)
     for node in qgtree.nodes:
-        l.append(str('real_id: '+ str(node.node_id) + ' fake_id: '+ str(node.fake_node_id)))
-    Debug.save_output(contents=qgtree.nodes + l, path='./output/final_result_details.txt')
-
-
-    # species_root = SpeciesTree.global_species_tree.root
-    # SpeciesTree.global_species_tree.post_order_fake_id(species_root)
-    # for node in SpeciesTree.global_species_tree.nodes:
-    #     print('real_id: ', node.node_id, ' fake_id: ', node.fake_node_id)
-
+        Debug.summary(header=str('real_id: '+ str(node.node_id) + ' fake_id: '+ str(node.fake_node_id)) + '\n')
 
     print('Number of events: ')
     print('Duplicaton: ' + str(Debug.event_count['d']))
@@ -214,13 +211,10 @@ def main(options):
     # for node in final_result_cut.tips():
     #     print(final_result_cut.distance(node))
 
-    # print('\nTest')
-    # print(qstree.node_by_id(10))
-    # print(qstree.node_by_name('E'))
-    # print(qgtree.node_by_id(10))
-    # print(qgtree.node_by_name('3*'))
-    # print(qstree.node_by_id(0))
-    # print(qgtree.node_by_id(14))
+
+
+    Debug.log_file.close()
+    Debug.summary_file.close()
     return
 
 
