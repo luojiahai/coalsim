@@ -407,12 +407,14 @@ class GeneTree(GenericTree):
                         find_ils = True
                         break
             if (find_ils):
+                species_id = self.map_gene_id_to_species_id(j)
                 Debug.event_count['i'] += 1
                 file_name = 'ils_' + str(Debug.event_count['i'])
                 f = open(os.path.join(path, file_name), 'w')
                 f.write(str(gene_node.name) + ',' + str(gene_split_0) + ' ' + str(gene_split_1))
                 f.close()
-                print('find ils at gene node ' + str(gene_node.name) + ' split: ' + str(gene_split_0) + ' ' + str(gene_split_1))
+                print('find ils at gene node ' + str(gene_node.name) + ' split: ' + str(gene_split_0) + ' ' 
+                        + str(gene_split_1) + ' ' + 'species_id: ' + str(species_id) + ' ' + str(species_node.node_id))
 
     # find the duplication subtree and do subtree coalescence
     def dt_subtree_recurse(self, event, node_id, coal_distance, path):

@@ -76,8 +76,6 @@ def build_tree_recurse(gene_tree, path):
 
             new_l_node = skbio.TreeNode()
             child = None
-            print(node_l_name)
-            print(_id)
             for node in current_tree.traverse():
                 splited = node.name.split('_')
                 if (_id == ''):
@@ -87,7 +85,7 @@ def build_tree_recurse(gene_tree, path):
                     if (splited[0] == node_l_name and ('_' + splited[-1]) == _id):
                         child = node
             parent = child.parent
-            new_l_node.name = node_l_name + '_l' + _id # fix this
+            new_l_node.name = node_l_name + '_l' + _id 
             new_l_node.length = child.length - node_l_distance
             new_l_node.parent = parent
             new_l_node.children.append(child)
@@ -213,11 +211,11 @@ def main(options):
     Debug.summary(header='node_id\tclade_set\n')
 
     for node in SpeciesTree.global_species_tree.nodes:
-        clade = node.name.split('*')[:-1]
+        clade = node.clade
         for i in range(len(clade)):
             clade[i] = SpeciesTree.global_species_tree.get_fake_id_from_real_id(clade[i])
         Debug.summary(header=str(node.fake_node_id) + '\t'
-                                + str(clade) + '\t' + str(node.event) + '\n' )
+                                + str(clade) + '\n' )
 
     if (not final_result_cut):
         print("EXCEPTION: ALL LOST")
@@ -227,7 +225,7 @@ def main(options):
         qgtree.post_order_fake_id()
         
         Debug.summary(header='\nGene_tree_table:\n')
-        Debug.summary(header='node_id\tclade_set\n')
+        Debug.summary(header='gene_node_id\tclade_set\tevent\tspecies_node_id\n')
         for node in qgtree.nodes:
             if ('_d' in node.name):
                 node.event = 'd'
@@ -235,10 +233,9 @@ def main(options):
                 node.event = 't'
             # elif ('_l' in node.name):
             #     node.event = 'l'
-            # elif ('_i' in node.name):
-            #     node.event = 'i'
+            elif ('_i' in node.name):
+                node.event = 'i'
             index = node.name.split('_')[-1]
-            # print(index)
             find_it = False
             if (node.event):
                 for event in qgtree.full_events:
