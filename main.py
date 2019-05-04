@@ -32,6 +32,7 @@ def build_tree_recurse(gene_tree, path):
         node_name = splited[0]
         distance = float(splited[1])
         event_name = '_' + splited[2][0]
+        event_index = '_' + splited[3]
         f.close()
 
         new_dt_node = skbio.TreeNode()
@@ -75,11 +76,18 @@ def build_tree_recurse(gene_tree, path):
 
             new_l_node = skbio.TreeNode()
             child = None
+            print(node_l_name)
+            print(_id)
             for node in current_tree.traverse():
-                if node.name == (node_l_name + _id):
-                    child = node
+                splited = node.name.split('_')
+                if (_id == ''):
+                    if (splited[0] == node_l_name):
+                        child = node
+                else:
+                    if (splited[0] == node_l_name and ('_' + splited[-1]) == _id):
+                        child = node
             parent = child.parent
-            new_l_node.name = node_l_name + '_l' + _id
+            new_l_node.name = node_l_name + '_l' + _id # fix this
             new_l_node.length = child.length - node_l_distance
             new_l_node.parent = parent
             new_l_node.children.append(child)
@@ -104,7 +112,7 @@ def build_tree_recurse(gene_tree, path):
             node_name = splited[0]
             for node in current_tree.traverse():
                 if node.name == (node_name + _id):
-                    node.name += '_i'
+                    node.name += '_i' + '_' + str(Utility.increment())
                     break
             file_.close()
 
@@ -131,12 +139,15 @@ def main(options):
     Debug.log(header='Log created on ' + time.ctime() + '\n')
     Debug.summary_file = open('./output/summary.txt', 'w')
     Debug.summary(header='Summary created on ' + time.ctime() + '\n')
-    Debug.summary(header='Events:\n')    
+    Debug.summary(header='Events:\n') 
+    Debug.summary(header='type\tspecies_node\tclade_set\n')   
 
-    qstree = SpeciesTree(newick_path='data/tree_sample.txt')    # read newick species tree
+    qstree = SpeciesTree(newick_path='data/tree_sample1.txt')    # read newick species tree
     Debug.save_tree_nodes(nodes=qstree.nodes, path='output/species_nodes_table.txt')
 
     SpeciesTree.global_species_tree = qstree
+    # I want fake id
+    SpeciesTree.global_species_tree.post_order_fake_id()
     SpeciesTree.lambda_coal = np.random.gamma(shape=3, scale=0.1, size=len(qstree.leaves))
 
     Debug.log(header='\nspecies_tree ascii_art:\n',
@@ -176,10 +187,18 @@ def main(options):
                          pformat=True)
     Debug.log(header='\ngene_tree dt_subtree:\n')
     qgtree.dt_subtree(coalescent_process=coalescent_process, events=events, path=tree_path)        # generate duplication subtrees
-
+    
+    Debug.log(header='\nfull_events:\n',
+                         bodies=qgtree.full_events,
+                         pformat=True)
     # save final gene tree
     final_result = qgtree.skbio_tree.deepcopy()
     loss_nodes = build_tree(final_result, './output/tree')
+    # for node in loss_nodes:
+    #     if (node.parent.parent):
+    #         node.parent.parent.name += '_lp'
+    #     else: 
+    #         node.parent.event = 'l'
     Debug.save_output(contents=[final_result,final_result.ascii_art()],
                                  path='./output/final_result.txt')
     final_result_cut = cut_tree(final_result, loss_nodes)
@@ -188,19 +207,53 @@ def main(options):
     Debug.save_output(contents=[final_result_cut],path='./output/final_result_cut_newick.txt')
 
     # species tree table
-    SpeciesTree.global_species_tree.post_order_fake_id()
-    Debug.summary(header='\nSpecies_tree:\n',
-                         bodies=SpeciesTree.global_species_tree.nodes)
+    # SpeciesTree.global_species_tree.post_order_fake_id()
+
+    Debug.summary(header='\nSpecies_tree_table:\n')
+    Debug.summary(header='node_id\tclade_set\n')
+
     for node in SpeciesTree.global_species_tree.nodes:
-        Debug.summary(header=str('real_id: '+ str(node.node_id) + ' fake_id: '+ str(node.fake_node_id)) + '\n')
-    
-    # gene tree table
-    qgtree.post_order_fake_id()
-    qgtree.construct_final_gene_nodes(final_result_cut)
-    Debug.summary(header='\nGene_tree:\n',
-                         bodies=qgtree.nodes)
-    for node in qgtree.nodes:
-        Debug.summary(header=str('real_id: '+ str(node.node_id) + ' fake_id: '+ str(node.fake_node_id)) + '\n')
+        clade = node.name.split('*')[:-1]
+        for i in range(len(clade)):
+            clade[i] = SpeciesTree.global_species_tree.get_fake_id_from_real_id(clade[i])
+        Debug.summary(header=str(node.fake_node_id) + '\t'
+                                + str(clade) + '\t' + str(node.event) + '\n' )
+
+    if (not final_result_cut):
+        print("EXCEPTION: ALL LOST")
+    else:
+        # gene tree table
+        qgtree.construct_final_gene_nodes(final_result_cut)
+        qgtree.post_order_fake_id()
+        
+        Debug.summary(header='\nGene_tree_table:\n')
+        Debug.summary(header='node_id\tclade_set\n')
+        for node in qgtree.nodes:
+            if ('_d' in node.name):
+                node.event = 'd'
+            elif ('_t' in node.name):
+                node.event = 't'
+            # elif ('_l' in node.name):
+            #     node.event = 'l'
+            # elif ('_i' in node.name):
+            #     node.event = 'i'
+            index = node.name.split('_')[-1]
+            # print(index)
+            find_it = False
+            if (node.event):
+                for event in qgtree.full_events:
+                    if (str(event['index'])==index):
+                        species_fake_id = SpeciesTree.global_species_tree.get_fake_id_from_real_id(event['species_node_id'])
+                        find_it = True
+            if (find_it == False):
+                species_fake_id = -1
+            clade = node.name.split('*')[:-1]
+            for i in range(len(clade)):
+                clade[i] = SpeciesTree.global_species_tree.get_fake_id_from_real_id(clade[i])
+            Debug.summary(header=str(node.fake_node_id) + '\t'
+                                    + str(clade) + '\t' 
+                                    + str(node.event) + '\t'
+                                    + str(species_fake_id) + '\n' )
 
     print('Number of events: ')
     print('Duplicaton: ' + str(Debug.event_count['d']))

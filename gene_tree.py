@@ -11,6 +11,7 @@ class GeneTree(GenericTree):
     lambda_dup = None
     lambda_loss = None
     lambda_trans = None
+    full_events = []
 
     def __init__(self,
                  time_sequences,
@@ -234,7 +235,8 @@ class GeneTree(GenericTree):
                 'distance_to_gene_node': distance - distance_dup,
                 'event_height': event_height,
                 'species_node_id': species_id,
-                'distance_to_species_node': distance_above_species_node
+                'distance_to_species_node': distance_above_species_node,
+                'index': -1
             })
             # looking for more events on the same branch
             self.dt_process_recurse(tree, distance - distance_dup, events) 
@@ -257,7 +259,8 @@ class GeneTree(GenericTree):
                         'target_species_id': target,
                         'event_height': event_height,
                         'species_node_id': species_id,
-                        'distance_to_species_node': distance_above_species_node
+                        'distance_to_species_node': distance_above_species_node,
+                        'index': -1
                     })
             self.dlt_process_recurse(tree, distance - distance_trans, events)
         elif (distance_loss <= min(distance_dup, distance_trans) and distance_loss < distance):      
@@ -275,7 +278,8 @@ class GeneTree(GenericTree):
                 'distance_to_gene_node': distance - distance_loss,
                 'event_height': event_height,
                 'species_node_id': species_id,
-                'distance_to_species_node': distance_above_species_node
+                'distance_to_species_node': distance_above_species_node,
+                'index': -1
             })
         else:   # reach the end the current branch, looking for events in the 2 children branches
             Debug.log(header='nothing happened at node ' + str(node.node_id) + ' (' + node.name + ')' + '\n')
@@ -310,7 +314,8 @@ class GeneTree(GenericTree):
                 'distance_to_gene_node': distance - distance_dup,
                 'event_height': event_height,
                 'species_node_id': species_id,
-                'distance_to_species_node': distance_above_species_node
+                'distance_to_species_node': distance_above_species_node,
+                'index': -1
             })
             self.dt_process_recurse(tree, distance - distance_dup, events) # looking for more events on the same branch
         elif (distance_trans <= min(distance_dup, distance_loss) and distance_trans < distance):
@@ -332,7 +337,8 @@ class GeneTree(GenericTree):
                         'target_species_id': target,
                         'event_height': event_height,
                         'species_node_id': species_id,
-                        'distance_to_species_node': distance_above_species_node
+                        'distance_to_species_node': distance_above_species_node,
+                        'index': -1
                     })
             self.dlt_process_recurse(tree, distance - distance_trans, events)
         elif (distance_loss <= min(distance_dup, distance_trans) and distance_loss < distance): 
@@ -349,7 +355,8 @@ class GeneTree(GenericTree):
                 'distance_to_gene_node': distance - distance_loss,
                 'event_height': event_height,
                 'species_node_id': species_id,
-                'distance_to_species_node': distance_above_species_node
+                'distance_to_species_node': distance_above_species_node,
+                'index': -1
             })
         else:   # reach the end the current branch, looking for events in the 2 children branches
             Debug.log(header='nothing happened at node ' + str(node.node_id) + ' (' + node.name + ')' + '\n')
@@ -461,12 +468,14 @@ class GeneTree(GenericTree):
             gene_subtree_events = gene_subtree.dlt_process(event=event, distance=event['event_height'] - gene_subtree_height)
             Debug.log(header='\ngene_subtree events:\n', bodies=[gene_subtree_events], pformat=True)
             
-            _id = 'trans_subtree_' + str(Utility.increment())
+            index = Utility.increment()
+            event['index'] = index
+            _id = 'trans_subtree_' + str(index)
             next_dir = os.path.join(path, _id)
             os.mkdir(next_dir)
             file_name = 'event.txt'
             f = open(os.path.join(next_dir, file_name), 'w')
-            f.write(str(event['gene_node_name']) + ',' + str(event['distance_to_gene_node']) + ',' + str(event['type']))
+            f.write(str(event['gene_node_name']) + ',' + str(event['distance_to_gene_node']) + ',' + str(event['type']) + ',' + str(index))
             f.close()
             gene_subtree.dt_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events, path=next_dir)
 
@@ -533,12 +542,14 @@ class GeneTree(GenericTree):
             Debug.log(header='\ngene_subtree events:\n',
                       bodies=[gene_subtree_events], pformat=True)
 
-            _id = 'dup_subtree_' + str(Utility.increment())
+            index = Utility.increment()
+            event['index'] = index
+            _id = 'dup_subtree_' + str(index)
             next_dir = os.path.join(path, _id)
             os.mkdir(next_dir)
             file_name = 'event.txt'
             f = open(os.path.join(next_dir, file_name), 'w')
-            f.write(str(event['gene_node_name']) + ',' + str(event['distance_to_gene_node']) + ',' + str(event['type']))
+            f.write(str(event['gene_node_name']) + ',' + str(event['distance_to_gene_node']) + ',' + str(event['type']) + ',' + str(index))
             f.close()
             gene_subtree.dt_subtree(coalescent_process=species_subtree_coal_process, events=gene_subtree_events, path=next_dir)
         
@@ -560,8 +571,15 @@ class GeneTree(GenericTree):
             self.find_ils(path)
         if (not events):
             return
-        Debug.summary(header='', bodies=events)
+        GeneTree.full_events += events
         for event in events:
+            a = event['gene_node_name'].split('*')[:-1]
+            for i in range(len(a)):
+                a[i] = SpeciesTree.global_species_tree.get_fake_id_from_real_id(a[i])
+            Debug.summary(header=event['type'][0] + '\t'
+                 + str(SpeciesTree.global_species_tree.get_fake_id_from_real_id(event['species_node_id'])) + '\t' 
+                 + str(a) + '\n')
+
             if (event['type'] == 'duplication'):
                 Debug.event_count['d'] += 1
                 node_id = None
@@ -587,6 +605,8 @@ class GeneTree(GenericTree):
                 distance_above_target = event['event_height'] - target_height
                 self.dt_subtree_recurse(event=event, node_id=trans_target_id, coal_distance=distance_above_target, path=path)
             elif (event['type'] == 'loss'):
+                index = Utility.increment()
+                event['index'] = index
                 Debug.event_count['l'] += 1
                 file_name = 'loss_' + str(event['distance_to_gene_node'])
                 f = open(os.path.join(path, file_name), 'w')

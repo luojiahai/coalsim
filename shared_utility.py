@@ -77,6 +77,7 @@ class TreeNode(object):
         self.distance_to_children = []
         self.clade = []
         self.clade_split = []
+        self.event = None
         return
     
     def __repr__(self):
@@ -253,6 +254,11 @@ class GenericTree(object):
     def post_order_fake_id(self):
         root = self.root
         self.post_order_fake_id_recurse(0, root)
+
+    def get_fake_id_from_real_id(self, real_id):
+        node = self.node_by_id(int(real_id))
+        fake_id = node.fake_node_id
+        return fake_id
     
     # find the distance of a given node to the root
     # needed when finding the walking distance
