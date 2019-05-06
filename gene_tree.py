@@ -389,7 +389,8 @@ class GeneTree(GenericTree):
             gene_clade = gene_node.clade
             gene_splits = gene_node.clade_split
             find_species_node = False
-            for node in self.species_tree.nodes:
+            # find lowest possibile species node, then trace back
+            for node in self.species_tree.nodes: 
                 if (set(node.clade).issuperset(set(gene_clade))):
                     find_species_node = True
                     species_node = node
@@ -408,13 +409,38 @@ class GeneTree(GenericTree):
                         break
             if (find_ils):
                 species_id = self.map_gene_id_to_species_id(j)
-                Debug.event_count['i'] += 1
-                file_name = 'ils_' + str(Debug.event_count['i'])
+                index = Utility.increment()
+                self.full_events.append({
+                    'type': 'ils',
+                    'gene_node_id': j, 
+                    'gene_node_name': node.name, 
+                    'species_node_id': species_id,
+                    'index': index
+                })
+                # Debug.event_count['i'] += 1
+                file_name = 'ils_' + str(index)
                 f = open(os.path.join(path, file_name), 'w')
                 f.write(str(gene_node.name) + ',' + str(gene_split_0) + ' ' + str(gene_split_1))
                 f.close()
-                print('find ils at gene node ' + str(gene_node.name) + ' split: ' + str(gene_split_0) + ' ' 
-                        + str(gene_split_1) + ' ' + 'species_id: ' + str(species_id) + ' ' + str(species_node.node_id))
+                # print('find ils at gene node ' + str(gene_node.name) + ' split: ' + str(gene_split_0) + ' ' 
+                #         + str(gene_split_1) + ' ' + 'species_id: ' + str(species_id))
+            else: 
+                if (gene_splits):
+                    species_id = self.map_gene_id_to_species_id(j)
+                    index = Utility.increment()
+                    self.full_events.append({
+                        'type': 's',
+                        'gene_node_id': j, 
+                        'gene_node_name': node.name, 
+                        'species_node_id': species_id,
+                        'index': index
+                    })
+                    file_name = 's_' + str(index)
+                    f = open(os.path.join(path, file_name), 'w')
+                    f.write(str(gene_node.name) + ',' + str(gene_split_0) + ' ' + str(gene_split_1))
+                    f.close()
+                    # print('find speciation at gene node ' + str(gene_node.name) + ' split: ' + str(gene_split_0) + ' ' 
+                    #         + str(gene_split_1) + ' ' + 'species_id: ' + str(species_id))
 
     # find the duplication subtree and do subtree coalescence
     def dt_subtree_recurse(self, event, node_id, coal_distance, path):
@@ -583,7 +609,7 @@ class GeneTree(GenericTree):
                  + str(a) + '\n')
 
             if (event['type'] == 'duplication'):
-                Debug.event_count['d'] += 1
+                # Debug.event_count['d'] += 1
                 node_id = None
                 coal_distance = None
                 if (coalescent_process):        # non-trivial
@@ -601,7 +627,7 @@ class GeneTree(GenericTree):
                     coal_distance = 0
                     self.dt_subtree_recurse(event=event, node_id=node_id, coal_distance=coal_distance, path=path)
             elif (event['type'] == 'transfer'):
-                Debug.event_count['t'] += 1
+                # Debug.event_count['t'] += 1
                 trans_target_id = event['target_species_id']
                 target_height = SpeciesTree.global_species_tree.distance_to_leaf(trans_target_id, 0)
                 distance_above_target = event['event_height'] - target_height

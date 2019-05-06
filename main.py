@@ -103,6 +103,7 @@ def build_tree_recurse(gene_tree, path):
     for f in files:
         file_name = f.split('_')
         if (file_name and file_name[0] == 'ils'):
+            _index = '_' + file_name[1]
             ils_path = os.path.join(path, f)
             file_ = open(ils_path)
             line = file_.readline()
@@ -110,7 +111,22 @@ def build_tree_recurse(gene_tree, path):
             node_name = splited[0]
             for node in current_tree.traverse():
                 if node.name == (node_name + _id):
-                    node.name += '_i' + '_' + str(Utility.increment())
+                    node.name += '_i' + _index
+                    break
+            file_.close()
+
+    for f in files:
+        file_name = f.split('_')
+        if (file_name and file_name[0] == 's'):
+            _index = '_' + file_name[1]
+            s_path = os.path.join(path, f)
+            file_ = open(s_path)
+            line = file_.readline()
+            splited = line.split(',')
+            node_name = splited[0]
+            for node in current_tree.traverse():
+                if node.name == (node_name + _id):
+                    node.name += '_s' + _index
                     break
             file_.close()
 
@@ -214,8 +230,9 @@ def main(options):
         clade = node.clade
         for i in range(len(clade)):
             clade[i] = SpeciesTree.global_species_tree.get_fake_id_from_real_id(clade[i])
-        Debug.summary(header=str(node.fake_node_id) + '\t'
-                                + str(clade) + '\n' )
+        Debug.summary(header=str(node.node_id) + '\t'
+                                + str(node.fake_node_id) + '\t'
+                                + str(clade) + '\n')
 
     if (not final_result_cut):
         print("EXCEPTION: ALL LOST")
@@ -226,6 +243,15 @@ def main(options):
         
         Debug.summary(header='\nGene_tree_table:\n')
         Debug.summary(header='gene_node_id\tclade_set\tevent\tspecies_node_id\n')
+        for node in qgtree.nodes:      
+            clade = node.name.split('*')[:-1]
+            for i in range(len(clade)):
+                clade[i] = SpeciesTree.global_species_tree.get_fake_id_from_real_id(clade[i])                     
+            Debug.summary(header=str(node.node_id) + '\t'
+                                + str(node.fake_node_id) + '\t'
+                                + str(clade) + '\n' )
+    
+        Debug.summary(header='\nevent_table:\n')
         for node in qgtree.nodes:
             if ('_d' in node.name):
                 node.event = 'd'
@@ -235,6 +261,8 @@ def main(options):
             #     node.event = 'l'
             elif ('_i' in node.name):
                 node.event = 'i'
+            elif ('_s' in node.name):
+                node.event = 's'
             index = node.name.split('_')[-1]
             find_it = False
             if (node.event):
@@ -242,17 +270,26 @@ def main(options):
                     if (str(event['index'])==index):
                         species_fake_id = SpeciesTree.global_species_tree.get_fake_id_from_real_id(event['species_node_id'])
                         find_it = True
+                        break
             if (find_it == False):
                 species_fake_id = -1
             clade = node.name.split('*')[:-1]
             for i in range(len(clade)):
                 clade[i] = SpeciesTree.global_species_tree.get_fake_id_from_real_id(clade[i])
-            Debug.summary(header=str(node.fake_node_id) + '\t'
+            if (node.event):
+                Debug.event_count[node.event] += 1
+                Debug.summary(header=str(node.node_id) + '\t'
+                                    + str(node.fake_node_id) + '\t'
                                     + str(clade) + '\t' 
                                     + str(node.event) + '\t'
                                     + str(species_fake_id) + '\n' )
 
+    Debug.summary(header='\ntime_sequences:\n',
+                         bodies=qgtree.full_events,
+                         pformat=True)
+
     print('Number of events: ')
+    print('Speciation: ' + str(Debug.event_count['s']))
     print('Duplicaton: ' + str(Debug.event_count['d']))
     print('Loss: ' + str(Debug.event_count['l']))
     print('Transfer: ' + str(Debug.event_count['t']))

@@ -14,7 +14,7 @@ class Utility(object):
 class Debug(object):
     log_file = None
     summary_file = None
-    event_count = {'d': 0, 'l': 0, 't': 0, 'i': 0}
+    event_count = {'d': 0, 'l': 0, 't': 0, 'i': 0, 's':0}
 
     def __init__(self):
         pass

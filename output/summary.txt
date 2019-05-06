@@ -1,31 +1,134 @@
-Summary created on Sat May  4 20:54:14 2019
+Summary created on Mon May  6 13:51:08 2019
 Events:
 type	species_node	clade_set
-l	15	[1, 2, 3]
-l	14	[6, 7, 9, 10, 12]
+t	5	[1, 2, 3]
+d	1	[1]
+l	0	[0]
 
 Species_tree_table:
 node_id	clade_set
-0	[0]
-1	[1]
-2	[2]
-3	[3]
-6	[6]
-7	[7]
-9	[9]
-10	[10]
-12	[12]
-8	[6, 7]
-11	[9, 10]
-4	[2, 3]
-13	[9, 10, 12]
-5	[1, 2, 3]
-14	[6, 7, 9, 10, 12]
-15	[1, 2, 3, 6, 7, 9, 10, 12]
-16	[0, 1, 2, 3, 6, 7, 9, 10, 12]
+0	0	[0]
+1	1	[1]
+2	2	[2]
+3	3	[3]
+4	6	[6]
+5	7	[7]
+6	9	[9]
+7	10	[10]
+8	12	[12]
+9	8	[6, 7]
+10	11	[9, 10]
+11	4	[2, 3]
+12	13	[9, 10, 12]
+13	5	[1, 2, 3]
+14	14	[6, 7, 9, 10, 12]
+15	15	[1, 2, 3, 6, 7, 9, 10, 12]
+16	16	[0, 1, 2, 3, 6, 7, 9, 10, 12]
 
 Gene_tree_table:
 gene_node_id	clade_set	event	species_node_id
-1	[0]	None	-1
-0	[1, 2, 3, 6, 7, 9, 10, 12]	None	-1
-2	[0, 1, 2, 3, 6, 7, 9, 10, 12]	None	-1
+0	0	[6]
+1	1	[7]
+2	3	[9]
+3	4	[12]
+4	6	[10]
+5	9	[2]
+6	10	[3]
+7	12	[1]
+8	13	[1]
+9	16	[6]
+10	17	[7]
+11	14	[1]
+12	2	[6, 7]
+13	18	[6, 7]
+14	5	[9, 12]
+15	11	[2, 3]
+16	7	[9, 10, 12]
+17	8	[6, 7, 9, 10, 12]
+18	15	[1, 2, 3]
+19	19	[1, 2, 3]
+20	20	[1, 2, 3, 6, 7, 9, 10, 12]
+
+event_table:
+11	14	[1]	d	1
+12	2	[6, 7]	s	8
+13	18	[6, 7]	s	8
+14	5	[9, 12]	s	13
+15	11	[2, 3]	s	4
+16	7	[9, 10, 12]	i	13
+17	8	[6, 7, 9, 10, 12]	s	14
+18	15	[1, 2, 3]	s	5
+19	19	[1, 2, 3]	t	5
+20	20	[1, 2, 3, 6, 7, 9, 10, 12]	s	15
+
+time_sequences:
+{'gene_node_id': 16,
+ 'gene_node_name': 'ABCDEFGHI',
+ 'index': 1,
+ 'species_node_id': 16,
+ 'type': 's'}
+{'gene_node_id': 15,
+ 'gene_node_name': 'BCDEFGHI',
+ 'index': 2,
+ 'species_node_id': 15,
+ 'type': 's'}
+{'gene_node_id': 14,
+ 'gene_node_name': 'BCD',
+ 'index': 3,
+ 'species_node_id': 13,
+ 'type': 's'}
+{'gene_node_id': 13,
+ 'gene_node_name': 'EFGHI',
+ 'index': 4,
+ 'species_node_id': 14,
+ 'type': 's'}
+{'gene_node_id': 12,
+ 'gene_node_name': 'GHI',
+ 'index': 5,
+ 'species_node_id': 12,
+ 'type': 'ils'}
+{'gene_node_id': 11,
+ 'gene_node_name': 'CD',
+ 'index': 6,
+ 'species_node_id': 11,
+ 'type': 's'}
+{'gene_node_id': 10,
+ 'gene_node_name': 'GHI',
+ 'index': 7,
+ 'species_node_id': 12,
+ 'type': 's'}
+{'gene_node_id': 9,
+ 'gene_node_name': 'EF',
+ 'index': 8,
+ 'species_node_id': 9,
+ 'type': 's'}
+{'distance_to_gene_node': 1.3258772460804165,
+ 'distance_to_species_node': 2.840059383548013,
+ 'event_height': 7.840059383548013,
+ 'gene_node_id': 14,
+ 'gene_node_name': '1*2*3*',
+ 'index': 9,
+ 'species_node_id': 13,
+ 'target_species_id': 14,
+ 'type': 'transfer'}
+{'distance_to_gene_node': 0.8514461217857123,
+ 'distance_to_species_node': 0.8514461217857123,
+ 'event_height': 0.8514461217857123,
+ 'gene_node_id': 2,
+ 'gene_node_name': '1*',
+ 'index': 11,
+ 'species_node_id': 1,
+ 'type': 'duplication'}
+{'distance_to_gene_node': 8.232420317334931,
+ 'distance_to_species_node': 8.232420317334931,
+ 'event_height': 8.232420317334931,
+ 'gene_node_id': 8,
+ 'gene_node_name': '0*',
+ 'index': 12,
+ 'species_node_id': 0,
+ 'type': 'loss'}
+{'gene_node_id': 2,
+ 'gene_node_name': 'EF',
+ 'index': 10,
+ 'species_node_id': 9,
+ 'type': 's'}
