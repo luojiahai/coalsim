@@ -220,6 +220,12 @@ def main(options):
                                  path='./output/final_result_cut.txt')
     Debug.save_output(contents=[final_result_cut],path='./output/final_result_cut_newick.txt')
 
+    if (not final_result_cut):
+        print("EXCEPTION: ALL LOST")
+        Debug.log_file.close()
+        Debug.summary_file.close()
+        return
+            
     # species tree table
     # SpeciesTree.global_species_tree.post_order_fake_id()
 
@@ -295,10 +301,13 @@ def main(options):
     print('Transfer: ' + str(Debug.event_count['t']))
     print('ILS: ' + str(Debug.event_count['i']))
 
+    # node = final_result_cut.tips()[0]
+    # distance_to_root = final_result_cut.distance(node)
     # for node in final_result_cut.tips():
-    #     print(final_result_cut.distance(node))
-
-
+    #     if (distance_to_root != final_result_cut.distance(node)):
+    #         print("invalid output!")
+    #         break
+    #         return
 
     Debug.log_file.close()
     Debug.summary_file.close()
