@@ -14,7 +14,8 @@ class Utility(object):
 class Debug(object):
     log_file = None
     summary_file = None
-    event_count = {'d': 0, 'l': 0, 't': 0, 'i': 0, 's':0}
+    recon_file = None
+    event_count = {'D': 0, 'L': 0, 'T': 0, 'I': 0, 'S':0, 'SL': 0, 'TL': 0, 'IL': 0, 'DL': 0}
 
     def __init__(self):
         pass
@@ -59,6 +60,16 @@ class Debug(object):
             else:
                 Debug.summary_file.write(str(body))
             Debug.summary_file.write('\n')
+    
+    @staticmethod
+    def recon_table(header, bodies=[], pformat=False):
+        Debug.recon_file.write(header)
+        for body in bodies:
+            if (pformat):
+                Debug.recon_file.write(pprint.pformat(body))
+            else:
+                Debug.recon_file.write(str(body))
+            Debug.recon_file.write('\n')
 
 
 class TreeNode(object):
@@ -77,7 +88,7 @@ class TreeNode(object):
         self.distance_to_children = []
         self.clade = []
         self.clade_split = []
-        self.event = None
+        self.events = []
         return
     
     def __repr__(self):
